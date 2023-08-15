@@ -1,0 +1,205 @@
+# Modules
+
+snippet i "import named"
+	import { ${1} } from '${0}'
+#
+
+snippet id "import default"
+	import ${1} from '${0:$1}'
+#
+
+snippet e "export"
+	export ${0}
+#
+
+snippet ed "export default"
+	export default ${0}
+#
+
+snippet ec "export const"
+	export const ${1:name} = ${0}
+#
+
+snippet lr "let require"
+	let { ${1} } = require('${0}')
+#
+
+snippet cr "const require"
+	const { ${1} } = require('${0}')
+#
+
+# Statements
+
+snippet l "let"
+	let ${1:name} = ${0}
+#
+
+snippet c "const"
+	const ${1:name} = ${0}
+#
+
+# Functions
+# body/no body - autopairs
+# async/sync - code actions
+# return/no return - snippet
+
+snippet r "return"
+	return ${0}
+#
+
+snippet f "arrow function"
+	(${1}) => {${0:${VISUAL}}}
+#
+
+snippet lf "let arrow function"
+	let ${1:name} = (${2}) => {${0:${VISUAL}}}
+#
+
+snippet cf "const arrow function"
+	const ${1:name} = (${2}) => {${0:${VISUAL}}}
+#
+
+snippet fu "function"
+	function ${1:name}(${2}) {
+		${0:${VISUAL}}
+	}
+#
+
+snippet m "method"
+	${1:name}(${2}) {
+		${0}
+	}
+#
+
+# Control flow
+
+snippet if "if"
+	if (${1}) {
+		${0:${VISUAL}}
+	}
+#
+
+snippet el "else"
+	else (${1}) {
+		${0:${VISUAL}}
+	}
+#
+
+snippet ei "else if"
+	else if (${1}) {
+		${0:${VISUAL}}
+	}
+#
+
+# Iteration
+
+snippet fo "for let of"
+	for (let ${1:name} of ${2:name}) {
+		${0:${VISUAL}}
+	}
+#
+
+snippet fco "for const of"
+	for (const ${1:name} of ${2:name}) {
+		${0:${VISUAL}}
+	}
+#
+
+snippet fi "for let in"
+	for (let ${1:name} in ${2:name}) {
+		${0:${VISUAL}}
+	}
+#
+
+snippet fci "for const in"
+	for (const ${1:name} in ${2:name}) {
+		${0:${VISUAL}}
+	}
+#
+
+snippet w "while"
+	while (${1}) {
+		${0:${VISUAL}}
+	}
+#
+
+snippet do "do while"
+	do {
+		${0:${VISUAL}}
+	} while ($1)
+
+# Error handling
+
+snippet try "try/catch"
+	try {
+		${0:${VISUAL}}
+	} catch (${1:e}) {
+		${2}
+	}
+#
+
+snippet te "throw new Error"
+	throw new Error('${1}')
+#
+
+# Testing
+
+snippet desc "describe"
+	describe('${1}', () => {
+		${0}	
+	})
+#
+
+snippet it "test"
+	it('${1}', () => {
+		${0}	
+	})
+#
+
+# Debugging
+
+snippet cl "console.log"
+	console.log(${0})
+#
+
+snippet cd "console.debug"
+	console.debug(${0})
+#
+
+snippet ce "console.error"
+	console.error(${0})
+#
+
+snippet ci "console.info"
+	console.info(${0})
+#
+
+snippet js "JSON stringify"
+	JSON.stringify(${0})
+#
+
+snippet jsi "JSON stringify indented"
+	JSON.stringify(${0}, null, 2)
+#
+
+# Async
+
+snippet a "await"
+	await ${0}
+#
+
+snippet pa "Promise.all"
+	Promise.all(${0})
+#
+
+snippet np "new Promise"
+	new Promise((resolve, reject) => {${0}})
+#
+
+# Misc
+
+snippet doc "JSDoc comment"
+	/*
+	 * ${0}
+	 */
+#
