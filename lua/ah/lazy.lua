@@ -14,6 +14,10 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 
 require("lazy").setup("ah.plugins", {
+	defaults = {
+		-- Enable/disable plugins globally
+		cond = nil,
+	},
 	change_detection = {
 		notify = false,
 	},
