@@ -52,8 +52,4 @@ require("ah.mappings")
 require("ah.lazy")
 
 -- Change colorschemes if running inside linux framebuffer
-if os.getenv('TERM') == 'linux' then
-  cmd.colorscheme('pablo')
-else
-  cmd.colorscheme("furnisher")
-end
+cmd.colorscheme('tokyonight-night')
