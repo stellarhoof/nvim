@@ -54,6 +54,8 @@ require("ah.lazy")
 -- Change colorschemes if running inside linux framebuffer
 if os.getenv("TERM") == "linux" then
   cmd.colorscheme("pablo")
-else
+elseif os.getenv("TERM") == "xterm-kitty" then
   cmd.colorscheme("furnisher")
+else
+  cmd.colorscheme("tokyonight-night")
 end
