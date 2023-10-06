@@ -143,7 +143,7 @@ function M.config()
       preview = false,
       prompt_prefix = " ",
       selection_caret = "  ",
-      color_devicons = false,
+      color_devicons = true,
       vimgrep_arguments = vim.g.grepprg,
       layout_strategy = "vertical",
       sorting_strategy = "ascending",
@@ -179,6 +179,12 @@ function M.init()
       layout_config = { preview_width = 0.6 },
     }))
   end, { noremap = true, desc = "Help Tags" })
+
+  nmap("<space>m", function()
+    require("telescope.builtin").man_pages(themes.horizontal({
+      layout_config = { preview_width = 0.6 },
+    }))
+  end, { noremap = true, desc = "Man Pages" })
 
   nmap("<space>n", function()
     require("telescope").extensions.luasnip.luasnip(themes.dropdown({
@@ -241,6 +247,13 @@ function M.init()
       ignore_current_buffer = true,
     }))
   end, { noremap = true, desc = "Buffers" })
+
+  nmap("<space>c", function()
+    require("telescope.builtin").colorscheme(themes.horizontal({
+      enable_preview = true,
+    }))
+    vim.o.bg = "light"
+  end, { noremap = true, desc = "Colorschemes" })
 
   nmap("<space>p", function()
     require("ah.plugins.telescope.repos")(themes.bufwindow({

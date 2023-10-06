@@ -4,10 +4,21 @@ return {
 		"https://github.com/nvim-lua/plenary.nvim",
 	},
 
-	-- Colorscheme
-	{
-		"https://github.com/folke/tokyonight.nvim",
-	},
+	-- Colorschemes
+	{ "https://github.com/folke/tokyonight.nvim", },
+	{ "https://github.com/catppuccin/nvim", },
+  { "https://github.com/sainnhe/edge" },
+  { "https://github.com/EdenEast/nightfox.nvim" },
+  { "https://github.com/mcchrish/zenbones.nvim" },
+  { "https://github.com/sainnhe/everforest" },
+  { "https://github.com/navarasu/onedark.nvim" },
+  { "https://github.com/shaunsingh/nord.nvim" },
+  { "https://github.com/rmehri01/onenord.nvim" },
+  { "https://github.com/maxmx03/solarized.nvim" },
+  { "https://github.com/olimorris/onedarkpro.nvim" },
+  { "https://github.com/lourenci/github-colors" },
+  { "https://github.com/ntbbloodbath/sweetie.nvim" },
+  { "https://github.com/mofiqul/adwaita.nvim" },
 
 	-- Vim sugar for the UNIX shell commands that need it the most
 	{
@@ -462,4 +473,19 @@ return {
 			}
 		end,
 	},
+
+  {
+    "https://github.com/stevearc/dressing.nvim",
+    opts = {
+      select = { backend = { "telescope" } }
+    }
+  },
+
+  {
+    "https://github.com/ziontee113/icon-picker.nvim",
+    config = function()
+      require('icon-picker').setup({ })
+      -- nmap("<space>c", "<cmd>IconPickerNormal nerd_font_v3<cr>", { noremap = true, silent = true })
+    end,
+  }
 }

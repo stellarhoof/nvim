@@ -52,4 +52,4 @@ require("ah.mappings")
 require("ah.lazy")
 
 -- Change colorschemes if running inside linux framebuffer
-cmd.colorscheme('tokyonight-night')
+cmd.colorscheme('furnisher')
