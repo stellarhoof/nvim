@@ -2,7 +2,7 @@ cmd.highlight("clear")
 vim.g.colors_name = "furnisher"
 hl({
   Normal = {fg = "#111111"},
-	Comment = {fg = "#666666", bg = "#EBEBEB"},
+	Comment = {fg = "#111111", bold = true},
 	Conceal = {},
 	Constant = {fg = "#111111"},
 	Cursor = {bg = "#CF222C"},
@@ -81,7 +81,7 @@ hl({
 	TabLineFill = {bg = "#B9B9B9"},
 	TabLineSel = {fg = "#111111", bold = true},
 	TelescopeMatching = {fg = "#783EDA", bold = true, underline = true},
-	TelescopeResultsComment = {fg = "#666666"},
+	TelescopeResultsComment = {fg = "#111111"},
 	Todo = {bold = true},
 	Type = {fg = "#111111"},
 	Underlined = {sp = "#783EDA", underline = true},
@@ -119,7 +119,7 @@ hl({
 	["@method_def"] = {link = "@lsp.type.variable"},
 	["@tag.javascript"] = {bold = true},
 	["@tag.tsx"] = {link = "@tag.javascript"},
-	["@text.literal"] = {fg = "#666666", bg = "#EBEBEB"},
+	["@text.literal"] = {fg = "#111111"},
 	["@text.note"] = {bold = true},
 	["@text.reference"] = {fg = "#783EDA", bold = true},
 	["@text.uri"] = {fg = "#0554AF", underline = true},

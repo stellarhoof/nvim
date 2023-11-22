@@ -4,9 +4,14 @@ return {
     "https://github.com/nvim-lua/plenary.nvim",
   },
 
-	-- Colorschemes
-	{ "https://github.com/folke/tokyonight.nvim", },
-	{ "https://github.com/catppuccin/nvim", },
+  -- Colorschemes
+  {
+    "https://github.com/folke/tokyonight.nvim",
+    opts = {
+      transparent = true,
+    },
+  },
+  { "https://github.com/catppuccin/nvim" },
   { "https://github.com/sainnhe/edge" },
   { "https://github.com/EdenEast/nightfox.nvim" },
   { "https://github.com/mcchrish/zenbones.nvim" },
@@ -16,9 +21,26 @@ return {
   { "https://github.com/rmehri01/onenord.nvim" },
   { "https://github.com/maxmx03/solarized.nvim" },
   { "https://github.com/olimorris/onedarkpro.nvim" },
-  { "https://github.com/lourenci/github-colors" },
   { "https://github.com/ntbbloodbath/sweetie.nvim" },
   { "https://github.com/mofiqul/adwaita.nvim" },
+  {
+    "https://github.com/projekt0n/github-nvim-theme",
+    config = function()
+      require("github-theme").setup({
+        options = {
+          transparent = true,
+          dim_inactive = false,
+          hide_end_of_buffer = false,
+          hide_nc_statusline = false,
+        },
+        groups = {
+          all = {
+            ["@text.literal"] = { gui = "NONE" },
+          },
+        },
+      })
+    end,
+  },
 
   -- Vim sugar for the UNIX shell commands that need it the most
   {
@@ -213,7 +235,7 @@ return {
 
   -- Use Neovim as a language server to inject LSP diagnostics, code actions, and more via Lua.
   {
-    "https://github.com/jose-elias-alvarez/null-ls.nvim",
+    "https://github.com/nvimtools/none-ls.nvim",
     config = function()
       local fmt = require("null-ls").builtins.formatting
       local lint = require("null-ls").builtins.diagnostics
@@ -322,6 +344,8 @@ return {
   {
     "https://github.com/rest-nvim/rest.nvim",
     ft = { "http" },
+    -- latest commit breaks formatting
+    commit = "8b62563",
     init = function()
       au("FileType", {
         pattern = "http",
@@ -359,8 +383,9 @@ return {
   },
 
   -- Readline motions and deletions in Neovim.
+  -- Repo deleted?
   {
-    "https://github.com/linty-org/readline.nvim",
+    "https://github.com/sysedwinistrator/readline.nvim",
     config = function()
       local readline = require("readline")
 
@@ -444,49 +469,59 @@ return {
     end,
   },
 
-	-- Helps you win at grep.
-	{
-		"https://github.com/mhinz/vim-grepper",
-		keys = {
-			{
-				"<space>s",
-				function()
-					cmd.Grepper({ args = vim.o.ft == "dirvish" and { "-dir", "file" } or {} })
-				end,
-				silent = true,
-				noremap = true,
-				desc = "Search with Grepper",
-			},
-		},
-		config = function()
-			vim.g.grepper = {
-				switch = 0,
-				jump = 1,
-				dir = "repo,file,pwd",
-				side_cmd = "tabnew",
-				tools = { "rg", "tg", "rgall" },
-				operator = { prompt = 1 },
-				rg = { grepprg = vim.o.grepprg },
-				rgall = { grepprg = vim.o.grepprg .. " --no-ignore-vcs" },
-				prompt_text = "(<c-o>=change-dir) (<c-s>=side) (<tab>=change-tool) $t> ",
-				prompt_mapping_dir = "<c-o>",
-				prompt_quote = 0,
-			}
-		end,
-	},
+  -- Helps you win at grep.
+  {
+    "https://github.com/mhinz/vim-grepper",
+    keys = {
+      {
+        "<space>s",
+        function()
+          cmd.Grepper({ args = vim.o.ft == "dirvish" and { "-dir", "file" } or {} })
+        end,
+        silent = true,
+        noremap = true,
+        desc = "Search with Grepper",
+      },
+    },
+    config = function()
+      vim.g.grepper = {
+        switch = 0,
+        jump = 1,
+        dir = "repo,file,pwd",
+        side_cmd = "tabnew",
+        tools = { "rg", "tg", "rgall" },
+        operator = { prompt = 1 },
+        rg = { grepprg = vim.o.grepprg },
+        rgall = { grepprg = vim.o.grepprg .. " --no-ignore-vcs" },
+        prompt_text = "(<c-o>=change-dir) (<c-s>=side) (<tab>=change-tool) $t> ",
+        prompt_mapping_dir = "<c-o>",
+        prompt_quote = 0,
+      }
+    end,
+  },
 
   {
     "https://github.com/stevearc/dressing.nvim",
     opts = {
-      select = { backend = { "telescope" } }
-    }
+      select = { backend = { "telescope" } },
+    },
   },
 
   {
     "https://github.com/ziontee113/icon-picker.nvim",
     config = function()
-      require('icon-picker').setup({ })
+      require("icon-picker").setup({})
       -- nmap("<space>c", "<cmd>IconPickerNormal nerd_font_v3<cr>", { noremap = true, silent = true })
     end,
-  }
+  },
+
+  {
+    "https://github.com/iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    build = "cd app && yarn install",
+    init = function()
+      vim.g.mkdp_filetypes = { "markdown" }
+    end,
+    ft = { "markdown" },
+  },
 }

@@ -127,8 +127,9 @@ return lush(function(x)
     User8 { fg = p.white, bg = StatusLine.bg, bold = true },
 
     -- |group-name|
-    Comment { fg = Normal.fg.li(40), bg = p.white.da(7) },
+    Comment { fg = Normal.fg, bold = true },
     Constant { fg = Normal.fg },
+
     String { fg = p.green },
     -- Character
     Number { String },
