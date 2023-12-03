@@ -7,39 +7,6 @@ return {
   -- Colorschemes
   {
     "https://github.com/folke/tokyonight.nvim",
-    opts = {
-      transparent = true,
-    },
-  },
-  { "https://github.com/catppuccin/nvim" },
-  { "https://github.com/sainnhe/edge" },
-  { "https://github.com/EdenEast/nightfox.nvim" },
-  { "https://github.com/mcchrish/zenbones.nvim" },
-  { "https://github.com/sainnhe/everforest" },
-  { "https://github.com/navarasu/onedark.nvim" },
-  { "https://github.com/shaunsingh/nord.nvim" },
-  { "https://github.com/rmehri01/onenord.nvim" },
-  { "https://github.com/maxmx03/solarized.nvim" },
-  { "https://github.com/olimorris/onedarkpro.nvim" },
-  { "https://github.com/ntbbloodbath/sweetie.nvim" },
-  { "https://github.com/mofiqul/adwaita.nvim" },
-  {
-    "https://github.com/projekt0n/github-nvim-theme",
-    config = function()
-      require("github-theme").setup({
-        options = {
-          transparent = true,
-          dim_inactive = false,
-          hide_end_of_buffer = false,
-          hide_nc_statusline = false,
-        },
-        groups = {
-          all = {
-            ["@text.literal"] = { gui = "NONE" },
-          },
-        },
-      })
-    end,
   },
 
   -- Vim sugar for the UNIX shell commands that need it the most
@@ -91,29 +58,29 @@ return {
     end,
   },
 
-  -- Operators to substitute and exchange text.
-  -- Lua version of https://github.com/svermeulen/vim-subversive and
-  -- https://github.com/tommcdo/vim-exchange
-  {
-    "https://github.com/gbprod/substitute.nvim",
-    config = function()
-      require("substitute").setup({
-        highlight_substituted_text = {
-          enabled = false,
-        },
-      })
-      -- Substitute
-      nmap("gs", require("substitute").operator, { noremap = true })
-      nmap("gss", require("substitute").line, { noremap = true })
-      nmap("gS", require("substitute").eol, { noremap = true })
-      xmap("gs", require("substitute").visual, { noremap = true })
-      -- Exchange
-      nmap("gx", require("substitute.exchange").operator, { noremap = true })
-      nmap("gxx", require("substitute.exchange").line, { noremap = true })
-      nmap("gxc", require("substitute.exchange").cancel, { noremap = true })
-      xmap("X", require("substitute.exchange").visual, { noremap = true })
-    end,
-  },
+  -- -- Operators to substitute and exchange text.
+  -- -- Lua version of https://github.com/svermeulen/vim-subversive and
+  -- -- https://github.com/tommcdo/vim-exchange
+  -- {
+  --   "https://github.com/gbprod/substitute.nvim",
+  --   config = function()
+  --     require("substitute").setup({
+  --       highlight_substituted_text = {
+  --         enabled = false,
+  --       },
+  --     })
+  --     -- Substitute
+  --     nmap("gs", require("substitute").operator, { noremap = true })
+  --     nmap("gss", require("substitute").line, { noremap = true })
+  --     nmap("gS", require("substitute").eol, { noremap = true })
+  --     xmap("gs", require("substitute").visual, { noremap = true })
+  --     -- Exchange
+  --     nmap("gx", require("substitute.exchange").operator, { noremap = true })
+  --     nmap("gxx", require("substitute.exchange").line, { noremap = true })
+  --     nmap("gxc", require("substitute.exchange").cancel, { noremap = true })
+  --     xmap("X", require("substitute.exchange").visual, { noremap = true })
+  --   end,
+  -- },
 
   -- Move 'up' or 'down' without changing the cursor column.
   {
@@ -146,27 +113,16 @@ return {
     opts = {},
   },
 
-  -- Create missing folders on save.
-  {
-    "https://github.com/jghauser/mkdir.nvim",
-  },
-
   -- Capture and show any messages in a customisable (floating) buffer.
   {
     "https://github.com/AckslD/messages.nvim",
     opts = {},
   },
 
-  -- Intelligently reopen files at your last edit position in Vim.
-  {
-    "https://github.com/ethanholz/nvim-lastplace",
-    opts = {},
-  },
-
   -- A high-performance color highlighter with no external dependencies.
   {
     "https://github.com/NvChad/nvim-colorizer.lua",
-    keys = { { "<leader>c", cmd.ColorizerToggle, desc = "Toggle Colorizer" } },
+    keys = { { "<leader>c", vim.cmd.ColorizerToggle, desc = "Toggle Colorizer" } },
     opts = {
       filetypes = {},
       user_default_options = { names = false, hsl_fn = true, rgb_fn = true },
@@ -224,7 +180,7 @@ return {
   {
     "https://github.com/mbbill/undotree",
     keys = {
-      { "<leader>u", cmd.UndotreeToggle, silent = true, desc = "Toggle UndoTree" },
+      { "<leader>u", vim.cmd.UndotreeToggle, silent = true, desc = "Toggle UndoTree" },
     },
     config = function()
       vim.g.undotree_DiffAutoOpen = 0
@@ -266,7 +222,7 @@ return {
           -- Disable slow treesitter highlight for large files
           disable = function(lang, buf)
             local max_filesize = 100 * 1024 -- 100 KB
-            local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+            local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
             if ok and stats and stats.size > max_filesize then
               return true
             end
@@ -285,13 +241,8 @@ return {
         { "https://github.com/JoosepAlviste/nvim-ts-context-commentstring" },
       },
       config = function()
-        -- https://github.com/JoosepAlviste/nvim-ts-context-commentstring#nvim-comment
-        require("nvim-treesitter.configs").setup({
-          context_commentstring = {
-            enable = true,
-            enable_autocmd = false,
-          },
-        })
+        require("ts_context_commentstring").setup({ enable_autocmd = false })
+        vim.g.skip_ts_context_commentstring_module = true
         require("Comment").setup({
           pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
         })
@@ -455,7 +406,7 @@ return {
       au("FileType", {
         pattern = "dirvish",
         callback = function()
-          cmd.sort(",^.*[\\/],") -- Sort directories first
+          vim.cmd.sort(",^.*[\\/],") -- Sort directories first
           nmap("F", "<plug>(dovish_create_file)", { silent = true, buffer = true })
           nmap("I", "<plug>(dovish_create_directory)", { silent = true, buffer = true })
           nmap("D", "<plug>(dovish_delete)", { silent = true, buffer = true })
@@ -476,7 +427,7 @@ return {
       {
         "<space>s",
         function()
-          cmd.Grepper({ args = vim.o.ft == "dirvish" and { "-dir", "file" } or {} })
+          vim.cmd.Grepper({ args = vim.o.ft == "dirvish" and { "-dir", "file" } or {} })
         end,
         silent = true,
         noremap = true,
@@ -523,5 +474,11 @@ return {
       vim.g.mkdp_filetypes = { "markdown" }
     end,
     ft = { "markdown" },
+  },
+
+  {
+    "https://github.com/vuki656/package-info.nvim",
+    -- Commands start with PackageInfo*
+    opts = {},
   },
 }

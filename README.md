@@ -42,3 +42,13 @@ https://github.com/cshuaimin/ssr.nvim/
 https://github.com/CKolkey/ts-node-action (too new, give it some time)
 https://github.com/Wansmer/treesj (api is too messy)
 https://github.com/ziontee113/syntax-tree-surfer
+
+# Plugins
+
+https://github.com/carbon-steel/detour.nvim
+https://github.com/stevearc/oil.nvim
+https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-files.md
+https://github.com/OlegGulevskyy/better-ts-errors.nvim
+https://github.com/piersolenski/telescope-import.nvim
+https://github.com/piersolenski/wtf.nvim
+https://github.com/dmmulroy/tsc.nvim

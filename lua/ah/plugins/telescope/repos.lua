@@ -31,12 +31,11 @@ end
 return function(opts)
 	-- Make roots absolute paths
 	opts.roots = vim.tbl_map(function(r)
-		return fn.fnamemodify(r, ":p")
+		return vim.fn.fnamemodify(r, ":p")
 	end, opts.roots)
 
 	-- Find width of longest root name for padding purposes
-	local maxw =
-		math.max(unpack(vim.tbl_map(string.len, vim.tbl_keys(opts.roots))))
+	local maxw = math.max(unpack(vim.tbl_map(string.len, vim.tbl_keys(opts.roots))))
 
 	opts.entry_maker = function(line)
 		local entry = make_entry.gen_from_file(opts)(line)
@@ -65,12 +64,10 @@ return function(opts)
 			)
 
 			-- Same as telescope's, but make transform_devicons return a git icon.
-			display, hl_group =
-				utils.transform_devicons(".git", display, opts.disable_devicons)
+			display, hl_group = utils.transform_devicons(".git", display, opts.disable_devicons)
 
 			if hl_group then
-				return display,
-					{ { { 0, 4 }, hl_group }, { { 4, maxw + 6 }, "Comment" } }
+				return display, { { { 0, 4 }, hl_group }, { { 4, maxw + 6 }, "Comment" } }
 			end
 
 			return display, { { { 0, maxw + 2 }, "Comment" } }

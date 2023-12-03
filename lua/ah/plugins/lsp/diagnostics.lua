@@ -22,7 +22,7 @@ function M.setup()
 	-- |diagnostic-signs|
 	for type, icon in pairs(M.signs) do
 		local hl = "DiagnosticSign" .. type
-		fn.sign_define(hl, { text = icon, texthl = hl, numhl = "", linehl = "" })
+		vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "", linehl = "" })
 	end
 end
 

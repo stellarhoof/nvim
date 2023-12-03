@@ -36,36 +36,8 @@ function M.on_attach(client, bufnr)
 		require("telescope.builtin").lsp_dynamic_workspace_symbols()
 	end, desc("Workspace Symbols"))
 
-	nmap("K", vim.lsp.buf.hover, desc("Hover Documentation"))
-	nmap("<leader>k", vim.lsp.buf.signature_help, desc("Signature Documentation"))
-
-	-- |vim.diagnostic.open_float()|
-	local opts = {
-		-- float = false,
-		wrap = false,
-		severity = require("ah.plugins.lsp.diagnostics").severity,
-	}
-
-	nmap("<a-k>", vim.diagnostic.open_float, desc("Open diagnostic floating window"))
-
-	nmap("[d", function()
-		vim.diagnostic.goto_prev(opts)
-	end, desc("Go to previous diagnostic"))
-
-	nmap("[D", function()
-		vim.diagnostic.goto_next(vim.tbl_extend("force", opts, { cursor_position = { 0, 0 } }))
-	end, desc("Go to first diagnostic"))
-
-	nmap("]d", function()
-		vim.diagnostic.goto_next(opts)
-	end, desc("Go to next diagnostic"))
-
-	nmap("]D", function()
-		vim.diagnostic.goto_next(vim.tbl_extend("force", opts, { cursor_position = { -1, -1 } }))
-	end, desc("Go to last diagnostic"))
-
 	-- Format document on write
-	if client.server_capabilities.documentFormattingProvider then
+	if client.supports_method(vim.lsp.protocol.Methods.textDocument_formatting) then
 		au("BufWritePre", {
 			desc = "Format buffer on save",
 			buffer = bufnr,
@@ -99,7 +71,7 @@ function M.config()
 
 	require("ah.plugins.lsp.diagnostics").setup()
 
-	set_floating_window_defaults({ noautocmd = true, border = border })
+	set_floating_window_defaults({ noautocmd = true })
 
 	-- Set LSP client's log level. Servers log level is not affected.
 	vim.lsp.set_log_level("warn")
@@ -151,7 +123,7 @@ function M.config()
 					},
 					workspace = {
 						-- Make the server aware of Neovim runtime files
-						library = api.nvim_get_runtime_file("", true),
+						library = vim.api.nvim_get_runtime_file("", true),
 						checkThirdParty = false,
 					},
 					telemetry = {
