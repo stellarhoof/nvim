@@ -24,7 +24,6 @@ vim.opt.grepprg = table.concat(vim.g.grepprg, " ")
 vim.opt.grepformat = { "%f:%l:%c:%m", "%f:%l:%m" }
 vim.opt.exrc = true
 vim.opt.showtabline = 1
-vim.opt.statusline = "%!v:lua.require'ah.statusline'(win_getid())"
 vim.opt.laststatus = 2
 vim.opt.updatetime = 300 -- CursorHold
 vim.opt.pumheight = 25
