@@ -25,3 +25,5 @@ require("ah.options")
 require("ah.keymaps")
 require("ah.autocommands")
 require("ah.lazy")
+
+vim.cmd.colorscheme("zenwritten")

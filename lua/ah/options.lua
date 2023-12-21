@@ -18,7 +18,6 @@ vim.g.grepprg = {
 }
 
 vim.opt.bg = "light"
-vim.opt.smoothscroll = true
 vim.opt.foldmethod = "indent"
 vim.opt.grepprg = table.concat(vim.g.grepprg, " ")
 vim.opt.grepformat = { "%f:%l:%c:%m", "%f:%l:%m" }
@@ -53,7 +52,7 @@ vim.opt.formatoptions = "jcroqlnt"
 vim.opt.complete = { ".", "b" }
 vim.opt.undofile = true
 vim.opt.conceallevel = 0
-vim.opt.signcolumn = "no"
+vim.opt.signcolumn = "yes"
 vim.opt.foldlevel = 99
 vim.opt.foldminlines = 0
 vim.opt.linebreak = true

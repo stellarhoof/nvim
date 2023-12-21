@@ -1,118 +1,108 @@
-local M = {
-  "https://github.com/mfussenegger/nvim-dap",
-  lazy = true,
-  dependencies = {
-    "https://github.com/rcarriga/nvim-dap-ui",
-    "https://github.com/mxsdev/nvim-dap-vscode-js",
-  },
+-- :h dap.txt
+
+-- DAP-Client ----- Debug Adapter ------- Debugger ------ Debugee
+-- (nvim-dap)  |   (per language)  |   (per language)    (your app)
+--             |                   |
+--             |        Implementation specific communication
+--             |        Debug adapter and debugger could be the same process
+--             |
+--      Communication via the Debug Adapter Protocol
+
+-- Resources
+-- https://www.youtube.com/watch?v=Ul_WPhS2bis
+-- https://theosteiner.de/debugging-javascript-frameworks-in-neovim
+
+return {
+	"https://github.com/mfussenegger/nvim-dap",
+	dependencies = { "https://github.com/mxsdev/nvim-dap-vscode-js" },
+	config = function()
+		local dap = require("dap")
+
+		-- require("dap-vscode-js").setup({
+		-- 	adapters = { "pwa-node" },
+		-- 	debugger_cmd = { "js-debug-adapter" },
+		-- 	port = "${port}",
+		-- })
+		--
+		-- -- https://theosteiner.de/debugging-javascript-frameworks-in-neovim
+		-- for _, lang in ipairs({ "javascript", "typescript" }) do
+		-- 	require("dap").configurations[lang] = {
+		-- 		{
+		-- 			type = "pwa-node",
+		-- 			request = "launch",
+		-- 			name = "Launch file",
+		-- 			program = "${file}",
+		-- 			cwd = vim.fn.getcwd(),
+		-- 			sourceMaps = true,
+		-- 		},
+		-- 	}
+		-- end
+
+		-- Neovim needs a debug adapter with which it can communicate. Neovim can
+		-- either launch the debug adapter itself, or it can attach to an existing
+		-- one.
+
+		dap.adapters["node-adapter"] = {
+			type = "server",
+			host = "127.0.0.1",
+			-- Use random free port
+			port = "${port}",
+			-- Should be installed with Mason
+			executable = { command = "js-debug-adapter", args = { "${port}" } },
+		}
+
+		dap.adapters["chrome-adapter"] = {
+			type = "executable",
+			command = "node",
+			-- Should be installed with Mason
+			executable = { command = "chrome-debug-adapter" },
+		}
+
+		-- In addition to launching (possibly) and connecting to a debug adapter,
+		-- Neovim needs to instruct the debug adapter itself how to launch and
+		-- connect to the debugee. The debugee is the application you want to debug.
+		dap.configurations.javascript = {
+			-- https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation#vscode-js-debug
+			{
+				type = "node-adapter",
+				request = "launch",
+				name = "Launch a node process for the current file and attach debugger to it.",
+				cwd = "${workspaceFolder}",
+				program = "${file}",
+			},
+			{
+				type = "node-adapter",
+				request = "attach",
+				name = "Attach debugger to a node process started with `--inspect`.",
+				cwd = "${workspaceFolder}",
+				skipFiles = { "${workspaceFolder}/node_modules/**" },
+				processId = require("dap.utils").pick_process,
+				sourceMaps = true,
+				resolveSourceMapLocations = { "${workspaceFolder}/**", "!**/node_modules/**" },
+			},
+			-- https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation#javascript-chrome
+			{
+				type = "chrome-adapter",
+				request = "attach",
+				name = "Attach debugger to a chrome instance started with `--inspect`.",
+				program = "${file}",
+				cwd = vim.fn.getcwd(),
+				sourceMaps = true,
+				resolveSourceMapLocations = { "${workspaceFolder}/**", "!**/node_modules/**" },
+				protocol = "inspector",
+				port = 9222,
+				webRoot = "${workspaceFolder}",
+			},
+		}
+
+		dap.configurations.javascriptreact = dap.configurations.javascript
+		dap.configurations.typescript = dap.configurations.javascript
+		dap.configurations.typescriptreact = dap.configurations.javascript
+
+		nmap("<f5>", dap.continue, { desc = "Debug: continue" })
+		nmap("<f9>", dap.toggle_breakpoint, { desc = "Debug: toggle breakpoint" })
+		nmap("<f10>", dap.step_over, { desc = "Deubg: step over" })
+		nmap("<f11>", dap.step_into, { desc = "Debug: step into" })
+		nmap("<f12>", dap.step_out, { desc = "Debug: step out" })
+	end,
 }
-
-function M.init()
-  nmap("<leader>dc", function()
-    require("dap").continue()
-  end, { desc = "[D]ebugger [C]continue" })
-
-  nmap("<leader>do", function()
-    require("dap").step_over()
-  end, { desc = "[D]ebugger Step [O]ver" })
-
-  nmap("<leader>di", function()
-    require("dap").step_into()
-  end, { desc = "[D]ebugger Step [I]nto" })
-
-  nmap("<leader>du", function()
-    require("dap").step_out()
-  end, { desc = "[D]ebugger Step O[u]t" })
-
-  nmap("<leader>db", function()
-    require("dap").toggle_breakpoint()
-  end, { desc = "[D]ebugger [B]reakpoint" })
-
-  nmap("<leader>dr", function()
-    require("dap").repl.open()
-  end, { desc = "[D]ebugger [R]epl" })
-
-  nmap("<leader>dw", function()
-    require("dap.ui.widgets").hover()
-  end, { desc = "Widgets" })
-
-  nmap("<leader>du", function()
-    require("dapui").toggle()
-  end, { desc = "Dap UI" })
-end
-
-function M.config()
-  require("dap-vscode-js").setup({
-    adapters = { "pwa-node" },
-    debugger_path = fn.stdpath("data") .. "/mason/bin/js-debug-adapter", -- Path to VSCode Debugger
-    debugger_cmd = { "js-debug-adapter" },
-  })
-
-  -- https://theosteiner.de/debugging-javascript-frameworks-in-neovim
-  for _, lang in ipairs({ "javascript", "typescript" }) do
-    require("dap").configurations[lang] = {
-      {
-        -- Launch a node process for the current file and attach debugger to it
-        name = "Launch nodejs javascript file",
-        -- Use nvim-dap-vscode-js's pwa-node debug adapter
-        type = "pwa-node",
-        -- Launch a new process to attach the debugger to
-        request = "launch",
-        -- Launch current file
-        program = "${file}",
-        cwd = "${workspaceFolder}",
-        -- Do not debug code inside node_modules
-        skipFiles = { "${workspaceFolder}/node_modules/**" },
-      },
-      {
-        -- Attach to a node process that has been started with `--inspect` for
-        -- long running tasks or `--inspect-brk` for short tasks
-        name = "Attach debugger to existing node process",
-        -- Use nvim-dap-vscode-js's pwa-node debug adapter
-        type = "pwa-node",
-        -- Attach to an already running node process with `--inspect` flag
-        -- Default port: 9222
-        request = "attach",
-        -- Allows us to pick the process using a picker
-        processId = require("dap.utils").pick_process,
-        -- For compiled languages like TypeScript or Svelte.js
-        sourceMaps = true,
-        -- Resolve source maps in nested locations while ignoring node_modules
-        resolveSourceMapLocations = { "${workspaceFolder}/**", "!**/node_modules/**" },
-        -- Path to src in vite based projects (and most other projects as well)
-        cwd = "${workspaceFolder}/src",
-        -- Do not debug code inside node_modules
-        skipFiles = { "${workspaceFolder}/node_modules/**" },
-      },
-      {
-        name = "Vitest Debug",
-        type = "pwa-node",
-        request = "launch",
-        cwd = fn.getcwd(),
-        program = "${workspaceFolder}/node_modules/vitest/vitest.mjs",
-        args = { "--threads", "false", "run", "${file}" },
-        autoAttachChildProcesses = true,
-        smartStep = true,
-        console = "integratedTerminal",
-        skipFiles = { "<node_internals>/**", "node_modules/**" },
-      },
-      {
-        type = "pwa-node",
-        request = "attach",
-        name = "Attach",
-        processId = require("dap.utils").pick_process,
-        cwd = "${workspaceFolder}",
-      },
-    }
-  end
-
-  require("dapui").setup()
-
-  require("dap").listeners.after.event_initialized["dapui_config"] = function()
-    require("dapui").open({ reset = true })
-  end
-  require("dap").listeners.before.event_terminated["dapui_config"] = require("dapui").close
-  require("dap").listeners.before.event_exited["dapui_config"] = require("dapui").close
-end
-
-return M

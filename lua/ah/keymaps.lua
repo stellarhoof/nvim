@@ -10,11 +10,9 @@ nmap("<c-down>", "<cmd>resize -2<cr>", { silent = true, desc = "Decrease window 
 nmap("<c-left>", "<cmd>vertical resize -2<cr>", { silent = true, desc = "Decrease window width" })
 nmap("<c-right>", "<cmd>vertical resize +2<cr>", { silent = true, desc = "Increase window width" })
 
--- Tab movements/utils
+-- Tab movements
 nmap("]<tab>", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 nmap("[<tab>", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
-nmap("<tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
-nmap("<tab><backspace>", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 
 -- Faster mode switching
 imap("jk", "<esc>")
