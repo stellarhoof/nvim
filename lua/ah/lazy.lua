@@ -22,7 +22,7 @@ require("lazy").setup("ah.plugins", {
 		notify = false,
 	},
 	install = {
-		missing = false,
+		colorscheme = { "default" },
 	},
 	performance = {
 		rtp = {

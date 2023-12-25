@@ -22,6 +22,7 @@ return {
 				italic_comments = false,
 				darken_noncurrent_window = true,
 			}
+			vim.cmd.colorscheme("zenwritten")
 		end,
 	},
 
@@ -133,7 +134,6 @@ return {
 	-- A high-performance color highlighter with no external dependencies.
 	{
 		"https://github.com/NvChad/nvim-colorizer.lua",
-		keys = { { "<leader>c", vim.cmd.ColorizerToggle, desc = "Toggle Colorizer" } },
 		opts = {
 			filetypes = {},
 			user_default_options = { names = false, hsl_fn = true, rgb_fn = true },

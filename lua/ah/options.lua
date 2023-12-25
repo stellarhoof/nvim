@@ -10,6 +10,7 @@ vim.g.grepprg = {
 	"--column",
 	"--smart-case",
 	"--hidden",
+	"--glob=!e2e",
 	"--glob=!.git",
 	"--glob=!.yarn/*",
 	"--glob=!flake.lock",
