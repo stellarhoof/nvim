@@ -45,6 +45,8 @@ https://github.com/ziontee113/syntax-tree-surfer
 
 # Plugins
 
+https://github.com/cbochs/grapple.nvim
+https://github.com/cbochs/portal.nvim
 https://github.com/carbon-steel/detour.nvim
 https://github.com/stevearc/oil.nvim
 https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-files.md

@@ -24,8 +24,8 @@ au({ "BufReadPost" }, {
     local ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit" }
     local buf = event.buf
     if
-        vim.list_contains(ignore_buftype, vim.bo[buf].buftype)
-        or vim.list_contains(ignore_filetype, vim.bo[buf].filetype)
+        vim.tbl_contains(ignore_buftype, vim.bo[buf].buftype)
+        or vim.tbl_contains(ignore_filetype, vim.bo[buf].filetype)
         or vim.b[buf].last_loc
     then
       return
@@ -44,7 +44,7 @@ au({ "BufWritePre" }, {
   group = group,
   callback = function(event)
     if not event.match:match("^%w%w+://") then
-      local file = vim.uv.fs_realpath(event.match) or event.match
+      local file = vim.loop.fs_realpath(event.match) or event.match
       vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
     end
   end,
