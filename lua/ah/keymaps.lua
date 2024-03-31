@@ -26,33 +26,45 @@ map({ "n", "v" }, "j", "gj", { noremap = true })
 map({ "i", "n", "s", "x" }, "<c-s>", vim.cmd.wall, { desc = "Write all buffers" })
 
 nmap(
-	"gp",
-	'"`[" . strpart(getregtype(), 0, 1) . "`]"',
-	{ expr = true, noremap = true, desc = "Visually select last pasted text" }
+  "gp",
+  '"`[" . strpart(getregtype(), 0, 1) . "`]"',
+  { expr = true, noremap = true, desc = "Visually select last pasted text" }
 )
 
 cmap(
-	"%%",
-	'<c-r>=fnameescape(expand("%:~:h"))<cr>',
-	{ noremap = true, desc = "Expand to directory of current file." }
+  "%%",
+  '<c-r>=fnameescape(expand("%:~:h"))<cr>',
+  { noremap = true, desc = "Expand to directory of current file." }
 )
 
 -- Unimpaired-like movements
 
 nmap("[d", function()
-	vim.diagnostic.goto_prev({ wrap = false })
+  vim.diagnostic.goto_prev({
+    wrap = false,
+    severity = vim.diagnostic.severity.ERROR,
+  })
 end, { desc = "Go to previous diagnostic" })
 
 nmap("[D", function()
-	vim.diagnostic.goto_next({ cursor_position = { 0, 0 } })
+  vim.diagnostic.goto_next({
+    cursor_position = { 0, 0 },
+    severity = vim.diagnostic.severity.ERROR,
+  })
 end, { desc = "Go to first diagnostic" })
 
 nmap("]d", function()
-	vim.diagnostic.goto_next({ wrap = false })
+  vim.diagnostic.goto_next({
+    wrap = false,
+    severity = vim.diagnostic.severity.ERROR,
+  })
 end, { desc = "Go to next diagnostic" })
 
 nmap("]D", function()
-	vim.diagnostic.goto_next({ cursor_position = { -1, -1 } })
+  vim.diagnostic.goto_next({
+    cursor_position = { -1, -1 },
+    severity = vim.diagnostic.severity.ERROR,
+  })
 end, { desc = "Go to last diagnostic" })
 
 -- UI Show/Toggles
@@ -60,24 +72,24 @@ end, { desc = "Go to last diagnostic" })
 nmap("<space>ui", vim.show_pos, { desc = "Show items at a given buffer position." })
 
 nmap("<space>ul", function()
-	local _ = vim.fn.getloclist(0, { winid = 1 }).winid ~= 0 and vim.cmd.lclose() or vim.cmd.lopen()
-	vim.cmd.wincmd("p")
+  local _ = vim.fn.getloclist(0, { winid = 1 }).winid ~= 0 and vim.cmd.lclose() or vim.cmd.lopen()
+  vim.cmd.wincmd("p")
 end, { desc = "Toggle location list" })
 
 nmap("<space>uq", function()
-	local _ = vim.fn.getqflist({ winid = 1 }).winid ~= 0 and vim.cmd.cclose()
-		or vim.cmd("botright copen")
-	vim.cmd.wincmd("p")
+  local _ = vim.fn.getqflist({ winid = 1 }).winid ~= 0 and vim.cmd.cclose()
+      or vim.cmd("botright copen")
+  vim.cmd.wincmd("p")
 end, { desc = "Toggle quickfix list" })
 
 local diagnostics_enabled = true
 nmap("<space>ud", function()
-	diagnostics_enabled = not diagnostics_enabled
-	if diagnostics_enabled then
-		vim.diagnostic.enable()
-		print("Enabled diagnostics")
-	else
-		vim.diagnostic.disable()
-		print("Disabled diagnostics")
-	end
+  diagnostics_enabled = not diagnostics_enabled
+  if diagnostics_enabled then
+    vim.diagnostic.enable()
+    print("Enabled diagnostics")
+  else
+    vim.diagnostic.disable()
+    print("Disabled diagnostics")
+  end
 end, { desc = "Toggle diagnostics" })

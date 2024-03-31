@@ -26,10 +26,7 @@ function layouts.buffer_window(self)
 	-- Height
 	prompt.height = 1
 	preview.height = self.previewer and math.floor(height * 0.4) or 0
-	results.height = height
-		- padding
-		- (prompt.height + padding)
-		- (self.previewer and (preview.height + padding) or 0)
+	results.height = height - padding - (prompt.height + padding) - (self.previewer and (preview.height + padding) or 0)
 
 	-- Line
 	local rows = {}
@@ -169,7 +166,7 @@ function M.config()
 end
 
 local getcwd = function()
-	return vim.o.ft == "dirvish" and vim.b.dirvish._dir
+	return vim.o.ft == "oil" and require("oil").get_current_dir()
 end
 
 function M.init()
@@ -213,9 +210,7 @@ function M.init()
 	end, { noremap = true, desc = "All Git Branches" })
 
 	nmap("<space>al", function()
-		require("telescope.builtin").git_branches(
-			themes.dropdown({ show_remote_tracking_branches = false })
-		)
+		require("telescope.builtin").git_branches(themes.dropdown({ show_remote_tracking_branches = false }))
 	end, { noremap = true, desc = "Local Git Branches" })
 
 	nmap("<space>as", function()
