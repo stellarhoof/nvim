@@ -1,6 +1,11 @@
+-- This directory
+root = vim.fn.fnamemodify(debug.getinfo(1, "S").source:sub(2), ":h")
+
+-- autocmd aliases
 au = vim.api.nvim_create_autocmd
 aug = vim.api.nvim_create_augroup
-root = vim.fn.fnamemodify(debug.getinfo(1, "S").source:sub(2), ":h")
+
+-- keymaps aliases
 map = vim.keymap.set
 unmap = vim.keymap.del
 nmap = function(...)
@@ -42,6 +47,9 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 
 require("lazy").setup("ah.plugins", {
+	change_detection = {
+		notify = false,
+	},
 	performance = {
 		rtp = {
 			disabled_plugins = {
