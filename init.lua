@@ -1,3 +1,13 @@
+-- Global utils
+
+function buf_cwd()
+	return vim.b.dir or vim.fn.getcwd()
+end
+
+function merge(...)
+	return vim.tbl_deep_extend("force", ...)
+end
+
 -- This directory
 root = vim.fn.fnamemodify(debug.getinfo(1, "S").source:sub(2), ":h")
 
@@ -5,31 +15,50 @@ root = vim.fn.fnamemodify(debug.getinfo(1, "S").source:sub(2), ":h")
 au = vim.api.nvim_create_autocmd
 aug = vim.api.nvim_create_augroup
 
+local function mapmode(mode)
+	return function(lhs, rhs, opts)
+		vim.keymap.set(mode, lhs, rhs, merge({ unique = true }, opts or {}))
+	end
+end
+
 -- keymaps aliases
 map = vim.keymap.set
 unmap = vim.keymap.del
-nmap = function(...)
-	vim.keymap.set("n", ...)
+nmap = mapmode("n")
+imap = mapmode("i")
+vmap = mapmode("v")
+cmap = mapmode("c")
+omap = mapmode("o")
+xmap = mapmode("x")
+
+function hl_get(name)
+	return vim.api.nvim_get_hl(0, { name = name })
 end
-imap = function(...)
-	vim.keymap.set("i", ...)
+
+function hl_set(name, opts)
+	vim.api.nvim_set_hl(0, name, opts)
 end
-vmap = function(...)
-	vim.keymap.set("v", ...)
+
+function hl_link(name, link, opts)
+	if opts == nil then
+		hl_set(name, { link = link })
+	else
+		hl_set(name, merge(hl_get(link), opts))
+	end
 end
-cmap = function(...)
-	vim.keymap.set("c", ...)
+
+function hl_clear(name)
+	hl_set(name, {})
 end
-omap = function(...)
-	vim.keymap.set("o", ...)
-end
-xmap = function(...)
-	vim.keymap.set("x", ...)
+
+function hl_update(name, opts)
+	hl_set(name, merge(hl_get(name), opts))
 end
 
 require("ah.options")
 require("ah.keymaps")
 require("ah.autocommands")
+require("ah.diagnostics")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 

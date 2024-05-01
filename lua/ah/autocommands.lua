@@ -50,48 +50,59 @@ au({ "BufWritePre" }, {
 	end,
 })
 
-au({ "OptionSet" }, {
+au({ "ColorScheme" }, {
 	group = group,
-	desc = "Persist options for ShaDa",
-	callback = function(event)
-		if event.match == "background" then
-			vim.api.nvim_set_var(string.upper(event.match), vim.v.option_new)
-		end
+	desc = "Override general colorscheme highlights",
+	callback = function()
+		hl_clear("Folded")
+		hl_link("FloatBorder", "NormalFloat")
+		hl_link("FloatTitle", "NormalFloat", { bold = true })
+		hl_update("Directory", { bold = true })
+		hl_update("DiagnosticUnderlineHint", { undercurl = true })
+		hl_update("DiagnosticUnderlineInfo", { undercurl = true })
+		hl_update("DiagnosticUnderlineWarn", { undercurl = true })
+		hl_update("DiagnosticUnderlineError", { undercurl = true })
 	end,
 })
 
 au({ "ColorScheme" }, {
 	group = group,
-	desc = "Override colorscheme highlights",
+	pattern = "zen*",
+	desc = "Override zenbones colorscheme highlights",
 	callback = function()
-		vim.cmd([[
-      hi Directory gui=bold
-      hi DiagnosticUnderlineHint gui=undercurl
-      hi DiagnosticUnderlineInfo gui=undercurl
-      hi DiagnosticUnderlineWarn gui=undercurl
-      hi DiagnosticUnderlineError gui=undercurl
-    ]])
+		hl_link("PmenuThumb", "PmenuSel")
+		hl_link("CmpItemAbbr", "CmpItemKindDefault")
+		hl_update("CmpItemMenu", { italic = true })
+		hl_update("WinSeparator", { bg = hl_get("NormalNC").bg })
 	end,
 })
 
-au({ "ColorScheme" }, {
-	group = group,
-	desc = "Persist colorscheme name for ShaDa",
-	callback = function(event)
-		vim.g.COLORSCHEME = event.match
-	end,
-})
+local function rshada_after()
+	vim.api.nvim_set_option_value("bg", vim.g.BACKGROUND, {})
+	if vim.g.COLORSCHEME ~= "" and vim.g.COLORSCHEME ~= vim.g.colors_name then
+		vim.cmd.colorscheme(vim.g.COLORSCHEME)
+		vim.api.nvim_exec_autocmds("ColorScheme", { pattern = vim.g.COLORSCHEME })
+	end
+end
 
-au({ "VimEnter" }, {
-	group = group,
-	desc = "Restore last colorscheme and background",
-	callback = function()
-		if vim.g.BACKGROUND then
-			vim.opt.bg = vim.g.BACKGROUND
-		end
-		if vim.g.COLORSCHEME then
-			vim.cmd.colorscheme(vim.g.COLORSCHEME)
-			vim.api.nvim_exec_autocmds("ColorScheme", { pattern = vim.g.COLORSCHEME })
-		end
-	end,
-})
+local function rshada()
+	vim.defer_fn(function()
+		vim.cmd.rshada()
+		rshada_after()
+	end, 100)
+end
+
+local function wshada_before()
+	vim.g.BACKGROUND = vim.api.nvim_get_option_value("bg", {})
+	vim.g.COLORSCHEME = vim.g.colors_name
+end
+
+local function wshada()
+	wshada_before()
+	vim.cmd.wshada()
+end
+
+au({ "VimEnter" }, { group = group, callback = rshada_after })
+-- au({ "FocusGained" }, { group = group, callback = rshada })
+au({ "VimLeavePre" }, { group = group, callback = wshada_before })
+-- au({ "FocusLost" }, { group = group, callback = wshada })

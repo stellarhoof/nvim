@@ -26,7 +26,7 @@ M.single = {}
 
 -- ┌──────────┐
 -- │          │
-M.single.top_box = vim.tbl_extend("force", M.box, {
+M.single.top_box = merge(M.box, {
 	bottom_left = "",
 	bottom = "",
 	bottom_right = "",
@@ -34,7 +34,7 @@ M.single.top_box = vim.tbl_extend("force", M.box, {
 
 -- ├──────────┤
 -- │          │
-M.single.middle_box = vim.tbl_extend("force", M.single.top_box, {
+M.single.middle_box = merge(M.single.top_box, {
 	top_left = "├",
 	top_right = "┤",
 })
@@ -42,7 +42,7 @@ M.single.middle_box = vim.tbl_extend("force", M.single.top_box, {
 -- ├──────────┤
 -- │          │
 -- └──────────┘
-M.single.bottom_box = vim.tbl_extend("force", M.box, {
+M.single.bottom_box = merge(M.box, {
 	top_left = "├",
 	top_right = "┤",
 })
@@ -62,21 +62,21 @@ M.double = {}
 
 -- ┌──────────┬
 -- │          │
-M.double.top_left_box = vim.tbl_extend("force", M.single.top_box, {
+M.double.top_left_box = merge(M.single.top_box, {
 	top_right = "┬",
 })
 
 -- ├──────────┤
 -- │          │
 -- └──────────┴
-M.double.bottom_left_box = vim.tbl_extend("force", M.single.bottom_box, {
+M.double.bottom_left_box = merge(M.single.bottom_box, {
 	bottom_right = "┴",
 })
 
 -- ────────────┐
 --             │
 -- ────────────┘
-M.double.right_box = vim.tbl_extend("force", M.box, {
+M.double.right_box = merge(M.box, {
 	top_left = "",
 	left = "",
 	bottom_left = "",
@@ -85,7 +85,7 @@ M.double.right_box = vim.tbl_extend("force", M.box, {
 -- ┌────────────
 -- │
 -- └────────────
-M.double.left_box = vim.tbl_extend("force", M.box, {
+M.double.left_box = merge(M.box, {
 	top_right = "",
 	right = "",
 	bottom_right = "",
@@ -93,14 +93,14 @@ M.double.left_box = vim.tbl_extend("force", M.box, {
 
 -- ┬──────────┐
 -- │          │
-M.double.top_right_box = vim.tbl_extend("force", M.single.top_box, {
+M.double.top_right_box = merge(M.single.top_box, {
 	top_left = "┬",
 })
 
 -- ├──────────┤
 -- │          │
 -- ┴──────────┘
-M.double.bottom_right_box = vim.tbl_extend("force", M.single.bottom_box, {
+M.double.bottom_right_box = merge(M.single.bottom_box, {
 	bottom_left = "┴",
 })
 

@@ -15,14 +15,16 @@ local function make_command(opts)
 		"--absolute-path",
 		"--max-depth",
 		"5",
-		"--hidden",
+		"--unrestricted",
 		"--case-sensitive",
+		"--type",
+		"d",
 		"--glob",
+		".git",
 		"--exec",
 		"echo",
 		"{//}",
 		";",
-		".git",
 	}
 	table.insert(command, vim.tbl_values(opts.roots))
 	return vim.tbl_flatten(command)
@@ -34,7 +36,7 @@ return function(opts)
 		return vim.fn.fnamemodify(r, ":p")
 	end, opts.roots)
 
-	-- Find width of longest root name for padding purposes
+	-- Calculate width of longest root name for padding purposes
 	local maxw = math.max(unpack(vim.tbl_map(string.len, vim.tbl_keys(opts.roots))))
 
 	opts.entry_maker = function(line)
@@ -85,6 +87,8 @@ return function(opts)
 		})
 		:find()
 end
+
+-- vim.fs.find({".git"}, { limit = math.huge, path = "~/Code", type = "directory", stop = ".git" })
 
 -- function M.cycle_directories(directories)
 -- 	local counter = 0

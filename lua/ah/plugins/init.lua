@@ -20,14 +20,6 @@ local motions = {
 		"https://github.com/vim-utils/vim-vertical-move",
 	},
 
-	-- Improved paragraph motion.
-	{
-		"https://github.com/justinmk/vim-ipmotion",
-		init = function()
-			vim.g.ip_skipfold = 1
-		end,
-	},
-
 	-- Pairs of handy bracket mappings
 	{
 		"https://github.com/tpope/vim-unimpaired",
@@ -75,7 +67,12 @@ local motions = {
 		config = function(_, opts)
 			require("flash").setup(opts)
 			map({ "n", "x", "o" }, "m", require("flash").jump, { desc = "Jump to words" })
-			map({ "n", "x", "o" }, "gm", require("flash").treesitter, { desc = "Select treesitter nodes" })
+			map(
+				{ "n", "x", "o" },
+				"gm",
+				require("flash").treesitter,
+				{ desc = "Select treesitter nodes" }
+			)
 		end,
 	},
 }
@@ -95,23 +92,8 @@ local editing = {
 	-- Auto insert pairs of delimiters.
 	{
 		"https://github.com/windwp/nvim-autopairs",
-		event = "VeryLazy",
+		event = "InsertEnter",
 		opts = {},
-	},
-
-	-- Comment lines
-	{
-		"https://github.com/echasnovski/mini.nvim",
-		event = "VeryLazy",
-		config = function()
-			require("mini.comment").setup()
-		end,
-	},
-
-	-- Select and insert Nerd icons
-	{
-		"https://github.com/2KAbhishek/nerdy.nvim",
-		cmd = "Nerdy",
 	},
 
 	-- Add/change/delete surrounding delimiter pairs with ease.
@@ -141,19 +123,21 @@ local editing = {
 		},
 	},
 
-	-- -- Reorder delimited items.
-	-- {
-	-- 	"https://github.com/machakann/vim-swap",
-	-- 	config = function()
-	-- 		vim.g.swap_no_default_key_mappings = 1
-	-- 		nmap("g<", "<plug>(swap-prev)")
-	-- 		nmap("g>", "<plug>(swap-next)")
-	-- 		omap("i,", "<plug>(swap-textobject-i)")
-	-- 		xmap("i,", "<plug>(swap-textobject-i)")
-	-- 		omap("a,", "<plug>(swap-textobject-a)")
-	-- 		xmap("a,", "<plug>(swap-textobject-a)")
-	-- 	end,
-	-- },
+	-- Reorder delimited items.
+	{
+		"https://github.com/machakann/vim-swap",
+		init = function()
+			vim.g.swap_no_default_key_mappings = 1
+		end,
+		config = function()
+			nmap("g<", "<plug>(swap-prev)")
+			nmap("g>", "<plug>(swap-next)")
+			omap("i,", "<plug>(swap-textobject-i)")
+			xmap("i,", "<plug>(swap-textobject-i)")
+			omap("a,", "<plug>(swap-textobject-a)")
+			xmap("a,", "<plug>(swap-textobject-a)")
+		end,
+	},
 
 	-- Bundle of two dozen new text objects for Neovim.
 	{
@@ -184,24 +168,6 @@ local editing = {
 			map({ "o", "x" }, "aq", function()
 				textobj.anyQuote("outer")
 			end, { desc = "outer quote in a line" })
-		end,
-	},
-
-	-- Cycle through yank and put history.
-	{
-		"https://github.com/gbprod/yanky.nvim",
-		event = "VeryLazy",
-		opts = {
-			highlight = { on_put = false, on_yank = false },
-		},
-		config = function(_, opts)
-			require("yanky").setup(opts)
-			map({ "n", "x" }, "y", "<plug>(YankyYank)", { desc = "Yank text" })
-			map({ "n", "x" }, "p", "<plug>(YankyPutAfter)", { desc = "Put yanked text after cursor" })
-			map({ "n", "x" }, "P", "<plug>(YankyPutBefore)", { desc = "Put yanked text before cursor" })
-			map({ "n", "x" }, "<c-n>", "<plug>(YankyCycleForward)", { desc = "Select previous yank history entry" })
-			map({ "n", "x" }, "<c-p>", "<plug>(YankyCycleBackward)", { desc = "Select next yank history entry" })
-			-- There are also ]p, [p that conflict with unimpaired
 		end,
 	},
 
@@ -274,7 +240,12 @@ local editing = {
 
 			-- Edit word
 			map({ "i", "c" }, "<m-d>", readline.kill_word, { desc = "Forward kill word" })
-			map({ "i", "c" }, "<m-bs>", readline.backward_kill_word, { desc = "Backward kill word" })
+			map(
+				{ "i", "c" },
+				"<m-bs>",
+				readline.backward_kill_word,
+				{ desc = "Backward kill word" }
+			)
 
 			-- Edit line
 			map({ "i", "c" }, "<c-k>", readline.kill_line, { desc = "Forward kill line" })
@@ -285,6 +256,39 @@ local editing = {
 
 -- Plugins that enhance neovim's ui or provide ui components
 local ui = {
+	-- Extensible UI for Neovim notifications and LSP progress messages.
+	{
+		"https://github.com/j-hui/fidget.nvim",
+		opts = {
+			progress = {
+				display = {
+					done_icon = " ",
+					icon_style = "Normal",
+					overrides = {
+						overseer = {
+							ttl = 10,
+							debug_style = "Constant",
+							info_style = "Constant",
+							warn_style = "Constant",
+							error_style = "Constant",
+							icon = function(now, items)
+								for _, item in ipairs(items) do
+									local icon = item.data.icon
+									return type(icon) == "string" and icon or icon(now, items)
+								end
+							end,
+							states = { CANCELED = { icon = "󰜺 " }, FAILURE = { icon = " " } },
+						},
+					},
+				},
+			},
+			notification = {
+				override_vim_notify = true,
+				window = { normal_hl = "Comment", winblend = 0 },
+			},
+		},
+	},
+
 	-- A vim plugin to perform diffs on blocks of code
 	{
 		"https://github.com/AndrewRadev/linediff.vim",
@@ -302,7 +306,60 @@ local ui = {
 	{
 		"https://github.com/stevearc/dressing.nvim",
 		event = "VeryLazy",
-		opts = { select = { backend = { "telescope" } } },
+		opts = {
+			input = {
+				title_pos = "center",
+				border = "single",
+			},
+			select = {
+				get_config = function(opts)
+					if opts.kind == "codeaction" or opts.kind == "snippets" then
+						return {
+							backend = "nui",
+							nui = {
+								relative = "cursor",
+								position = { row = 1, col = 0 },
+								border = { style = "single" },
+							},
+						}
+					end
+					return { backend = "telescope" }
+				end,
+			},
+		},
+		config = function(_, opts)
+			require("dressing").setup(opts)
+			au({ "FileType" }, {
+				pattern = "DressingSelect",
+				callback = function(evt)
+					nmap("q", "<cmd>q<cr>", { buffer = evt.buf })
+				end,
+			})
+		end,
+	},
+
+	-- Displays popup with possible keybindings of the command you started typing.
+	{
+		"https://github.com/folke/which-key.nvim",
+		event = "VeryLazy",
+		opts = {
+			plugins = {
+				marks = false,
+				registers = false,
+			},
+		},
+		config = function(_, opts)
+			require("which-key").setup(opts)
+			-- secret character that will be used to create <nop> mappings
+			local secret = "Þ"
+			require("which-key").register({
+				["<leader>d"] = { name = "Diagnostics", [secret] = "which_key_ignore" },
+				["<leader>g"] = { name = "Git", [secret] = "which_key_ignore" },
+				["<leader>l"] = { name = "LSP", [secret] = "which_key_ignore" },
+				["<leader>t"] = { name = "Telescope", [secret] = "which_key_ignore" },
+				["<leader>u"] = { name = "UI", [secret] = "which_key_ignore" },
+			})
+		end,
 	},
 
 	-- A high-performance color highlighter with no external dependencies.
@@ -318,7 +375,11 @@ local ui = {
 	-- Capture and show any messages in a customisable (floating) buffer.
 	{
 		"https://github.com/AckslD/messages.nvim",
-		opts = {},
+		opts = {
+			post_open_float = function()
+				nmap("q", "<cmd>q<cr>", { buffer = true })
+			end,
+		},
 		config = function(_, opts)
 			require("messages").setup(opts)
 			local alias = vim.cmd.Alias
@@ -332,7 +393,7 @@ local ui = {
 		"https://github.com/mbbill/undotree",
 		keys = {
 			{
-				"<leader>u",
+				"<leader>uu",
 				vim.cmd.UndotreeToggle,
 				silent = true,
 				desc = "Toggle UndoTree",
@@ -349,13 +410,13 @@ local ui = {
 	{
 		"https://github.com/stevearc/oil.nvim",
 		opts = {
-			view_options = {
-				show_hidden = true,
-			},
+			cleanup_delay_ms = false,
+			view_options = { show_hidden = true },
+			skip_confirm_for_simple_edits = true,
 			-- :h |oil-config|
 			keymaps = {
-				["<C-v>"] = "actions.select_vsplit",
-				["<C-s>"] = "actions.select_split",
+				["<C-v>"] = false,
+				["<C-s>"] = false,
 				["<C-h>"] = false,
 				["<C-l>"] = false,
 				["<C-c>"] = false,
@@ -363,76 +424,25 @@ local ui = {
 				["gs"] = false,
 				["g\\"] = false,
 			},
+			win_options = {
+				conceallevel = 0,
+			},
 		},
 		config = function(_, opts)
 			require("oil").setup(opts)
 			nmap("-", vim.cmd.Oil, { desc = "Open buffer directory" })
+			au({ "FileType" }, {
+				pattern = "oil",
+				callback = function()
+					vim.b.dir = require("oil").get_current_dir()
+				end,
+			})
 		end,
 	},
 }
 
 -- Plugins that interact with external tools
 local external = {
-	-- Convenience file operations for neovim, written in lua.
-	{
-		"https://github.com/chrisgrieser/nvim-genghis",
-		event = "VeryLazy",
-		config = function()
-			local alias = vim.cmd.Alias
-			alias({ args = { "mv", "Move" } })
-			alias({ args = { "rm", "Trash" } })
-			alias({ args = { "dup", "Duplicate" } })
-			alias({ args = { "ren", "Rename" } })
-			alias({ args = { "cpf", "CopyFilePath" } })
-		end,
-	},
-
-	-- A Git wrapper so awesome, it should be illegal.
-	{
-		"https://github.com/tpope/vim-fugitive",
-		event = "VeryLazy",
-		dependencies = { "https://github.com/tpope/vim-rhubarb" },
-		config = function()
-			local alias = vim.cmd.Alias
-			alias({ args = { "g", "G" } })
-			alias({ args = { "gbl", "Git blame -w -M" } })
-			alias({ args = { "gd", "Gdiffsplit" } })
-			alias({ args = { "ge", "Gedit" } })
-			alias({ args = { "gr", "Gread" } })
-			alias({ args = { "gs", "Git" } })
-			alias({ args = { "gw", "Gwrite" } })
-			alias({ args = { "gco", "Git checkout" } })
-			alias({ args = { "gcm", "Git commit" } })
-			alias({ args = { "gcma", "Git commit --amend" } })
-			alias({ args = { "gcman", "Git commit --amend --reuse-message HEAD" } })
-			-- Rhubarb
-			vim.cmd("Alias -range gx GBrowse")
-			-- alias({ args = { "go", "GBrowse" }, range = {} }) -- This doesn't work
-		end,
-	},
-
-	-- Lightweight yet powerful formatter plugin for Neovim
-	{
-		"https://github.com/stevearc/conform.nvim",
-		event = "VeryLazy",
-		opts = {
-			formatters_by_ft = {
-				sh = { "shfmt" },
-				nix = { "nixfmt" },
-				lua = { "stylua" },
-				python = { "isort", "black" },
-				javascript = { "prettierd" },
-				javascriptreact = { "prettierd" },
-				typescript = { "prettierd" },
-				typescriptreact = { "prettierd" },
-			},
-			format_on_save = {
-				timeout_ms = 500,
-				lsp_fallback = true,
-			},
-		},
-	},
-
 	-- Easily install and manage LSP servers, DAP servers, linters, and formatters.
 	{
 		"https://github.com/williamboman/mason.nvim",
@@ -464,6 +474,137 @@ local external = {
 		},
 	},
 
+	-- Convenience file operations for neovim, written in lua.
+	{
+		"https://github.com/chrisgrieser/nvim-genghis",
+		event = "VeryLazy",
+		config = function()
+			local alias = vim.cmd.Alias
+			alias({ args = { "mv", "Move" } })
+			alias({ args = { "rm", "Trash" } })
+			alias({ args = { "dup", "Duplicate" } })
+			alias({ args = { "ren", "Rename" } })
+			alias({ args = { "cpf", "CopyFilePath" } })
+		end,
+	},
+
+	-- A Git wrapper so awesome, it should be illegal.
+	{
+		"https://github.com/tpope/vim-fugitive",
+		event = "VeryLazy",
+		dependencies = { "https://github.com/tpope/vim-rhubarb" },
+		config = function()
+			local alias = vim.cmd.Alias
+			alias({ args = { "g", "G" } })
+			alias({ args = { "gbl", "Git blame -w -M" } })
+			alias({ args = { "gd", "Gdiffsplit" } })
+			alias({ args = { "ge", "Gedit" } })
+			alias({ args = { "gr", "Gread" } })
+			alias({ args = { "gs", "Git" } })
+			alias({ args = { "gw", "Gwrite" } })
+			alias({ args = { "gg", "Ggrep" } })
+			alias({ args = { "gco", "Git checkout" } })
+			alias({ args = { "gcm", "Git commit" } })
+			alias({ args = { "gcma", "Git commit --amend" } })
+			alias({ args = { "gcman", "Git commit --amend --reuse-message HEAD" } })
+
+			local function cleanup_fugitive_windows()
+				for _, winnr in pairs(vim.api.nvim_tabpage_list_wins(0)) do
+					local bufnr = vim.fn.winbufnr(winnr)
+					if vim.startswith(vim.fn.bufname(bufnr), "fugitive://") then
+						vim.cmd.bdelete(bufnr)
+					end
+				end
+			end
+
+			local function diff_current_quickfix_entry()
+				local qf = vim.fn.getqflist({ idx = 0, title = 0, context = 0 })
+				if
+					qf.idx
+					and qf.context
+					and qf.context.items
+					and string.find(qf.title, "difftool")
+				then
+					local item = qf.context.items[qf.idx]
+					if item and item.diff then
+						cleanup_fugitive_windows()
+						vim.cmd.cc()
+						vim.cmd.Gdiffsplit(item.diff[1].module)
+					end
+				end
+			end
+
+			nmap("[c", function()
+				vim.cmd.cpfile()
+				diff_current_quickfix_entry()
+			end, { unique = false })
+
+			nmap("]c", function()
+				vim.cmd.cnfile()
+				diff_current_quickfix_entry()
+			end, { unique = false })
+
+			local function get_active_visual_region()
+				return vim.fn.getregion(
+					vim.fn.getpos("."),
+					vim.fn.getpos("v"),
+					{ type = vim.fn.mode() }
+				)
+			end
+
+			local function get_active_visual_lines()
+				return table.concat(vim.iter(get_active_visual_region()):map(vim.trim):totable())
+			end
+
+			local gx_desc =
+				"Open filepath or URI under cursor or current file with system handler (file explorer, web browser, …)"
+
+			vim.keymap.set({ "n" }, "gx", function()
+				if require("ah.util").open_uri(vim.fn.expand("<cfile>")) then
+					vim.cmd.GBrowse()
+				end
+			end, { desc = gx_desc })
+
+			vim.keymap.set({ "x" }, "gx", function()
+				if require("ah.util").open_uri(get_active_visual_lines()) then
+					vim.cmd.GBrowse({ range = { vim.fn.line("v"), vim.fn.line(".") } })
+				end
+			end, { desc = gx_desc })
+
+			-- Required by Fugitive to open a url since we're not using netrw.
+			vim.api.nvim_create_user_command("Browse", function(args)
+				require("ah.util").open_uri(args.args)
+			end, { nargs = 1 })
+		end,
+	},
+
+	-- Lightweight yet powerful formatter plugin for Neovim
+	{
+		"https://github.com/stevearc/conform.nvim",
+		event = "VeryLazy",
+		opts = {
+			formatters_by_ft = {
+				sh = { "shfmt" },
+				nix = { "nixfmt" },
+				lua = { "stylua" },
+				python = { "isort", "black" },
+				html = { "prettierd" },
+				json = { { "biome-check", "prettierd" } },
+				javascript = { { "biome-check", "prettierd" } },
+				javascriptreact = { { "biome-check", "prettierd" } },
+				typescript = { { "biome-check", "prettierd" } },
+				typescriptreact = { { "biome-check", "prettierd" } },
+			},
+			format_on_save = {
+				timeout_ms = 500,
+				lsp_fallback = false,
+			},
+			format_after_save = {
+				lsp_fallback = false,
+			},
+		},
+	},
+
 	-- A fast Neovim http client written in Lua.
 	{
 		"https://github.com/rest-nvim/rest.nvim",
@@ -473,14 +614,18 @@ local external = {
 			-- Skip SSL verification, useful for unknown certificates
 			skip_ssl_verification = true,
 			-- File to store environmental variables
-			env_file = ".http-env",
+			env_file = ".envrc",
 		},
 		config = function(_, opts)
 			require("rest-nvim").setup(opts)
 			au("FileType", {
 				pattern = "http",
 				callback = function()
-					nmap("<leader>r", "<plug>RestNvim", { buffer = true, desc = "Run request under the cursor" })
+					nmap(
+						"<localleader>r",
+						"<plug>RestNvim",
+						{ buffer = true, desc = "Run request under the cursor" }
+					)
 				end,
 			})
 		end,
@@ -490,40 +635,23 @@ local external = {
 	{
 		"https://github.com/nvim-pack/nvim-spectre",
 		keys = {
-			{ "<space>e", '<cmd>lua require("spectre").toggle()<cr>', desc = "Toggle spectre" },
+			{
+				"<leader>e",
+				function()
+					require("spectre").toggle({ cwd = buf_cwd() })
+				end,
+				desc = "Toggle spectre",
+			},
+		},
+		opts = {
+			open_cmd = "tabnew",
 		},
 	},
 
 	-- Utils for working with package.json files
 	{
 		"https://github.com/vuki656/package-info.nvim",
-		config = function()
-			nmap("<leader>nt", require("package-info").toggle, {
-				silent = true,
-				noremap = true,
-				desc = "Toggle package.json versions display",
-			})
-			nmap("<leader>nu", require("package-info").update, {
-				silent = true,
-				noremap = true,
-				desc = "Update dependency on current line",
-			})
-			nmap("<leader>nd", require("package-info").delete, {
-				silent = true,
-				noremap = true,
-				desc = "Delete dependency on current line",
-			})
-			nmap("<leader>ni", require("package-info").install, {
-				silent = true,
-				noremap = true,
-				desc = "Install new dependency",
-			})
-			nmap("<leader>np", require("package-info").change_version, {
-				silent = true,
-				noremap = true,
-				desc = "Install different version of dependency on current line",
-			})
-		end,
+		opts = {},
 	},
 }
 

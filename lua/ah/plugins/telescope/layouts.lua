@@ -1,9 +1,5 @@
 local borders = require("ah.plugins.telescope.borders")
 
-local function merge(left, right)
-	return vim.tbl_deep_extend("force", left or {}, right or {})
-end
-
 local function create_prompt(picker, overrides)
 	local Popup = require("nui.popup")
 	return Popup(merge({
@@ -15,8 +11,7 @@ local function create_prompt(picker, overrides)
 				top_align = "center",
 			},
 		},
-		win_options = { winhighlight = "Normal:Normal" },
-	}, overrides))
+	}, overrides or {}))
 end
 
 local function create_results(picker, overrides)
@@ -30,8 +25,7 @@ local function create_results(picker, overrides)
 				top_align = "center",
 			},
 		},
-		win_options = { winhighlight = "Normal:Normal" },
-	}, overrides))
+	}, overrides or {}))
 end
 
 local function create_preview(picker, overrides)
@@ -45,8 +39,7 @@ local function create_preview(picker, overrides)
 				top_align = "center",
 			},
 		},
-		win_options = { winhighlight = "Normal:Normal" },
-	}, overrides))
+	}, overrides or {}))
 end
 
 local function create_picker_window(popup)
@@ -72,14 +65,14 @@ end
 
 local M = {}
 
-M.default = function(picker)
+M.horizontal = function(picker)
 	local Layout = require("nui.layout")
 
 	local layout_config = merge({
 		relative = "editor",
 		position = "50%",
 		size = "80%",
-	}, picker.layout_config)
+	}, picker.layout_config.horizontal or {})
 
 	if not picker.previewer then
 		return M.vertical(picker)
@@ -174,9 +167,15 @@ M.vertical = function(picker)
 		relative = "editor",
 		position = "50%",
 		size = "90%",
-	}, picker.layout_config)
+	}, picker.layout_config.vertical or {})
 
 	return create_picker_layout(picker, Layout(layout_config, box), parts)
+end
+
+M.center = function(picker)
+	return M.vertical(merge(picker, {
+		layout_config = { vertical = { size = { width = "30%", height = "70%" } } },
+	} or {}))
 end
 
 M.window = function(picker)
@@ -186,8 +185,8 @@ M.window = function(picker)
 	local box = nil
 
 	local parts = {
-		prompt = Popup({ enter = true, win_options = { winhighlight = "Normal:Normal" } }),
-		results = Popup({ focusable = false, win_options = { winhighlight = "Normal:Normal" } }),
+		prompt = Popup({ enter = true }),
+		results = Popup({ focusable = false }),
 	}
 
 	if picker.sorting_strategy == "ascending" then
@@ -205,7 +204,7 @@ M.window = function(picker)
 	local layout_config = merge({
 		position = 0,
 		size = "100%",
-	}, picker.layout_config)
+	}, picker.layout_config.window or {})
 
 	return create_picker_layout(picker, Layout(layout_config, box), parts)
 end
