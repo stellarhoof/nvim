@@ -1,212 +1,209 @@
 local borders = require("ah.plugins.telescope.borders")
 
 local function create_prompt(picker, overrides)
-	local Popup = require("nui.popup")
-	return Popup(merge({
-		enter = true,
-		border = {
-			style = "single",
-			text = {
-				top = picker.prompt_title,
-				top_align = "center",
-			},
-		},
-	}, overrides or {}))
+  local Popup = require("nui.popup")
+  return Popup(G.merge({
+    enter = true,
+    border = {
+      style = "single",
+      text = {
+        top = picker.prompt_title,
+        top_align = "center",
+      },
+    },
+  }, overrides or {}))
 end
 
 local function create_results(picker, overrides)
-	local Popup = require("nui.popup")
-	return Popup(merge({
-		focusable = false,
-		border = {
-			style = "single",
-			text = {
-				top = picker.results_title,
-				top_align = "center",
-			},
-		},
-	}, overrides or {}))
+  local Popup = require("nui.popup")
+  return Popup(G.merge({
+    focusable = false,
+    border = {
+      style = "single",
+      text = {
+        top = picker.results_title,
+        top_align = "center",
+      },
+    },
+  }, overrides or {}))
 end
 
 local function create_preview(picker, overrides)
-	local Popup = require("nui.popup")
-	return Popup(merge({
-		focusable = false,
-		border = {
-			style = "single",
-			text = {
-				top = picker.preview_title,
-				top_align = "center",
-			},
-		},
-	}, overrides or {}))
+  local Popup = require("nui.popup")
+  return Popup(G.merge({
+    focusable = false,
+    border = {
+      style = "single",
+      text = {
+        top = picker.preview_title,
+        top_align = "center",
+      },
+    },
+  }, overrides or {}))
 end
 
 local function create_picker_window(popup)
-	function popup.border:change_title(title)
-		popup.border.set_text(popup.border, "top", title)
-	end
-	return require("telescope.pickers.layout").Window(popup)
+  function popup.border:change_title(title)
+    popup.border.set_text(popup.border, "top", title)
+  end
+  return require("telescope.pickers.layout").Window(popup)
 end
 
 local function create_picker_layout(picker, layout, parts)
-	layout.picker = picker
-	if parts.results then
-		layout.results = create_picker_window(parts.results)
-	end
-	if parts.prompt then
-		layout.prompt = create_picker_window(parts.prompt)
-	end
-	if parts.preview then
-		layout.preview = create_picker_window(parts.preview)
-	end
-	return layout
+  layout.picker = picker
+  if parts.results then
+    layout.results = create_picker_window(parts.results)
+  end
+  if parts.prompt then
+    layout.prompt = create_picker_window(parts.prompt)
+  end
+  if parts.preview then
+    layout.preview = create_picker_window(parts.preview)
+  end
+  return layout
 end
 
 local M = {}
 
 M.horizontal = function(picker)
-	local Layout = require("nui.layout")
+  local Layout = require("nui.layout")
 
-	local layout_config = merge({
-		relative = "editor",
-		position = "50%",
-		size = "80%",
-	}, picker.layout_config.horizontal or {})
+  local layout_config = G.merge({
+    relative = "editor",
+    position = "50%",
+    size = "80%",
+  }, picker.layout_config.horizontal or {})
 
-	if not picker.previewer then
-		return M.vertical(picker)
-	end
+  if not picker.previewer then
+    return M.vertical(picker)
+  end
 
-	local parts = nil
-	local box = nil
+  local parts = nil
+  local box = nil
 
-	if picker.sorting_strategy == "ascending" then
-		parts = {
-			prompt = create_prompt(picker, { border = { style = borders.double.top_left_box } }),
-			results = create_results(
-				picker,
-				{ border = { style = borders.double.bottom_left_box } }
-			),
-			preview = create_preview(picker, { border = { style = borders.double.right_box } }),
-		}
-		box = Layout.Box({
-			Layout.Box({
-				Layout.Box(parts.prompt, { size = 2 }),
-				Layout.Box(parts.results, { grow = 1 }),
-			}, { dir = "col", size = "40%" }),
-			Layout.Box(parts.preview, { size = "60%" }),
-		}, { dir = "row" })
-	else
-		parts = {
-			results = create_results(picker, { border = { style = borders.double.top_left_box } }),
-			prompt = create_prompt(picker, { border = { style = borders.double.bottom_left_box } }),
-			preview = create_preview(picker, { border = { style = borders.double.right_box } }),
-		}
-		box = Layout.Box({
-			Layout.Box({
-				Layout.Box(parts.results, { grow = 1 }),
-				Layout.Box(parts.prompt, { size = 2 }),
-			}, { dir = "col", size = "40%" }),
-			Layout.Box(parts.preview, { size = "60%" }),
-		}, { dir = "row" })
-	end
+  if picker.sorting_strategy == "ascending" then
+    parts = {
+      prompt = create_prompt(picker, { border = { style = borders.double.top_left_box } }),
+      results = create_results(picker, { border = { style = borders.double.bottom_left_box } }),
+      preview = create_preview(picker, { border = { style = borders.double.right_box } }),
+    }
+    box = Layout.Box({
+      Layout.Box({
+        Layout.Box(parts.prompt, { size = 2 }),
+        Layout.Box(parts.results, { grow = 1 }),
+      }, { dir = "col", size = "40%" }),
+      Layout.Box(parts.preview, { size = "60%" }),
+    }, { dir = "row" })
+  else
+    parts = {
+      results = create_results(picker, { border = { style = borders.double.top_left_box } }),
+      prompt = create_prompt(picker, { border = { style = borders.double.bottom_left_box } }),
+      preview = create_preview(picker, { border = { style = borders.double.right_box } }),
+    }
+    box = Layout.Box({
+      Layout.Box({
+        Layout.Box(parts.results, { grow = 1 }),
+        Layout.Box(parts.prompt, { size = 2 }),
+      }, { dir = "col", size = "40%" }),
+      Layout.Box(parts.preview, { size = "60%" }),
+    }, { dir = "row" })
+  end
 
-	return create_picker_layout(picker, Layout(layout_config, box), parts)
+  return create_picker_layout(picker, Layout(layout_config, box), parts)
 end
 
 M.vertical = function(picker)
-	local Layout = require("nui.layout")
+  local Layout = require("nui.layout")
 
-	local parts = nil
-	local box = nil
+  local parts = nil
+  local box = nil
 
-	if picker.previewer and picker.sorting_strategy == "ascending" then
-		parts = {
-			prompt = create_prompt(picker, { border = { style = borders.single.top_box } }),
-			results = create_results(picker, { border = { style = borders.single.middle_box } }),
-			preview = create_preview(picker, { border = { style = borders.single.bottom_box } }),
-		}
-		box = Layout.Box({
-			Layout.Box(parts.prompt, { size = 2 }),
-			Layout.Box(parts.results, { grow = 1 }),
-			Layout.Box(parts.preview, { grow = 1 }),
-		}, { dir = "col" })
-	elseif picker.previewer and picker.sorting_strategy == "descending" then
-		parts = {
-			results = create_results(picker, { border = { style = borders.single.top_box } }),
-			prompt = create_prompt(picker, { border = { style = borders.single.middle_box } }),
-			preview = create_preview(picker, { border = { style = borders.single.bottom_box } }),
-		}
-		box = Layout.Box({
-			Layout.Box(parts.results, { grow = 1 }),
-			Layout.Box(parts.prompt, { size = 2 }),
-			Layout.Box(parts.preview, { grow = 1 }),
-		}, { dir = "col" })
-	elseif not picker.previewer and picker.sorting_strategy == "ascending" then
-		parts = {
-			prompt = create_prompt(picker, { border = { style = borders.single.top_box } }),
-			results = create_results(picker, { border = { style = borders.single.bottom_box } }),
-		}
-		box = Layout.Box({
-			Layout.Box(parts.prompt, { size = 2 }),
-			Layout.Box(parts.results, { grow = 1 }),
-		}, { dir = "col" })
-	elseif not picker.previewer and picker.sorting_strategy == "descending" then
-		parts = {
-			results = create_results(picker, { border = { style = borders.single.top_box } }),
-			prompt = create_prompt(picker, { border = { style = borders.single.bottom_box } }),
-		}
-		box = Layout.Box({
-			Layout.Box(parts.results, { grow = 1 }),
-			Layout.Box(parts.prompt, { size = 2 }),
-		}, { dir = "col" })
-	end
+  if picker.previewer and picker.sorting_strategy == "ascending" then
+    parts = {
+      prompt = create_prompt(picker, { border = { style = borders.single.top_box } }),
+      results = create_results(picker, { border = { style = borders.single.middle_box } }),
+      preview = create_preview(picker, { border = { style = borders.single.bottom_box } }),
+    }
+    box = Layout.Box({
+      Layout.Box(parts.prompt, { size = 2 }),
+      Layout.Box(parts.results, { grow = 1 }),
+      Layout.Box(parts.preview, { grow = 1 }),
+    }, { dir = "col" })
+  elseif picker.previewer and picker.sorting_strategy == "descending" then
+    parts = {
+      results = create_results(picker, { border = { style = borders.single.top_box } }),
+      prompt = create_prompt(picker, { border = { style = borders.single.middle_box } }),
+      preview = create_preview(picker, { border = { style = borders.single.bottom_box } }),
+    }
+    box = Layout.Box({
+      Layout.Box(parts.results, { grow = 1 }),
+      Layout.Box(parts.prompt, { size = 2 }),
+      Layout.Box(parts.preview, { grow = 1 }),
+    }, { dir = "col" })
+  elseif not picker.previewer and picker.sorting_strategy == "ascending" then
+    parts = {
+      prompt = create_prompt(picker, { border = { style = borders.single.top_box } }),
+      results = create_results(picker, { border = { style = borders.single.bottom_box } }),
+    }
+    box = Layout.Box({
+      Layout.Box(parts.prompt, { size = 2 }),
+      Layout.Box(parts.results, { grow = 1 }),
+    }, { dir = "col" })
+  elseif not picker.previewer and picker.sorting_strategy == "descending" then
+    parts = {
+      results = create_results(picker, { border = { style = borders.single.top_box } }),
+      prompt = create_prompt(picker, { border = { style = borders.single.bottom_box } }),
+    }
+    box = Layout.Box({
+      Layout.Box(parts.results, { grow = 1 }),
+      Layout.Box(parts.prompt, { size = 2 }),
+    }, { dir = "col" })
+  end
 
-	local layout_config = merge({
-		relative = "editor",
-		position = "50%",
-		size = "90%",
-	}, picker.layout_config.vertical or {})
+  local layout_config = G.merge({
+    relative = "editor",
+    position = "50%",
+    size = "90%",
+  }, picker.layout_config.vertical or {})
 
-	return create_picker_layout(picker, Layout(layout_config, box), parts)
+  return create_picker_layout(picker, Layout(layout_config, box), parts)
 end
 
 M.center = function(picker)
-	return M.vertical(merge(picker, {
-		layout_config = { vertical = { size = { width = "30%", height = "70%" } } },
-	} or {}))
+  return M.vertical(G.merge(picker, {
+    layout_config = { vertical = { size = { width = "30%", height = "70%" } } },
+  } or {}))
 end
 
 M.window = function(picker)
-	local Layout = require("nui.layout")
-	local Popup = require("nui.popup")
+  local Layout = require("nui.layout")
+  local Popup = require("nui.popup")
 
-	local box = nil
+  local box = nil
 
-	local parts = {
-		prompt = Popup({ enter = true }),
-		results = Popup({ focusable = false }),
-	}
+  local parts = {
+    prompt = Popup({ enter = true }),
+    results = Popup({ focusable = false }),
+  }
 
-	if picker.sorting_strategy == "ascending" then
-		box = Layout.Box({
-			Layout.Box(parts.prompt, { size = 1 }),
-			Layout.Box(parts.results, { grow = 1 }),
-		}, { dir = "col" })
-	else
-		box = Layout.Box({
-			Layout.Box(parts.results, { grow = 1 }),
-			Layout.Box(parts.prompt, { size = 1 }),
-		}, { dir = "col" })
-	end
+  if picker.sorting_strategy == "ascending" then
+    box = Layout.Box({
+      Layout.Box(parts.prompt, { size = 1 }),
+      Layout.Box(parts.results, { grow = 1 }),
+    }, { dir = "col" })
+  else
+    box = Layout.Box({
+      Layout.Box(parts.results, { grow = 1 }),
+      Layout.Box(parts.prompt, { size = 1 }),
+    }, { dir = "col" })
+  end
 
-	local layout_config = merge({
-		position = 0,
-		size = "100%",
-	}, picker.layout_config.window or {})
+  local layout_config = G.merge({
+    position = 0,
+    size = "100%",
+  }, picker.layout_config.window or {})
 
-	return create_picker_layout(picker, Layout(layout_config, box), parts)
+  return create_picker_layout(picker, Layout(layout_config, box), parts)
 end
 
 return M

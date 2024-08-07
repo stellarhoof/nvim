@@ -1,7 +1,7 @@
 set nolist
 set conceallevel=0
 nnoremap <silent> <buffer> q :q!<CR>
-setlocal nomodifiable
+"setlocal nomodifiable
 " Search |link| and 'option'
 nnoremap <silent> <buffer> i :call search('''[A-Za-z0-9_-]\{2,}''')<CR>
 nnoremap <silent> <buffer> I :call search('''[A-Za-z0-9_-]\{2,}''', 'b')<CR>
