@@ -64,7 +64,7 @@ local function disable_inside_node_modules(name)
     if string.find(filename, "node_modules/") then
       return nil
     end
-    local config = require(string.format("lspconfig.server_configurations.%s", name))
+    local config = require(string.format("lspconfig.configs.%s", name))
     return config.default_config.root_dir(filename, bufnr)
   end
 end

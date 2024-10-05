@@ -37,8 +37,6 @@ return {
   "https://github.com/nvim-treesitter/nvim-treesitter",
   build = ":TSUpdate",
   config = function()
-    vim.wo.foldmethod = "expr"
-    vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
     require("nvim-treesitter.configs").setup({
       sync_install = true,
       auto_install = false,

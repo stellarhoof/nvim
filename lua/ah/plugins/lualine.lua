@@ -20,7 +20,7 @@ return {
     return {
       options = { section_separators = "", component_separators = "" },
       -- Manage statusline for buffers with the following filetypes
-      extensions = { "fugitive", "man", "oil", "overseer", "quickfix", "trouble" },
+      extensions = { "fugitive", "man", "oil", "overseer", "quickfix", "trouble", "dirvish" },
       sections = {
         lualine_a = { filetype, filename },
         lualine_b = { diagnostics, "searchcount" },

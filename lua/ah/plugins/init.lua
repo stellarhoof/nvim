@@ -400,44 +400,49 @@ local ui = {
     end,
   },
 
-  -- Neovim file explorer: edit your filesystem like a buffer
+  -- -- Neovim file explorer: edit your filesystem like a buffer
+  -- {
+  --   "https://github.com/stevearc/oil.nvim",
+  --   opts = {
+  --     cleanup_delay_ms = false,
+  --     view_options = { show_hidden = true },
+  --     skip_confirm_for_simple_edits = true,
+  --     -- :h |oil-config|
+  --     keymaps = {
+  --       ["<C-v>"] = false,
+  --       ["<C-s>"] = false,
+  --       ["<C-h>"] = false,
+  --       ["<C-l>"] = false,
+  --       ["<C-c>"] = false,
+  --       ["~"] = false,
+  --       ["gs"] = false,
+  --       ["g\\"] = false,
+  --     },
+  --     win_options = {
+  --       conceallevel = 0,
+  --     },
+  --     lsp_file_methods = {
+  --       -- Time to wait for LSP file operations to complete before skipping
+  --       timeout_ms = 2000,
+  --       -- Set to true to autosave buffers that are updated with LSP willRenameFiles
+  --       -- Set to "unmodified" to only save unmodified buffers
+  --       autosave_changes = true,
+  --     },
+  --   },
+  --   config = function(_, opts)
+  --     require("oil").setup(opts)
+  --     G.nmap("-", vim.cmd.Oil, { desc = "Open buffer directory" })
+  --     G.au({ "FileType" }, {
+  --       pattern = "oil",
+  --       callback = function()
+  --         vim.b.dir = require("oil").get_current_dir()
+  --       end,
+  --     })
+  --   end,
+  -- },
+
   {
-    "https://github.com/stevearc/oil.nvim",
-    opts = {
-      cleanup_delay_ms = false,
-      view_options = { show_hidden = true },
-      skip_confirm_for_simple_edits = true,
-      -- :h |oil-config|
-      keymaps = {
-        ["<C-v>"] = false,
-        ["<C-s>"] = false,
-        ["<C-h>"] = false,
-        ["<C-l>"] = false,
-        ["<C-c>"] = false,
-        ["gs"] = false,
-        ["g\\"] = false,
-      },
-      win_options = {
-        conceallevel = 0,
-      },
-      lsp_file_methods = {
-        -- Time to wait for LSP file operations to complete before skipping
-        timeout_ms = 2000,
-        -- Set to true to autosave buffers that are updated with LSP willRenameFiles
-        -- Set to "unmodified" to only save unmodified buffers
-        autosave_changes = true,
-      },
-    },
-    config = function(_, opts)
-      require("oil").setup(opts)
-      G.nmap("-", vim.cmd.Oil, { desc = "Open buffer directory" })
-      G.au({ "FileType" }, {
-        pattern = "oil",
-        callback = function()
-          vim.b.dir = require("oil").get_current_dir()
-        end,
-      })
-    end,
+    "https://github.com/justinmk/vim-dirvish",
   },
 }
 
@@ -630,7 +635,7 @@ local external = {
       {
         "<leader>e",
         function()
-          require("grug-far").grug_far({ transient = true })
+          require("grug-far").open({ transient = true })
           -- require("spectre").toggle({ cwd = G.buf_cwd() })
         end,
         desc = "Toggle search and replace",
@@ -638,33 +643,17 @@ local external = {
     },
     opts = {},
   },
-
-  -- Utils for working with package.json files
-  {
-    "https://github.com/vuki656/package-info.nvim",
-    opts = {},
-  },
 }
 
 local other = {
   {
-    "https://github.com/nvim-neorg/neorg",
-    version = "*",
-    config = function()
-      require("neorg").setup({
-        load = {
-          ["core.defaults"] = {},
-          ["core.concealer"] = {},
-          ["core.dirman"] = {
-            config = {
-              workspaces = {
-                notes = "~/Notes",
-              },
-            },
-          },
-        },
-      })
-    end,
+    "https://github.com/nvim-orgmode/orgmode",
+    event = "VeryLazy",
+    ft = { "org" },
+    opts = {
+      org_agenda_files = { "~/Notes/**/*" },
+      org_default_notes_file = "~/Notes/index.org",
+    },
   },
 }
 

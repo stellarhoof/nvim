@@ -198,14 +198,15 @@ return {
 
     -- -- Undo folding fix: https://github.com/nvim-telescope/telescope.nvim/issues/699
     -- G.au({ "BufEnter" }, {
-    -- 	desc = "Undo telescope folding fix",
-    -- 	callback = function()
-    -- 		vim.schedule(function()
-    -- 			-- vim.opt.foldmethod = "indent"
-    -- 			vim.wo.foldmethod = "expr"
-    -- 			vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
-    -- 		end)
-    -- 	end,
+    --   desc = "Undo telescope folding fix",
+    --   callback = function()
+    --     vim.schedule(function()
+    --       vim.wo.foldmethod = "indent"
+    --       vim.opt.foldmethod = "indent"
+    --       -- vim.wo.foldmethod = "expr"
+    --       -- vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
+    --     end)
+    --   end,
     -- })
   end,
 }
