@@ -1,5 +1,6 @@
 return {
   "https://github.com/nvim-neorg/neorg",
+  enabled = false,
   version = "*",
   opts = {
     ["core.defaults"] = {},

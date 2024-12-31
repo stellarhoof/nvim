@@ -19,7 +19,8 @@ G.aug = vim.api.nvim_create_augroup
 
 local function mapmode(mode)
   return function(lhs, rhs, opts)
-    vim.keymap.set(mode, lhs, rhs, G.merge({ unique = true }, opts or {}))
+    opts = opts or {}
+    vim.keymap.set(mode, lhs, rhs, G.merge({ unique = not opts.buffer }, opts or {}))
   end
 end
 

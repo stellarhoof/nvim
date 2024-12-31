@@ -12,7 +12,7 @@ G.au({ "TextYankPost" }, {
   group = group,
   desc = "Highlight yanked text",
   callback = function()
-    vim.highlight.on_yank({ timeout = 200 })
+    vim.hl.on_yank({ timeout = 200 })
   end,
 })
 
@@ -73,7 +73,6 @@ G.au({ "ColorScheme" }, {
     G.hl_link("PmenuThumb", "PmenuSel")
     G.hl_link("CmpItemAbbr", "CmpItemKindDefault")
     G.hl_update("CmpItemMenu", { italic = true })
-    G.hl_update("WinSeparator", { bg = G.hl_get("NormalNC").bg })
   end,
 })
 

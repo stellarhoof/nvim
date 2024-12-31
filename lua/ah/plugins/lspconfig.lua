@@ -19,35 +19,21 @@ local function on_attach(client, bufnr)
 
   -- Methods that show lists
 
-  if client.supports_method(method.textDocument_documentSymbol) then
-    G.nmap("<leader>ls", vim.lsp.buf.document_symbol, {
-      unique = false,
-      buffer = bufnr,
-      desc = "List document symbols",
-    })
-  end
-  if client.supports_method(method.workspace_symbol) then
+  if client:supports_method(method.workspace_symbol) then
     G.nmap("<leader>lw", vim.lsp.buf.workspace_symbol, {
       unique = false,
       buffer = bufnr,
       desc = "List workspace symbols",
     })
   end
-  if client.supports_method(method.textDocument_implementation) then
-    G.nmap("<leader>lm", vim.lsp.buf.implementation, {
-      unique = false,
-      buffer = bufnr,
-      desc = "List current symbol implementations",
-    })
-  end
-  if client.supports_method(method.textDocument_typeDefinition) then
+  if client:supports_method(method.textDocument_typeDefinition) then
     G.nmap("<leader>lt", vim.lsp.buf.type_definition, {
       unique = false,
       buffer = bufnr,
       desc = "List current symbol type definitions",
     })
   end
-  if client.supports_method(method.typeHierarchy_subtypes) then
+  if client:supports_method(method.typeHierarchy_subtypes) then
     G.nmap("<leader>lh", function()
       vim.lsp.buf.typehierarchy("subtypes")
     end, {
@@ -93,6 +79,7 @@ local servers = {
   -- 	root_dir = typescript_root_dir,
   -- 	single_file_support = false,
   -- },
+  -- TODO: Investigate https://github.com/pmizio/typescript-tools.nvim
   vtsls = {
     root_dir = typescript_root_dir,
     single_file_support = false,
@@ -101,6 +88,9 @@ local servers = {
       typescript = {
         updateImportsOnFileMove = "always",
         preferTypeOnlyAutoImports = true,
+        tsserver = {
+          maxTsServerMemory = 6144,
+        },
       },
       vtsls = {
         -- https://github.com/yioneko/vtsls#typescript-version

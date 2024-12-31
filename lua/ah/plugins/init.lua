@@ -5,10 +5,7 @@ local colorschemes = {
     priority = 1000,
     dependencies = { "https://github.com/rktjmp/lush.nvim" },
     config = function()
-      vim.g.zenwritten = {
-        italic_comments = false,
-        darken_noncurrent_window = true,
-      }
+      vim.g.zenbones = { italic_comments = false }
     end,
   },
 }
@@ -26,53 +23,6 @@ local motions = {
     event = "VeryLazy",
     config = function()
       G.nmap("co", "<plug>(unimpaired-toggle)")
-    end,
-  },
-
-  -- Navigate your code with search labels, enhanced character motions and
-  -- Treesitter integration
-  {
-    "https://github.com/folke/flash.nvim",
-    event = "VeryLazy",
-    opts = {
-      search = {
-        -- Match beginning of words only
-        mode = function(str)
-          return "\\<" .. str
-        end,
-      },
-      modes = {
-        search = { enabled = false },
-        char = { enabled = false },
-        treesitter = {
-          label = { after = false },
-          highlight = { backdrop = true },
-        },
-      },
-      highlight = {
-        groups = {
-          -- FlashBackdrop	  | Comment	    | backdrop
-          -- FlashMatch	      | Search	    | search matches
-          -- FlashCurrent	    | IncSearch	  | current match
-          -- FlashLabel	      | Substitute	| jump label
-          -- FlashPrompt	    | MsgArea	    | prompt
-          -- FlashPromptIcon	| Special	    | prompt icon
-          -- FlashCursor	    | Cursor	    | cursor
-          match = "Search",
-          current = "Search",
-          label = "IncSearch",
-        },
-      },
-    },
-    config = function(_, opts)
-      require("flash").setup(opts)
-      G.map({ "n", "x", "o" }, "m", require("flash").jump, { desc = "Jump to words" })
-      G.map(
-        { "n", "x", "o" },
-        "gm",
-        require("flash").treesitter,
-        { desc = "Select treesitter nodes" }
-      )
     end,
   },
 }
@@ -293,8 +243,27 @@ local ui = {
   -- File type icons
   {
     "https://github.com/nvim-tree/nvim-web-devicons",
+    -- enabled = false,
     lazy = true,
     opts = { color_icons = false, default = true },
+  },
+
+  {
+    "https://github.com/echasnovski/mini.icons",
+    version = false,
+    opts = {},
+    config = function(_, opts)
+      require("mini.icons").setup(opts)
+      G.hl_link("MiniIconsAzure", "Normal")
+      G.hl_link("MiniIconsBlue", "Normal")
+      G.hl_link("MiniIconsCyan", "Normal")
+      G.hl_link("MiniIconsGreen", "Normal")
+      G.hl_link("MiniIconsGrey", "Normal")
+      G.hl_link("MiniIconsOrange", "Normal")
+      G.hl_link("MiniIconsPurple", "Normal")
+      G.hl_link("MiniIconsRed", "Normal")
+      G.hl_link("MiniIconsYellow", "Normal")
+    end,
   },
 
   -- Neovim plugin to improve the default vim.ui interfaces.
@@ -440,10 +409,6 @@ local ui = {
   --     })
   --   end,
   -- },
-
-  {
-    "https://github.com/justinmk/vim-dirvish",
-  },
 }
 
 -- Plugins that interact with external tools
@@ -645,17 +610,7 @@ local external = {
   },
 }
 
-local other = {
-  {
-    "https://github.com/nvim-orgmode/orgmode",
-    event = "VeryLazy",
-    ft = { "org" },
-    opts = {
-      org_agenda_files = { "~/Notes/**/*" },
-      org_default_notes_file = "~/Notes/index.org",
-    },
-  },
-}
+local other = {}
 
 return {
   {

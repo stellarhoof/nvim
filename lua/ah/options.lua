@@ -69,6 +69,7 @@ vim.opt.grepprg = "rg --vimgrep $*"
 vim.opt.exrc = true
 vim.opt.showtabline = 1
 vim.opt.laststatus = 2
+vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,t:block-TermCursor"
 vim.opt.updatetime = 300 -- CursorHold
 vim.opt.pumheight = 15
 vim.opt.cpoptions = "aABceFs_q"
@@ -97,6 +98,9 @@ vim.opt.conceallevel = 0
 vim.opt.signcolumn = "yes"
 vim.opt.foldtext = "" --
 vim.opt.foldmethod = "indent"
+-- https://old.reddit.com/r/neovim/comments/1g41rjy/can_neovim_do_this_already_with_treesitter/
+-- vim.opt.foldmethod = "expr"
+-- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.foldcolumn = "0"
 vim.opt.foldlevel = 99
 vim.opt.foldminlines = 0
