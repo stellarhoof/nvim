@@ -147,27 +147,30 @@ local servers = {
       G.au("BufWritePre", { buffer = bufnr, command = "EslintFixAll", desc = "Fix buffer on save" })
     end,
   },
-  -- https://github.com/olrtg/emmet-language-server
-  -- https://github.com/olrtg/nvim-emmet
-  emmet_language_server = {
-    root_dir = disable_inside_node_modules("emmet_language_server"),
-    single_file_support = false,
-    filetypes = {
-      "css",
-      "eruby",
-      "html",
-      "javascript",
-      "javascriptreact",
-      "less",
-      "sass",
-      "scss",
-      "pug",
-      "typescriptreact",
-    },
-  },
+
+  -- -- https://github.com/olrtg/emmet-language-server
+  -- -- https://github.com/olrtg/nvim-emmet
+  -- emmet_language_server = {
+  --   root_dir = disable_inside_node_modules("emmet_language_server"),
+  --   single_file_support = false,
+  --   filetypes = {
+  --     "css",
+  --     "eruby",
+  --     "html",
+  --     "javascript",
+  --     "javascriptreact",
+  --     "less",
+  --     "sass",
+  --     "scss",
+  --     "pug",
+  --     "typescriptreact",
+  --   },
+  -- },
+
   rescriptls = {
     cmd = { "rescript-lsp", "--stdio" },
   },
+
   pylsp = {
     settings = {
       pylsp = {
@@ -181,7 +184,8 @@ local servers = {
       },
     },
   },
-  -- Configured by https://github.com/folke/neodev.nvim
+
+  -- Configured by https://github.com/folke/lazydev.nvim
   lua_ls = {},
 }
 
@@ -189,10 +193,6 @@ return {
   "https://github.com/neovim/nvim-lspconfig",
   event = "BufReadPre",
   dependencies = {
-    {
-      "https://github.com/folke/neodev.nvim",
-      opts = {},
-    },
     {
       "https://github.com/yioneko/nvim-vtsls",
     },
@@ -210,15 +210,6 @@ return {
           vim.lsp.protocol.make_client_capabilities(),
           -- cmp.nvim
           has_cmp and cmp_nvim_lsp.default_capabilities() or {},
-          -- nvim-ufo
-          {
-            textDocument = {
-              foldingRange = {
-                dynamicRegistration = false,
-                lineFoldingOnly = true,
-              },
-            },
-          },
           opts.capabilities or {}
         ),
         on_attach = function(...)

@@ -1,17 +1,11 @@
 # TODO
 
-Implement this commenting fix: https://github.com/LazyVim/LazyVim/commit/1d23c98da138494fafdad6735d70c3d3375bb7b2
-
 - Extract code into function
 - Extract code/function into file
 - Make component props into object and viceversa
 - Make component from () into {return}
 - Exit current block in insert mode via <tab> or another keybinding. Use matchup plugin instead of tabout
 - Per lsp diagnostic counts
-
-# Remember
-
-- Telescope quickfix_history
 
 # Mappings
 
@@ -22,29 +16,20 @@ Free: possibly ', |, Z, normal mode !, -, \_, +
 
 # Articles
 
+https://boltless.me/posts/neovim-config-without-plugins-2025/
 https://nanotipsforvim.prose.sh/
 [How to write a linter using tree-sitter in an hour](https://siraben.dev/2022/03/22/tree-sitter-linter.html)
 [Lua wiki](http://lua-users.org/wiki/LuaDirectory)
 [Lua manual](http://www.lua.org/manual/5.4/)
 
-# Per-tab bufferlists
-
-https://github.com/tiagovla/scope.nvim
-The plugin above is super simple: au on TabEnter, TabLeave, TabClosed, TabNewEntered and maintain a cache of buffers per tab and list/unlist buffers. Another option is to automatically populating the arglist for the current tab. Another plugin doing this: https://github.com/dosimple/workspace.vim. Also check this user's comment: https://www.reddit.com/r/neovim/comments/nktdgi/comment/gzf5lol/?utm_source=share&utm_medium=web2x&context=3
-
-Probably a better idea is per-project bufferlists
-
 # Treesitter
 
 https://github.com/CKolkey/ts-node-action (too new, give it some time)
 https://github.com/Wansmer/treesj (api is too messy)
-https://github.com/ziontee113/syntax-tree-surfer
 
 # Plugins
 
 https://old.reddit.com/r/neovim/comments/1d5j2c9/announcing_nvimimpairative_an_helper_plugin_for/
-https://github.com/SuperBo/fugit2.nvim
-https://github.com/anuvyklack/pretty-fold.nvim
 https://github.com/andrewferrier/debugprint.nvim
 https://github.com/cbochs/grapple.nvim
 https://github.com/cbochs/portal.nvim

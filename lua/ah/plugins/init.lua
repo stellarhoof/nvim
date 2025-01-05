@@ -34,6 +34,19 @@ local editing = {
     "https://github.com/tpope/vim-repeat",
   },
 
+  -- Sets 'commentstring' based on the cursor location in a file.
+  {
+    "https://github.com/folke/ts-comments.nvim",
+    opts = {},
+  },
+
+  -- Close and rename html/jsx elements with the power of treesitter
+  {
+    "https://github.com/tronikelis/ts-autotag.nvim",
+    opts = {},
+    event = "VeryLazy",
+  },
+
   -- A simple alignment operator
   {
     "https://github.com/tommcdo/vim-lion",
@@ -197,6 +210,11 @@ local editing = {
       G.map({ "i", "c" }, "<c-u>", readline.backward_kill_line, { desc = "Backward kill line" })
     end,
   },
+
+  {
+    "https://github.com/ThePrimeagen/refactoring.nvim",
+    opts = {},
+  },
 }
 
 -- Plugins that enhance neovim's ui or provide ui components
@@ -240,14 +258,6 @@ local ui = {
     cmd = "Linediff",
   },
 
-  -- File type icons
-  {
-    "https://github.com/nvim-tree/nvim-web-devicons",
-    -- enabled = false,
-    lazy = true,
-    opts = { color_icons = false, default = true },
-  },
-
   {
     "https://github.com/echasnovski/mini.icons",
     version = false,
@@ -287,7 +297,7 @@ local ui = {
               },
             }
           end
-          return { backend = "telescope" }
+          return { backend = "fzf_lua" }
         end,
       },
     },
@@ -308,6 +318,9 @@ local ui = {
     event = "VeryLazy",
     opts = {
       delay = 500,
+      icons = {
+        mappings = false,
+      },
       plugins = {
         marks = false,
         registers = false,
@@ -317,9 +330,7 @@ local ui = {
       require("which-key").setup(opts)
       require("which-key").add({
         { "<leader>d", group = "Diagnostics" },
-        { "<leader>g", group = "Git" },
         { "<leader>l", group = "LSP" },
-        { "<leader>t", group = "Telescope" },
         { "<leader>u", group = "UI" },
       })
     end,
@@ -428,7 +439,7 @@ local external = {
         -- LSP
         "eslint-lsp",
         "lua-language-server",
-        "emmet-language-server",
+        -- "emmet-language-server",
         "vtsls", -- Prefer this one over typescript-language-server
         "typescript-language-server",
         -- Formatters
@@ -610,7 +621,23 @@ local external = {
   },
 }
 
-local other = {}
+local other = {
+  {
+    "https://github.com/folke/lazydev.nvim",
+    ft = "lua",
+    opts = {
+      library = {
+        -- See the configuration section for more details
+        -- Load luvit types when the `vim.uv` word is found
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+      },
+      enabled = function(root_dir)
+        -- Disable when a .luarc.json file is found
+        return not vim.uv.fs_stat(root_dir .. "/.luarc.json")
+      end,
+    },
+  },
+}
 
 return {
   {

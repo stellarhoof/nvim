@@ -1,5 +1,6 @@
 return {
   "https://github.com/nvim-telescope/telescope.nvim",
+  -- enabled = false,
   dependencies = {
     { "https://github.com/MunifTanjim/nui.nvim" },
     {
@@ -9,111 +10,109 @@ return {
         require("telescope").load_extension("fzf")
       end,
     },
-    -- {
-    --   "https://github.com/smartpde/telescope-recent-files",
-    --   init = function()
-    --     G.nmap("<leader>h", function()
-    --       require("telescope").extensions.recent_files.pick({
-    --         layout_strategy = "window",
-    --         hidden = true,
-    --         no_ignore = true,
-    --       })
-    --     end, { noremap = true, desc = "File History" })
-    --   end,
-    --   config = function()
-    --     require("telescope").load_extension("recent_files")
-    --   end,
-    -- },
-    -- {
-    --   "https://github.com/benfowler/telescope-luasnip.nvim",
-    --   init = function()
-    --     G.nmap("<leader>ts", function()
-    --       require("telescope").extensions.luasnip.luasnip({
-    --         layout_strategy = "vertical",
-    --         sorting_strategy = "ascending",
-    --       })
-    --     end, { noremap = true, desc = "Luasnips snippets" })
-    --   end,
-    --   config = function()
-    --     require("telescope").load_extension("luasnip")
-    --   end,
-    -- },
-    -- -- Select and insert Nerd icons
-    -- {
-    --   "https://github.com/2KAbhishek/nerdy.nvim",
-    --   init = function()
-    --     G.nmap("<leader>ti", function()
-    --       require("telescope").extensions.nerdy.nerdy({
-    --         layout_strategy = "center",
-    --       })
-    --     end, { noremap = true, desc = "Nerd Icons" })
-    --   end,
-    --   config = function()
-    --     require("telescope").load_extension("nerdy")
-    --   end,
-    -- },
-    -- {
-    --   "https://github.com/piersolenski/telescope-import.nvim",
-    --   init = function()
-    --     G.nmap("<leader>i", function()
-    --       require("telescope").extensions.import.import({})
-    --     end, { noremap = true, desc = "Insert imports" })
-    --   end,
-    --   config = function()
-    --     require("telescope").load_extension("import")
-    --   end,
-    -- },
+    {
+      "https://github.com/smartpde/telescope-recent-files",
+      init = function()
+        G.nmap("<leader>h", function()
+          require("telescope").extensions.recent_files.pick({
+            layout_strategy = "window",
+            hidden = true,
+            no_ignore = true,
+          })
+        end, { noremap = true, desc = "File History" })
+      end,
+      config = function()
+        require("telescope").load_extension("recent_files")
+      end,
+    },
+    {
+      "https://github.com/benfowler/telescope-luasnip.nvim",
+      init = function()
+        G.nmap("<leader>ts", function()
+          require("telescope").extensions.luasnip.luasnip({
+            layout_strategy = "vertical",
+            sorting_strategy = "ascending",
+          })
+        end, { noremap = true, desc = "Luasnips snippets" })
+      end,
+      config = function()
+        require("telescope").load_extension("luasnip")
+      end,
+    },
+    -- Select and insert Nerd icons
+    {
+      "https://github.com/2KAbhishek/nerdy.nvim",
+      init = function()
+        G.nmap("<leader>ti", function()
+          require("telescope").extensions.nerdy.nerdy({
+            layout_strategy = "center",
+          })
+        end, { noremap = true, desc = "Nerd Icons" })
+      end,
+      config = function()
+        require("telescope").load_extension("nerdy")
+      end,
+    },
+    {
+      "https://github.com/piersolenski/telescope-import.nvim",
+      init = function()
+        G.nmap("<leader>i", function()
+          require("telescope").extensions.import.import({})
+        end, { noremap = true, desc = "Insert imports" })
+      end,
+      config = function()
+        require("telescope").load_extension("import")
+      end,
+    },
   },
   cmd = { "Telescope" },
   init = function()
-    -- G.nmap("<leader>s", function()
-    --   require("telescope.builtin").live_grep({
-    --     cwd = G.buf_cwd(),
-    --     layout_strategy = "vertical",
-    --   })
-    -- end, { noremap = true, desc = "Live Grep" })
+    G.nmap("<leader>s", function()
+      require("telescope.builtin").live_grep({
+        cwd = G.buf_cwd(),
+        layout_strategy = "vertical",
+      })
+    end, { noremap = true, desc = "Live Grep" })
 
-    -- G.nmap("<leader>b", function()
-    --   require("telescope.builtin").buffers({
-    --     layout_strategy = "window",
-    --     sort_mru = true,
-    --     ignore_current_buffer = true,
-    --   })
-    -- end, { noremap = true, desc = "Buffers" })
+    G.nmap("<leader>b", function()
+      require("telescope.builtin").buffers({
+        layout_strategy = "window",
+        sort_mru = true,
+        ignore_current_buffer = true,
+      })
+    end, { noremap = true, desc = "Buffers" })
 
-    -- G.nmap("<leader>p", function()
-    --   require("ah.plugins.telescope.repos")({
-    --     layout_strategy = "window",
-    --     roots = {
-    --       code = "~/Code",
-    --       plugin = vim.fn.stdpath("data") .. "/lazy",
-    --     },
-    --   })
-    -- end, { noremap = true, desc = "Projects" })
+    G.nmap("<leader>p", function()
+      require("ah.plugins.telescope.repos")({
+        layout_strategy = "window",
+        roots = {
+          code = "~/Code",
+          plugin = vim.fn.stdpath("data") .. "/lazy",
+        },
+      })
+    end, { noremap = true, desc = "Projects" })
 
-    -- G.nmap(
-    --   "<leader>f",
-    --   require("ah.plugins.telescope.handlers").find_files,
-    --   { noremap = true, desc = "Git Files" }
-    -- )
+    G.nmap(
+      "<leader>f",
+      require("ah.plugins.telescope.handlers").find_files,
+      { noremap = true, desc = "Git Files" }
+    )
 
-    -- Telescope
+    G.nmap("<leader>tt", function()
+      require("telescope.builtin").builtin({ include_extensions = true })
+    end, { noremap = true, desc = "Pickers" })
 
-    -- G.nmap("<leader>tt", function()
-    --   require("telescope.builtin").builtin({ include_extensions = true })
-    -- end, { noremap = true, desc = "Pickers" })
+    G.nmap("<leader>th", function()
+      require("telescope.builtin").help_tags({})
+    end, { noremap = true, desc = "Help Tags" })
 
-    -- G.nmap("<leader>th", function()
-    --   require("telescope.builtin").help_tags({})
-    -- end, { noremap = true, desc = "Help Tags" })
-
-    -- G.nmap("<leader>tf", function()
-    --   require("telescope.builtin").find_files({
-    --     layout_strategy = "window",
-    --     cwd = G.buf_cwd(),
-    --     hidden = true,
-    --   })
-    -- end, { noremap = true, desc = "Files" })
+    G.nmap("<leader>tf", function()
+      require("telescope.builtin").find_files({
+        layout_strategy = "window",
+        cwd = G.buf_cwd(),
+        hidden = true,
+      })
+    end, { noremap = true, desc = "Files" })
 
     G.nmap("<leader>tl", function()
       require("telescope.builtin").current_buffer_fuzzy_find({

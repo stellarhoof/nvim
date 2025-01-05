@@ -101,6 +101,8 @@ return {
     })
     require("cmp").setup({
       sources = require("cmp").config.sources({
+        -- Set group index to 0 to skip loading LuaLS completions
+        { name = "lazydev", group_index = 0 },
         { name = "nvim_lsp", entry_filter = lsp_entry_filter },
         { name = "luasnip" },
       }),

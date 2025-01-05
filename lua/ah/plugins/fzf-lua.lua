@@ -18,11 +18,50 @@ local borders = {
 
 return {
   "https://github.com/ibhagwan/fzf-lua",
+  enabled = false,
   config = function()
     local fzf = require("fzf-lua")
     local actions = require("fzf-lua.actions")
 
     fzf.setup({
+      winopts = {
+        -- width = 130,
+        -- height = 25,
+        row = 1,
+        height = 20,
+        width = 1,
+        border = borders.full,
+        preview = {
+          title = false,
+          border = "noborder", -- Only for native fzf previewers
+          scrollbar = false,
+          horizontal = "right:45%",
+          winopts = {
+            number = false,
+          },
+        },
+      },
+      files = {
+        prompt = "Files> ",
+        cwd_header = true,
+        cwd_prompt = false,
+        winopts = { preview = { hidden = "hidden" } },
+        -- fzf_opts = { ["--history"] = vim.fn.stdpath("data") .. "/fzf-lua-files-history" },
+      },
+      buffers = { preview = { hidden = "hidden" } },
+      oldfiles = { preview = { hidden = "hidden" } },
+      quickfix = { preview = { hidden = "hidden" } },
+      quickfix_stack = { preview = { hidden = "hidden" } },
+      loclist = { preview = { hidden = "hidden" } },
+      loclist_stack = { preview = { hidden = "hidden" } },
+      args = { preview = { hidden = "hidden" } },
+      grep = {
+        winopts = { fullscreen = true },
+        -- fzf_opts = { ["--history"] = vim.fn.stdpath("data") .. "/fzf-lua-grep-history" },
+      },
+      helptags = { winopts = { fullscreen = true } },
+      lines = { winopts = { fullscreen = true, preview = { horizontal = "right:50%" } } },
+      blines = { winopts = { fullscreen = true, preview = { horizontal = "right:50%" } } },
       fzf_colors = true,
       file_icon_padding = " ",
       defaults = {
@@ -34,17 +73,6 @@ return {
         border = "Special",
         preview_border = "Special",
         help_border = "Special",
-      },
-      winopts = {
-        width = 90,
-        height = 20,
-        border = borders.full,
-        preview = {
-          title = false,
-          hidden = "hidden",
-          border = "noborder", -- Only for native fzf previewers
-          scrollbar = false,
-        },
       },
       -- [FZF options](https://junegunn.github.io/fzf/reference/)
       fzf_opts = {
@@ -58,13 +86,12 @@ return {
       keymap = {
         builtin = {
           ["<c-/>"] = "toggle-help",
-          ["<alt-2>"] = "toggle-fullscreen",
-          ["<alt-3>"] = "toggle-preview-wrap",
-          ["<alt-4>"] = "toggle-preview",
-          ["<alt-5>"] = "toggle-preview-ccw", -- Rotate preview counter-clockwise
-          ["<alt-6>"] = "toggle-preview-cw", -- Rotate preview clockwise
-          ["<alt-up>"] = "preview-page-up",
-          ["<alt-down>"] = "preview-page-down",
+          ["<c-1>"] = "toggle-fullscreen",
+          ["<c-2>"] = "toggle-preview",
+          ["<c-3>"] = "toggle-preview-wrap",
+          ["<c-4>"] = "toggle-preview-cw", -- Rotate preview clockwise
+          ["<a-up>"] = "preview-page-up",
+          ["<a-down>"] = "preview-page-down",
         },
         -- fzf '--bind=' options
         fzf = {
@@ -77,8 +104,8 @@ return {
           ["alt-a"] = "toggle-all",
           ["alt-g"] = "first",
           ["alt-G"] = "last",
-          ["alt-3"] = "toggle-preview-wrap",
-          ["alt-4"] = "toggle-preview",
+          ["alt-p"] = "toggle-preview",
+          ["alt-w"] = "toggle-preview-wrap",
           ["alt-up"] = "preview-page-up",
           ["alt-down"] = "preview-page-down",
         },
@@ -86,30 +113,24 @@ return {
       actions = {
         files = {
           true,
+          ["alt-q"] = false,
           ["alt-Q"] = false,
           ["enter"] = actions.file_edit,
-          ["alt-l"] = actions.file_sel_to_ll,
+          -- https://github.com/ibhagwan/fzf-lua/wiki#how-do-i-send-all-grep-results-to-quickfix-list
+          ["ctrl-q"] = { prefix = "select-all+", fn = actions.file_sel_to_qf },
+          ["ctrl-l"] = { prefix = "select-all+", fn = actions.file_sel_to_ll },
         },
       },
       help_open_win = function(buf, enter, opts)
         opts.border = borders.top
         return vim.api.nvim_open_win(buf, enter, opts)
       end,
-      files = {
-        prompt = "Files> ",
-        cwd_header = true,
-        cwd_prompt = false,
-      },
-      helptags = {
-        previewer = "help_native",
-      },
     })
 
-    G.nmap("<leader>p", fzf.builtin, { noremap = true, desc = "Pickers" })
+    -- https://github.com/ibhagwan/fzf-lua/pull/1127
+    vim.g.fzf_history_dir = vim.fn.stdpath("data") .. "/fzf"
 
-    G.nmap("<leader>f", function()
-      fzf.files({ cwd = G.buf_cwd() })
-    end, { noremap = true, desc = "Files" })
+    G.nmap("<leader>p", fzf.builtin, { noremap = true, desc = "Pickers" })
 
     G.nmap("<leader>o", fzf.oldfiles, { noremap = true, desc = "Old Files" })
 
@@ -117,10 +138,16 @@ return {
 
     G.nmap("<leader>b", fzf.buffers, { noremap = true, desc = "Buffers" })
 
+    G.nmap("<leader>n", fzf.blines, { noremap = true, desc = "Buffer Lines" })
+
+    G.nmap("<leader>g", fzf.git_branches, { noremap = true, desc = "Git branches" })
+
+    G.nmap("<leader>f", function()
+      fzf.files({ cwd = G.buf_cwd() })
+    end, { noremap = true, desc = "Files" })
+
     G.nmap("<leader>s", function()
       fzf.live_grep({ cwd = G.buf_cwd() })
     end, { noremap = true, desc = "Live Grep" })
-
-    G.nmap("<leader>g", fzf.live_grep, { noremap = true, desc = "Git branches" })
   end,
 }
