@@ -25,6 +25,7 @@ G.nmap(
   vim.diagnostic.setloclist,
   { desc = "Add current buffer diagnostics to loclist" }
 )
+
 G.nmap(
   "<leader>dq",
   vim.diagnostic.setqflist,

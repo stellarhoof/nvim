@@ -25,20 +25,6 @@ return {
         require("telescope").load_extension("recent_files")
       end,
     },
-    {
-      "https://github.com/benfowler/telescope-luasnip.nvim",
-      init = function()
-        G.nmap("<leader>ts", function()
-          require("telescope").extensions.luasnip.luasnip({
-            layout_strategy = "vertical",
-            sorting_strategy = "ascending",
-          })
-        end, { noremap = true, desc = "Luasnips snippets" })
-      end,
-      config = function()
-        require("telescope").load_extension("luasnip")
-      end,
-    },
     -- Select and insert Nerd icons
     {
       "https://github.com/2KAbhishek/nerdy.nvim",

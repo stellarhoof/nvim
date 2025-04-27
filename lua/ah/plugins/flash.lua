@@ -4,12 +4,12 @@ return {
   "https://github.com/folke/flash.nvim",
   event = "VeryLazy",
   opts = {
-    search = {
-      -- Match beginning of words only
-      mode = function(str)
-        return "\\<" .. str
-      end,
-    },
+    -- search = {
+    --   -- Match beginning of words only
+    --   mode = function(str)
+    --     return "\\<" .. str
+    --   end,
+    -- },
     modes = {
       search = { enabled = false },
       char = { enabled = false },

@@ -64,6 +64,8 @@ See `:h vim.opt` for more information.
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
+-- TODO: Make telescope play nice with this setting
+-- vim.opt.winborder = "bold"
 vim.opt.smoothscroll = true
 vim.opt.grepprg = "rg --vimgrep $*"
 vim.opt.exrc = true
@@ -71,14 +73,13 @@ vim.opt.showtabline = 1
 vim.opt.laststatus = 2
 vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,t:block-TermCursor"
 vim.opt.updatetime = 300 -- CursorHold
-vim.opt.pumheight = 15
+-- vim.opt.pumheight = 15
 vim.opt.cpoptions = "aABceFs_q"
 vim.opt.smartcase = true
 vim.opt.ignorecase = true
 vim.opt.wrapscan = false
 vim.opt.shiftround = true
 vim.opt.startofline = false
-vim.opt.shelltemp = false
 vim.opt.gdefault = true
 vim.opt.wildignorecase = true
 vim.opt.listchars = { tab = "»·", trail = ".", eol = "¬" }

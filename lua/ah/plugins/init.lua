@@ -210,11 +210,6 @@ local editing = {
       G.map({ "i", "c" }, "<c-u>", readline.backward_kill_line, { desc = "Backward kill line" })
     end,
   },
-
-  {
-    "https://github.com/ThePrimeagen/refactoring.nvim",
-    opts = {},
-  },
 }
 
 -- Plugins that enhance neovim's ui or provide ui components
@@ -258,21 +253,55 @@ local ui = {
     cmd = "Linediff",
   },
 
+  -- File type icons
   {
-    "https://github.com/echasnovski/mini.icons",
-    version = false,
-    opts = {},
+    "https://github.com/nvim-tree/nvim-web-devicons",
+    lazy = true,
+    -- enabled = false,
+    opts = { color_icons = false, default = true },
+  },
+
+  -- Easily create and edit VSCode style snippets
+  {
+    "https://github.com/chrisgrieser/nvim-scissors",
+    opts = {
+      jsonFormatter = "jq",
+      backdrop = { enabled = false },
+      snippetSelection = { picker = "telescope" },
+      icons = { scissors = "" },
+    },
     config = function(_, opts)
-      require("mini.icons").setup(opts)
-      G.hl_link("MiniIconsAzure", "Normal")
-      G.hl_link("MiniIconsBlue", "Normal")
-      G.hl_link("MiniIconsCyan", "Normal")
-      G.hl_link("MiniIconsGreen", "Normal")
-      G.hl_link("MiniIconsGrey", "Normal")
-      G.hl_link("MiniIconsOrange", "Normal")
-      G.hl_link("MiniIconsPurple", "Normal")
-      G.hl_link("MiniIconsRed", "Normal")
-      G.hl_link("MiniIconsYellow", "Normal")
+      require("scissors").setup(opts)
+      G.nmap("<leader>ne", require("scissors").editSnippet, { desc = "Edit snippet" })
+      G.nmap("<leader>na", require("scissors").addNewSnippet, { desc = "Add snippet" })
+      -- Prefill selection as the snippet body.
+      G.xmap("<leader>na", require("scissors").addNewSnippet, { desc = "Add snippet" })
+    end,
+  },
+
+  {
+    "https://github.com/echasnovski/mini.nvim",
+    version = false,
+    config = function()
+      -- require("mini.icons").setup()
+      -- G.hl_link("MiniIconsAzure", "Normal")
+      -- G.hl_link("MiniIconsBlue", "Normal")
+      -- G.hl_link("MiniIconsCyan", "Normal")
+      -- G.hl_link("MiniIconsGreen", "Normal")
+      -- G.hl_link("MiniIconsGrey", "Normal")
+      -- G.hl_link("MiniIconsOrange", "Normal")
+      -- G.hl_link("MiniIconsPurple", "Normal")
+      -- G.hl_link("MiniIconsRed", "Normal")
+      -- G.hl_link("MiniIconsYellow", "Normal")
+
+      local gen_loader = require("mini.snippets").gen_loader
+      require("mini.snippets").setup({
+        snippets = {
+          -- Load snippets based on current language by reading files from
+          -- "snippets/" subdirectories from 'runtimepath' directories.
+          gen_loader.from_lang(),
+        },
+      })
     end,
   },
 
@@ -439,6 +468,7 @@ local external = {
         -- LSP
         "eslint-lsp",
         "lua-language-server",
+        "tailwind-language-server",
         -- "emmet-language-server",
         "vtsls", -- Prefer this one over typescript-language-server
         "typescript-language-server",
@@ -454,87 +484,6 @@ local external = {
         "chrome-debug-adapter",
       },
     },
-  },
-
-  -- A Git wrapper so awesome, it should be illegal.
-  {
-    "https://github.com/tpope/vim-fugitive",
-    event = "VeryLazy",
-    dependencies = { "https://github.com/tpope/vim-rhubarb" },
-    config = function()
-      local alias = vim.cmd.Alias
-      alias({ args = { "g", "G" } })
-      alias({ args = { "gbl", "Git blame -w -M" } })
-      alias({ args = { "gd", "Gdiffsplit" } })
-      alias({ args = { "ge", "Gedit" } })
-      alias({ args = { "gr", "Gread" } })
-      alias({ args = { "gs", "Git" } })
-      alias({ args = { "gw", "Gwrite" } })
-      alias({ args = { "gg", "Ggrep" } })
-      alias({ args = { "gco", "Git checkout" } })
-      alias({ args = { "gcm", "Git commit" } })
-      alias({ args = { "gcma", "Git commit --amend" } })
-      alias({ args = { "gcman", "Git commit --amend --reuse-message HEAD" } })
-
-      local function cleanup_fugitive_windows()
-        for _, winnr in pairs(vim.api.nvim_tabpage_list_wins(0)) do
-          local bufnr = vim.fn.winbufnr(winnr)
-          if vim.startswith(vim.fn.bufname(bufnr), "fugitive://") then
-            vim.cmd.bdelete(bufnr)
-          end
-        end
-      end
-
-      local function diff_current_quickfix_entry()
-        local qf = vim.fn.getqflist({ idx = 0, title = 0, context = 0 })
-        if qf.idx and qf.context and qf.context.items and string.find(qf.title, "difftool") then
-          local item = qf.context.items[qf.idx]
-          if item and item.diff then
-            cleanup_fugitive_windows()
-            vim.cmd.cc()
-            vim.cmd.Gdiffsplit(item.diff[1].module)
-          end
-        end
-      end
-
-      G.nmap("[c", function()
-        vim.cmd.cpfile()
-        diff_current_quickfix_entry()
-      end, { unique = false })
-
-      G.nmap("]c", function()
-        vim.cmd.cnfile()
-        diff_current_quickfix_entry()
-      end, { unique = false })
-
-      local function get_active_visual_region()
-        return vim.fn.getregion(vim.fn.getpos("."), vim.fn.getpos("v"), { type = vim.fn.mode() })
-      end
-
-      local function get_active_visual_lines()
-        return table.concat(vim.iter(get_active_visual_region()):map(vim.trim):totable())
-      end
-
-      local gx_desc =
-        "Open filepath or URI under cursor or current file with system handler (file explorer, web browser, …)"
-
-      vim.keymap.set({ "n" }, "gx", function()
-        if require("ah.util").open_uri(vim.fn.expand("<cfile>")) then
-          vim.cmd.GBrowse()
-        end
-      end, { desc = gx_desc })
-
-      vim.keymap.set({ "x" }, "gx", function()
-        if require("ah.util").open_uri(get_active_visual_lines()) then
-          vim.cmd.GBrowse({ range = { vim.fn.line("v"), vim.fn.line(".") } })
-        end
-      end, { desc = gx_desc })
-
-      -- Required by Fugitive to open a url since we're not using netrw.
-      vim.api.nvim_create_user_command("Browse", function(args)
-        require("ah.util").open_uri(args.args)
-      end, { nargs = 1 })
-    end,
   },
 
   -- Lightweight yet powerful formatter plugin for Neovim
@@ -557,6 +506,7 @@ local external = {
         markdown = { "prettierd" },
         html = { "prettierd" },
         http = { "kulala" },
+        svg = { "prettierd" },
         json = { "biome-check", "prettierd" },
         jsonc = { "biome-check", "prettierd" },
         javascript = { "biome-check", "prettierd" },
@@ -583,6 +533,7 @@ local external = {
     ft = { "http" },
     opts = {
       default_env = "dev",
+      kulala_keymaps = false,
       formatters = {
         json = { "jq", "." },
         xml = { "xmllint", "--format", "-" },
@@ -623,6 +574,12 @@ local external = {
 
 local other = {
   {
+    "https://github.com/neovim/nvim-lspconfig",
+  },
+  {
+    "https://github.com/yioneko/nvim-vtsls",
+  },
+  {
     "https://github.com/folke/lazydev.nvim",
     ft = "lua",
     opts = {
@@ -636,6 +593,9 @@ local other = {
         return not vim.uv.fs_stat(root_dir .. "/.luarc.json")
       end,
     },
+  },
+  {
+    "https://github.com/sindrets/diffview.nvim",
   },
 }
 

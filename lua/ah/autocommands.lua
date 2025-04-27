@@ -93,3 +93,45 @@ end
 
 G.au({ "VimEnter" }, { group = group, callback = rshada_after })
 G.au({ "VimLeavePre" }, { group = group, callback = wshada_before })
+
+-- https://github.com/jdhao/nvim-config/blob/main/lua/config/lsp.lua
+G.au({ "LspAttach" }, {
+  group = group,
+  callback = function(args)
+    local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+
+    -- Temporary until the LSP formatexpr can make comments wrap via `gqq`
+    vim.bo[args.buf].formatexpr = nil
+
+    -- Turn off semantic tokens
+    client.server_capabilities.semanticTokensProvider = nil
+
+    local method = vim.lsp.protocol.Methods
+
+    if client:supports_method(method.workspace_symbol) then
+      G.nmap("<leader>lw", vim.lsp.buf.workspace_symbol, {
+        unique = false,
+        buffer = args.buf,
+        desc = "List workspace symbols",
+      })
+    end
+
+    if client:supports_method(method.textDocument_typeDefinition) then
+      G.nmap("<leader>lt", vim.lsp.buf.type_definition, {
+        unique = false,
+        buffer = args.buf,
+        desc = "List current symbol type definitions",
+      })
+    end
+
+    if client:supports_method(method.typeHierarchy_subtypes) then
+      G.nmap("<leader>lh", function()
+        vim.lsp.buf.typehierarchy("subtypes")
+      end, {
+        unique = false,
+        buffer = args.buf,
+        desc = "List current symbol type hierarchy",
+      })
+    end
+  end,
+})

@@ -1,0 +1,40 @@
+{
+  "name": "my-snippets",
+  "contributes": {
+    "snippets": [
+      {
+        "language": [
+          "html",
+          "javascriptreact"
+        ],
+        "path": "./html.json"
+      },
+      {
+        "language": [
+          "javascript",
+          "javascriptreact"
+        ],
+        "path": "./javascript.json"
+      },
+      {
+        "language": [
+          "typescript",
+          "typescriptreact"
+        ],
+        "path": "./typescript.json"
+      },
+      {
+        "language": [
+          "javascriptreact"
+        ],
+        "path": "./javascript-react.json"
+      },
+      {
+        "language": [
+          "typescriptreact"
+        ],
+        "path": "./typescript-react.json"
+      }
+    ]
+  }
+}
