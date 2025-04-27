@@ -1,1 +1,42 @@
-{}
+{
+  "af": {
+    "body": [
+      "(${1}) => {",
+      "  return ${0:$TM_SELECTED_TEXT}",
+      "}"
+    ],
+    "prefix": "af"
+  },
+  "doc": {
+    "body": [
+      "/**",
+      " * ${0}",
+      " */"
+    ],
+    "prefix": "doc"
+  },
+  "e": {
+    "body": "export ${0}",
+    "prefix": "e"
+  },
+  "ec": {
+    "body": "export const ${1} = ${0}",
+    "prefix": "ec"
+  },
+  "ed": {
+    "body": "export default ${0}",
+    "prefix": "ed"
+  },
+  "id": {
+    "body": "import ${2:$1} from \"$1\"",
+    "prefix": "id"
+  },
+  "in": {
+    "body": "import { $2 } from \"$1\"",
+    "prefix": "in"
+  },
+  "ptime": {
+    "body": "new Promise((resolve, reject) => setTimeout(() => ${2:resolve(undefined)}, ${1:1000}))",
+    "prefix": "ptime"
+  }
+}

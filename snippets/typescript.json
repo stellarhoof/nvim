@@ -1,11 +1,1 @@
-{
-  "tabprops": {
-    "body": [
-      "export interface TabProps extends TabPrimitiveProps {",
-      "  count?: number",
-      "  className?: string",
-      "}"
-    ],
-    "prefix": "tabprops"
-  }
-}
+{}

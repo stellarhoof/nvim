@@ -294,12 +294,12 @@ local ui = {
       -- G.hl_link("MiniIconsRed", "Normal")
       -- G.hl_link("MiniIconsYellow", "Normal")
 
-      local gen_loader = require("mini.snippets").gen_loader
-      require("mini.snippets").setup({
+      local snippets = require("mini.snippets")
+      snippets.setup({
         snippets = {
           -- Load snippets based on current language by reading files from
           -- "snippets/" subdirectories from 'runtimepath' directories.
-          gen_loader.from_lang(),
+          snippets.gen_loader.from_lang(),
         },
       })
     end,
