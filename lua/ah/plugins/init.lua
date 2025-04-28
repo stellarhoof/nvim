@@ -279,32 +279,6 @@ local ui = {
     end,
   },
 
-  {
-    "https://github.com/echasnovski/mini.nvim",
-    version = false,
-    config = function()
-      -- require("mini.icons").setup()
-      -- G.hl_link("MiniIconsAzure", "Normal")
-      -- G.hl_link("MiniIconsBlue", "Normal")
-      -- G.hl_link("MiniIconsCyan", "Normal")
-      -- G.hl_link("MiniIconsGreen", "Normal")
-      -- G.hl_link("MiniIconsGrey", "Normal")
-      -- G.hl_link("MiniIconsOrange", "Normal")
-      -- G.hl_link("MiniIconsPurple", "Normal")
-      -- G.hl_link("MiniIconsRed", "Normal")
-      -- G.hl_link("MiniIconsYellow", "Normal")
-
-      local snippets = require("mini.snippets")
-      snippets.setup({
-        snippets = {
-          -- Load snippets based on current language by reading files from
-          -- "snippets/" subdirectories from 'runtimepath' directories.
-          snippets.gen_loader.from_lang(),
-        },
-      })
-    end,
-  },
-
   -- Neovim plugin to improve the default vim.ui interfaces.
   {
     "https://github.com/stevearc/dressing.nvim",
