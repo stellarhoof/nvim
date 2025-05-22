@@ -157,6 +157,19 @@ return {
       ["<c-5>"] = require("telescope.actions.layout").cycle_layout_prev,
     }
 
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "TelescopeFindPre",
+      callback = function()
+        vim.opt_local.winborder = "none"
+        vim.api.nvim_create_autocmd("WinLeave", {
+          once = true,
+          callback = function()
+            vim.opt_local.winborder = "single"
+          end,
+        })
+      end,
+    })
+
     require("telescope").setup({
       defaults = {
         prompt_prefix = "  ",

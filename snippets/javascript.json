@@ -1,42 +1,144 @@
 {
-  "af": {
-    "body": ["(${1}) => {", "  return ${0:$TM_SELECTED_TEXT}", "}"],
-    "prefix": "af",
-    "desc": "Arrow function with block"
+  "=": {
+    "body": "($1) => (${2:$TM_SELECTED_TEXT})",
+    "desc": "Arrow function",
+    "prefix": "="
+  },
+  "=r": {
+    "body": [
+      "(${1:args}) => {$0",
+      "  return ${2:$TM_SELECTED_TEXT}",
+      "}"
+    ],
+    "desc": "Arrow function with block",
+    "prefix": "=r"
+  },
+  "cl": {
+    "body": "console.log(${0:$TM_SELECTED_TEXT})",
+    "desc": "Console log",
+    "prefix": "cl"
+  },
+  "desc": {
+    "body": [
+      "describe(${1:\"\"}, () => {",
+      "  $0",
+      "})"
+    ],
+    "desc": "Test block",
+    "prefix": "desc"
+  },
+  "do": {
+    "body": [
+      "do {",
+      "  $0",
+      "} while (${1:condition})"
+    ],
+    "desc": "Do while",
+    "prefix": "do"
   },
   "doc": {
-    "body": ["/**", " * ${0}", " */"],
-    "prefix": "doc",
-    "desc": "JSDoc"
-  },
-  "e": {
-    "body": "export ${0}",
-    "prefix": "e",
-    "desc": "Export"
-  },
-  "ec": {
-    "body": "export const ${1} = ${0}",
-    "prefix": "ec",
-    "desc": "Named export"
+    "body": [
+      "/**",
+      " * ${0}",
+      " */"
+    ],
+    "desc": "JSDoc",
+    "prefix": "doc"
   },
   "ed": {
-    "body": "export default ${0}",
-    "prefix": "ed",
-    "desc": "Default export"
+    "body": "export default $0",
+    "desc": "Default export",
+    "prefix": "ed"
+  },
+  "en": {
+    "body": "export const $1 = $0",
+    "desc": "Named export",
+    "prefix": "en"
+  },
+  "f": {
+    "body": [
+      "function ${1:name}(${2:args}) {$0",
+      "  return ${3:$TM_SELECTED_TEXT}",
+      "}"
+    ],
+    "desc": "Named function",
+    "prefix": "f"
+  },
+  "for": {
+    "body": [
+      "for (${1:const} ${2:name} ${3:of} ${4:iterator}) {",
+      "  $0",
+      "}"
+    ],
+    "desc": "For loop",
+    "prefix": "for"
   },
   "id": {
-    "body": "import ${2:$1} from \"$1\"",
+    "body": "import ${2:$1} from \"${1:module}\"",
     "desc": "Default import",
     "prefix": "id"
   },
+  "if": {
+    "body": [
+      "if (${1:condition}) {",
+      "  ${0:$TM_SELECTED_TEXT}",
+      "}"
+    ],
+    "desc": "If statement",
+    "prefix": "if"
+  },
   "in": {
-    "body": "import { $2 } from \"$1\"",
-    "prefix": "in",
-    "desc": "Named import"
+    "body": "import { $2 } from \"${1:module}\"",
+    "desc": "Named import",
+    "prefix": "in"
+  },
+  "it": {
+    "body": [
+      "it(${1:\"\"}, () => {",
+      "  $0",
+      "})"
+    ],
+    "desc": "Test case",
+    "prefix": "it"
+  },
+  "js": {
+    "body": "JSON.stringify(${1:$TM_SELECTED_TEXT})",
+    "desc": "JSON stringify",
+    "prefix": "js"
+  },
+  "jsi": {
+    "body": "JSON.stringify(${1:$TM_SELECTED_TEXT}, null, 2)",
+    "desc": "Indented JSON stringify",
+    "prefix": "jsi"
   },
   "ptime": {
     "body": "new Promise((resolve, reject) => setTimeout(() => ${2:resolve(undefined)}, ${1:1000}))",
-    "prefix": "ptime",
-    "desc": "Promise with timeout"
+    "desc": "Promise with timeout",
+    "prefix": "ptime"
+  },
+  "te": {
+    "body": "throw new ${1:Error}($2)",
+    "desc": "Throw error",
+    "prefix": "te"
+  },
+  "try": {
+    "body": [
+      "try {",
+      "  ${1:$TM_SELECTED_TEXT}",
+      "} catch (${2:e}) {",
+      "  $3 ",
+      "}"
+    ],
+    "desc": "Try/catch",
+    "prefix": "try"
+  },
+  "wh": {
+    "body": [
+      "while (${1:condition}) {",
+      "  $0",
+      "}"
+    ],
+    "desc": "While loop",
+    "prefix": "wh"
   }
 }

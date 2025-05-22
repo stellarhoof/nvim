@@ -20,7 +20,9 @@ local function expand_snippet(cmp)
         end,
       })
     else
-      expand(snippets[1])
+      vim.schedule(function()
+        expand(snippets[1])
+      end)
     end
   end
 
@@ -41,6 +43,18 @@ return {
   -- Use a release tag to download pre-built binaries
   version = "1.*",
   opts_extend = { "sources.default" },
+  dependencies = {
+    {
+      "https://github.com/zbirenbaum/copilot.lua",
+      opts = {
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+      },
+    },
+    {
+      "https://github.com/fang2hou/blink-copilot",
+    },
+  },
   opts = {
     keymap = {
       --[[
@@ -72,11 +86,30 @@ return {
     },
     completion = {
       documentation = {
-        -- Only show the documentation popup when manually triggered
         auto_show = false,
       },
       menu = {
         max_height = 20,
+        auto_show = function()
+          local row, column = unpack(vim.api.nvim_win_get_cursor(0))
+          local success, node = pcall(vim.treesitter.get_node, {
+            pos = { row - 1, math.max(0, column - 1) },
+            ignore_injections = true,
+          })
+          -- Do not show menu when inside any of these node types
+          local reject = {
+            "comment",
+            "line_comment",
+            "block_comment",
+            "string_start",
+            "string_content",
+            "string_end",
+          }
+          if success and node and vim.tbl_contains(reject, node:type()) then
+            return false
+          end
+          return true
+        end,
         draw = {
           components = {
             -- Column showing imports
@@ -90,7 +123,21 @@ return {
     -- Default list of enabled providers defined so that you can extend it
     -- elsewhere in your config, without redefining it, due to `opts_extend`.
     sources = {
-      default = { "lsp", "path", "buffer" },
+      default = { "lsp", "copilot", "path", "buffer" },
+      per_filetype = { codecompanion = { "codecompanion" } },
+      providers = {
+        buffer = {
+          enabled = function()
+            return not vim.tbl_contains({ "DressingInput" }, vim.bo.filetype)
+          end,
+        },
+        copilot = {
+          name = "copilot",
+          module = "blink-copilot",
+          score_offset = 100,
+          async = true,
+        },
+      },
     },
     -- (Default) Rust fuzzy matcher for typo resistance and significantly better
     -- performance You may use a lua implementation instead by using

@@ -1,1 +1,40 @@
-{}
+{
+  "comp": {
+    "body": [
+      "import React from 'react'",
+      "",
+      "interface ${1:Component}Props {",
+      "  className?: string$2",
+      "}",
+      "",
+      "function ${1:Component}(props: ${1:Component}Props) {",
+      "  return ${0:$TM_SELECTED_TEXT}",
+      "}"
+    ],
+    "desc": "React component",
+    "prefix": "comp"
+  },
+  "compvar": {
+    "body": [
+      "import React from 'react'",
+      "",
+      "import { tv, twMerge, type VariantProps } from '#src/util/tailwind.ts'",
+      "",
+      "const ${1:Component}Styles = tv({",
+      "  base: '',",
+      "})",
+      "",
+      "export interface ${1:Component}Props extends VariantProps<typeof ${1:Component}Styles> {",
+      "  className?: string$2",
+      "}",
+      "",
+      "export function ${1:Component}(props: ${1:Component}Props) {",
+      "  const styles = ${1:Component}Styles()",
+      "  $0",
+      "  return <div {...props} className={twMerge(styles, props.className)} />",
+      "}"
+    ],
+    "desc": "React component with tailwind variants",
+    "prefix": "compvar"
+  }
+}

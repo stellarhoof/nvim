@@ -64,8 +64,7 @@ See `:h vim.opt` for more information.
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
--- TODO: Make telescope play nice with this setting
--- vim.opt.winborder = "bold"
+vim.opt.winborder = "single"
 vim.opt.smoothscroll = true
 vim.opt.grepprg = "rg --vimgrep $*"
 vim.opt.exrc = true

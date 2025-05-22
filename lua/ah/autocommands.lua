@@ -70,9 +70,7 @@ G.au({ "ColorScheme" }, {
   pattern = "zen*",
   desc = "Override zenbones colorscheme highlights",
   callback = function()
-    G.hl_link("PmenuThumb", "PmenuSel")
-    G.hl_link("CmpItemAbbr", "CmpItemKindDefault")
-    G.hl_update("CmpItemMenu", { italic = true })
+    G.hl_update("Constant", { italic = false })
   end,
 })
 

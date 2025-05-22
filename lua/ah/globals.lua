@@ -10,9 +10,6 @@ function G.merge(...)
   return vim.tbl_deep_extend("force", ...)
 end
 
--- This directory
-G.root = vim.fn.fnamemodify(debug.getinfo(1, "S").source:sub(2), ":h")
-
 -- autocmd aliases
 G.au = vim.api.nvim_create_autocmd
 G.aug = vim.api.nvim_create_augroup
@@ -74,3 +71,5 @@ function G.is_plugin_loaded(name)
   end
   return false
 end
+
+return G

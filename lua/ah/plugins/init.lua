@@ -6,7 +6,11 @@ local colorschemes = {
     dependencies = { "https://github.com/rktjmp/lush.nvim" },
     config = function()
       vim.g.zenbones = { italic_comments = false }
+      vim.g.zenwritten = { italic_comments = false }
     end,
+  },
+  {
+    "https://github.com/olimorris/onedarkpro.nvim",
   },
 }
 
@@ -423,6 +427,23 @@ local ui = {
   --     })
   --   end,
   -- },
+
+  -- Plugin to improve viewing Markdown files in Neovim
+  {
+    "https://github.com/MeanderingProgrammer/render-markdown.nvim",
+    opts = {
+      -- Filetypes this plugin will run on.
+      file_types = { "markdown", "codecompanion" },
+      render_modes = { "n", "i", "c", "t" },
+      sign = {
+        enabled = false,
+      },
+      code = {
+        language_name = false,
+        border = "thin",
+      },
+    },
+  },
 }
 
 -- Plugins that interact with external tools
@@ -543,6 +564,39 @@ local external = {
       },
     },
     opts = {},
+  },
+
+  -- AI-powered coding, seamlessly in Neovim
+  {
+    "https://github.com/olimorris/codecompanion.nvim",
+    dependencies = {
+      {
+        "https://github.com/ravitemer/codecompanion-history.nvim",
+      },
+    },
+    opts = {
+      extensions = {
+        history = {
+          enabled = true,
+        },
+      },
+    },
+    config = function(_, opts)
+      G.map(
+        { "n", "v" },
+        "<C-a>",
+        require("codecompanion").actions,
+        { noremap = true, silent = true }
+      )
+      G.map(
+        { "n", "v" },
+        "<leader>c",
+        require("codecompanion").toggle,
+        { noremap = true, silent = true }
+      )
+      G.vmap("ga", require("codecompanion").add, { noremap = true, silent = true })
+      require("codecompanion").setup(opts)
+    end,
   },
 }
 
