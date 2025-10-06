@@ -1,5 +1,6 @@
 return {
   "https://github.com/justinmk/vim-dirvish",
+  enabled = false,
   dependencies = { "https://github.com/roginfarrer/vim-dirvish-dovish" },
   init = function()
     vim.g.dirvish_mode = 2

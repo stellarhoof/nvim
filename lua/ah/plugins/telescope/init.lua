@@ -40,7 +40,7 @@ return {
       end,
     },
     {
-      "https://github.com/piersolenski/telescope-import.nvim",
+      "https://github.com/piersolenski/import.nvim",
       init = function()
         G.nmap("<leader>i", function()
           require("telescope").extensions.import.import({})
@@ -109,6 +109,7 @@ return {
     G.nmap("<leader>tc", function()
       require("telescope.builtin").colorscheme({
         enable_preview = true,
+        ignore_builtins = true,
       })
     end, { noremap = true, desc = "Colorschemes" })
 

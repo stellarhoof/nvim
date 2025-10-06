@@ -1,1 +1,23 @@
-{}
+{
+  "page": {
+    "body": [
+      "import type { PageRoute } from '#common/route/routes.js'",
+      "import {",
+      "  combine,",
+      "  goIf,",
+      "  requireAuth,",
+      "  routeIsNotAvailable,",
+      "} from '#src/util/policies.js'",
+      "",
+      "import { Page } from './Page.tsx'",
+      "",
+      "const pageRoute: PageRoute<never> = {",
+      "  canActivate: combine(requireAuth, goIf('home')(routeIsNotAvailable)),",
+      "  Component: Page,",
+      "}",
+      "",
+      "export default pageRoute"
+    ],
+    "prefix": "page"
+  }
+}

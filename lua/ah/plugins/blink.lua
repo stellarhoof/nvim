@@ -44,16 +44,16 @@ return {
   version = "1.*",
   opts_extend = { "sources.default" },
   dependencies = {
-    {
-      "https://github.com/zbirenbaum/copilot.lua",
-      opts = {
-        suggestion = { enabled = false },
-        panel = { enabled = false },
-      },
-    },
-    {
-      "https://github.com/fang2hou/blink-copilot",
-    },
+    -- {
+    --   "https://github.com/zbirenbaum/copilot.lua",
+    --   opts = {
+    --     suggestion = { enabled = false },
+    --     panel = { enabled = false },
+    --   },
+    -- },
+    -- {
+    --   "https://github.com/fang2hou/blink-copilot",
+    -- },
   },
   opts = {
     keymap = {
@@ -123,7 +123,8 @@ return {
     -- Default list of enabled providers defined so that you can extend it
     -- elsewhere in your config, without redefining it, due to `opts_extend`.
     sources = {
-      default = { "lsp", "copilot", "path", "buffer" },
+      -- default = { "lsp", "copilot", "path", "buffer" },
+      default = { "lsp", "path", "buffer" },
       per_filetype = { codecompanion = { "codecompanion" } },
       providers = {
         buffer = {
@@ -131,12 +132,12 @@ return {
             return not vim.tbl_contains({ "DressingInput" }, vim.bo.filetype)
           end,
         },
-        copilot = {
-          name = "copilot",
-          module = "blink-copilot",
-          score_offset = 100,
-          async = true,
-        },
+        -- copilot = {
+        --   name = "copilot",
+        --   module = "blink-copilot",
+        --   score_offset = 100,
+        --   async = true,
+        -- },
       },
     },
     -- (Default) Rust fuzzy matcher for typo resistance and significantly better

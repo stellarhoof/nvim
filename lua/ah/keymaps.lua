@@ -27,6 +27,9 @@ G.map({ "n", "v" }, ":", ",", { noremap = true })
 G.map({ "n", "v" }, "k", "gk", { noremap = true })
 G.map({ "n", "v" }, "j", "gj", { noremap = true })
 
+-- Terminal mappings
+G.tmap("jk", "<c-\\><c-n>", { noremap = true })
+
 G.map({ "i", "n", "s", "x" }, "<c-s>", vim.cmd.wall, { desc = "Write all buffers" })
 
 G.nmap(
@@ -41,7 +44,9 @@ G.cmap(
   { noremap = true, desc = "Expand to directory of current file." }
 )
 
--- UI Show/Toggles
+-- UI
+
+G.nmap("<leader>ur", "<cmd>restart<cr>", { desc = "Restart UI" })
 
 G.nmap("<leader>ui", vim.show_pos, { desc = "Show items at a given buffer position." })
 

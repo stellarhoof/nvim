@@ -18,7 +18,11 @@ return {
       colored = false,
     }
     return {
-      options = { section_separators = "", component_separators = "" },
+      options = {
+        theme = "zenwritten",
+        section_separators = "",
+        component_separators = "",
+      },
       -- Manage statusline for buffers with the following filetypes
       extensions = { "fugitive", "man", "oil", "overseer", "quickfix", "trouble" },
       sections = {

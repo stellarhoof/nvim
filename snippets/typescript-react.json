@@ -1,14 +1,12 @@
 {
   "comp": {
     "body": [
-      "import React from 'react'",
-      "",
-      "interface ${1:Component}Props {",
+      "interface ${1:$TM_FILENAME_BASE}Props {",
       "  className?: string$2",
       "}",
       "",
-      "function ${1:Component}(props: ${1:Component}Props) {",
-      "  return ${0:$TM_SELECTED_TEXT}",
+      "function ${1:$TM_FILENAME_BASE}(props: ${1:$TM_FILENAME_BASE}Props) {",
+      "  return <div className={props.className} />",
       "}"
     ],
     "desc": "React component",
@@ -36,5 +34,35 @@
     ],
     "desc": "React component with tailwind variants",
     "prefix": "compvar"
+  },
+  "ecomp": {
+    "body": [
+      "import React from 'react'",
+      "",
+      "interface ${1:$TM_FILENAME_BASE}Props {",
+      "  className?: string$2",
+      "}",
+      "",
+      "export function ${1:$TM_FILENAME_BASE}(props: ${1:$TM_FILENAME_BASE}Props) {",
+      "  return <div className={props.className} />",
+      "}"
+    ],
+    "prefix": "compf"
+  },
+  "story": {
+    "body": [
+      "import type { Meta, StoryObj } from '@storybook/react'",
+      "",
+      "import { ${1:$TM_FILENAME_BASE} } from './${1:$TM_FILENAME_BASE}.tsx'",
+      "",
+      "export default {",
+      "  component: ${1:$TM_FILENAME_BASE},",
+      "} satisfies Meta<typeof ${1:$TM_FILENAME_BASE}>",
+      "",
+      "type Story = StoryObj<typeof ${1:$TM_FILENAME_BASE}>",
+      "",
+      "export const Default: Story = {}"
+    ],
+    "prefix": "story"
   }
 }

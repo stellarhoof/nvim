@@ -18,8 +18,11 @@ require("ah.autocommands")
 -- Configure diagnostics
 require("ah.diagnostics")
 
+-- Configure lsp
+require("ah.lsp")
+
 -- Setup plugins. Install plugin manager if necessary.
 require("ah.lazy")
 
--- https://github.com/neovim/neovim/issues/32074
-vim.lsp.enable({ "vtsls", "biome", "eslint", "lua_ls", "tailwindcss" })
+-- Enable experimental UI intended to replace the message grid in the TUI
+require("vim._extui").enable({ enable = true })

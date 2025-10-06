@@ -6,6 +6,10 @@
 - Make component from () into {return}
 - Exit current block in insert mode via <tab> or another keybinding. Use matchup plugin instead of tabout
 - Per lsp diagnostic counts
+- Workspace diagnostics
+- Remove fidget and output messages myself
+- Disable completion in vim ui Select
+- Setup debugging
 
 # Mappings
 
@@ -131,7 +135,6 @@ Each of the following three things should be able to switch to each other
   - Same for file browser
   - Same for project listing
 - There should be a way of finding all the project directories under a certain directory
-
   - There may be projects inside projects.
     - Monorepo.
       - Do not consider monorepo packages different projects because while working on a monorepo, sub-project reference each other and it's annoying to have to have to switch to a parent project to search sibling projects. Unless I can come up with a reasonable workflow.

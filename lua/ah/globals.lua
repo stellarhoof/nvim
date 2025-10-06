@@ -26,6 +26,7 @@ G.map = vim.keymap.set
 G.unmap = vim.keymap.del
 G.nmap = mapmode("n")
 G.imap = mapmode("i")
+G.tmap = mapmode("t")
 G.vmap = mapmode("v")
 G.cmap = mapmode("c")
 G.omap = mapmode("o")

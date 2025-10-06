@@ -102,12 +102,12 @@
     "prefix": "it"
   },
   "js": {
-    "body": "JSON.stringify(${1:$TM_SELECTED_TEXT})",
+    "body": "JSON.stringify(${0:$TM_SELECTED_TEXT})",
     "desc": "JSON stringify",
     "prefix": "js"
   },
   "jsi": {
-    "body": "JSON.stringify(${1:$TM_SELECTED_TEXT}, null, 2)",
+    "body": "JSON.stringify(${0:$TM_SELECTED_TEXT}, null, 2)",
     "desc": "Indented JSON stringify",
     "prefix": "jsi"
   },

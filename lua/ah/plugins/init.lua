@@ -5,12 +5,16 @@ local colorschemes = {
     priority = 1000,
     dependencies = { "https://github.com/rktjmp/lush.nvim" },
     config = function()
-      vim.g.zenbones = { italic_comments = false }
-      vim.g.zenwritten = { italic_comments = false }
+      G.au({ "ColorScheme" }, {
+        pattern = "zen*",
+        desc = "Override zenbones colorscheme highlights",
+        callback = function()
+          G.hl_update("Constant", { italic = false })
+          G.hl_link("FloatBorder", "NormalFloat")
+          G.hl_link("FloatTitle", "NormalFloat", { bold = true })
+        end,
+      })
     end,
-  },
-  {
-    "https://github.com/olimorris/onedarkpro.nvim",
   },
 }
 
@@ -283,42 +287,6 @@ local ui = {
     end,
   },
 
-  -- Neovim plugin to improve the default vim.ui interfaces.
-  {
-    "https://github.com/stevearc/dressing.nvim",
-    event = "VeryLazy",
-    opts = {
-      input = {
-        title_pos = "center",
-        border = "single",
-      },
-      select = {
-        get_config = function(opts)
-          if opts.kind == "codeaction" or opts.kind == "snippets" then
-            return {
-              backend = "nui",
-              nui = {
-                relative = "cursor",
-                position = { row = 1, col = 0 },
-                border = { style = "single" },
-              },
-            }
-          end
-          return { backend = "fzf_lua" }
-        end,
-      },
-    },
-    config = function(_, opts)
-      require("dressing").setup(opts)
-      G.au({ "FileType" }, {
-        pattern = "DressingSelect",
-        callback = function(evt)
-          G.nmap("q", "<cmd>q<cr>", { buffer = evt.buf })
-        end,
-      })
-    end,
-  },
-
   -- Displays popup with possible keybindings of the command you started typing.
   {
     "https://github.com/folke/which-key.nvim",
@@ -343,32 +311,6 @@ local ui = {
     end,
   },
 
-  -- A high-performance color highlighter with no external dependencies.
-  {
-    "https://github.com/NvChad/nvim-colorizer.lua",
-    cmd = { "ColorizerToggle" },
-    opts = {
-      filetypes = {},
-      user_default_options = { names = false, hsl_fn = true, rgb_fn = true },
-    },
-  },
-
-  -- Capture and show any messages in a customisable (floating) buffer.
-  {
-    "https://github.com/AckslD/messages.nvim",
-    opts = {
-      post_open_float = function()
-        G.nmap("q", "<cmd>q<cr>", { buffer = true })
-      end,
-    },
-    config = function(_, opts)
-      require("messages").setup(opts)
-      local alias = vim.cmd.Alias
-      alias({ args = { "ms", "Messages" } })
-      alias({ args = { "mess", "Messages" } })
-    end,
-  },
-
   -- The undo history visualizer for VIM
   {
     "https://github.com/mbbill/undotree",
@@ -385,64 +327,6 @@ local ui = {
       vim.g.undotree_SetFocusWhenToggle = 1
       vim.g.undotree_SplitWidth = 40
     end,
-  },
-
-  -- -- Neovim file explorer: edit your filesystem like a buffer
-  -- {
-  --   "https://github.com/stevearc/oil.nvim",
-  --   opts = {
-  --     cleanup_delay_ms = false,
-  --     view_options = { show_hidden = true },
-  --     skip_confirm_for_simple_edits = true,
-  --     -- :h |oil-config|
-  --     keymaps = {
-  --       ["<C-v>"] = false,
-  --       ["<C-s>"] = false,
-  --       ["<C-h>"] = false,
-  --       ["<C-l>"] = false,
-  --       ["<C-c>"] = false,
-  --       ["~"] = false,
-  --       ["gs"] = false,
-  --       ["g\\"] = false,
-  --     },
-  --     win_options = {
-  --       conceallevel = 0,
-  --     },
-  --     lsp_file_methods = {
-  --       -- Time to wait for LSP file operations to complete before skipping
-  --       timeout_ms = 2000,
-  --       -- Set to true to autosave buffers that are updated with LSP willRenameFiles
-  --       -- Set to "unmodified" to only save unmodified buffers
-  --       autosave_changes = true,
-  --     },
-  --   },
-  --   config = function(_, opts)
-  --     require("oil").setup(opts)
-  --     G.nmap("-", vim.cmd.Oil, { desc = "Open buffer directory" })
-  --     G.au({ "FileType" }, {
-  --       pattern = "oil",
-  --       callback = function()
-  --         vim.b.dir = require("oil").get_current_dir()
-  --       end,
-  --     })
-  --   end,
-  -- },
-
-  -- Plugin to improve viewing Markdown files in Neovim
-  {
-    "https://github.com/MeanderingProgrammer/render-markdown.nvim",
-    opts = {
-      -- Filetypes this plugin will run on.
-      file_types = { "markdown", "codecompanion" },
-      render_modes = { "n", "i", "c", "t" },
-      sign = {
-        enabled = false,
-      },
-      code = {
-        language_name = false,
-        border = "thin",
-      },
-    },
   },
 }
 
@@ -463,10 +347,8 @@ local external = {
         -- LSP
         "eslint-lsp",
         "lua-language-server",
-        "tailwind-language-server",
-        -- "emmet-language-server",
-        "vtsls", -- Prefer this one over typescript-language-server
-        "typescript-language-server",
+        "tailwindcss-language-server",
+        "vtsls",
         -- Formatters
         "prettierd",
         "stylua",
@@ -476,7 +358,6 @@ local external = {
         "jq",
         -- DAP
         "js-debug-adapter",
-        "chrome-debug-adapter",
       },
     },
   },
@@ -534,6 +415,9 @@ local external = {
         xml = { "xmllint", "--format", "-" },
         html = { "xmllint", "--format", "--html", "-" },
       },
+      ui = {
+        max_response_size = 1024000,
+      },
     },
     config = function(_, opts)
       require("kulala").setup(opts)
@@ -550,25 +434,10 @@ local external = {
     end,
   },
 
-  -- Project-wide search and replace
-  {
-    "https://github.com/MagicDuck/grug-far.nvim",
-    keys = {
-      {
-        "<leader>e",
-        function()
-          require("grug-far").open({ transient = true })
-          -- require("spectre").toggle({ cwd = G.buf_cwd() })
-        end,
-        desc = "Toggle search and replace",
-      },
-    },
-    opts = {},
-  },
-
   -- AI-powered coding, seamlessly in Neovim
   {
     "https://github.com/olimorris/codecompanion.nvim",
+    enabled = false,
     dependencies = {
       {
         "https://github.com/ravitemer/codecompanion-history.nvim",
@@ -584,13 +453,13 @@ local external = {
     config = function(_, opts)
       G.map(
         { "n", "v" },
-        "<C-a>",
+        "<leader>ca",
         require("codecompanion").actions,
         { noremap = true, silent = true }
       )
       G.map(
         { "n", "v" },
-        "<leader>c",
+        "<leader>ct",
         require("codecompanion").toggle,
         { noremap = true, silent = true }
       )
@@ -604,6 +473,7 @@ local other = {
   {
     "https://github.com/neovim/nvim-lspconfig",
   },
+  -- Extra commands on top of vtsls. See `after/lsp/vtsls.lua`
   {
     "https://github.com/yioneko/nvim-vtsls",
   },

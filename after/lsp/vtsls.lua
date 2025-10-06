@@ -18,7 +18,6 @@ local function typescript_root_dir(filename)
   return root_pattern("tsconfig.json", ".git", "jsconfig.json", "package.json")(filename)
 end
 
--- TODO: Investigate https://github.com/pmizio/typescript-tools.nvim
 return {
   -- root_dir = typescript_root_dir,
   -- https://github.com/yioneko/vtsls/blob/41ad8c9d3f9dbd122ce3259564f34d020b7d71d9/packages/service/configuration.schema.json
@@ -26,50 +25,35 @@ return {
     typescript = {
       updateImportsOnFileMove = "always",
       preferTypeOnlyAutoImports = true,
-      tsserver = {
-        maxTsServerMemory = 6144,
-      },
+      tsserver = { maxTsServerMemory = 8192 },
+    },
+    javascript = {
+      updateImportsOnFileMove = "always",
     },
     vtsls = {
       -- https://github.com/yioneko/vtsls#typescript-version
       autoUseWorkspaceTsdk = true,
-      enableMoveToFileCodeAction = true,
-      -- This may make completions more performant
-      -- experimental.completion.enableServerSideFuzzyMatch
     },
   },
   on_attach = function(_, bufnr)
+    G.nmap("grf", require("vtsls").commands.file_references, {
+      buffer = bufnr,
+      desc = "[vtsls] commands.file_references",
+    })
+
     G.nmap("grs", require("vtsls").commands.source_actions, {
       buffer = bufnr,
-      desc = "Select source action",
+      desc = "[vtsls] commands.source_actions",
     })
 
-    G.nmap("grm", function()
-      local old_fpath = vim.fn.expand("%")
-      vim.ui.input({
-        prompt = "Rename file and update imports",
-        default = old_fpath,
-      }, function(new_fpath)
-        require("vtsls").rename(
-          vim.fn.fnamemodify(old_fpath, ":p"),
-          vim.fn.fnamemodify(new_fpath, ":p")
-        )
-      end)
-    end, {
+    G.nmap("grm", require("vtsls").commands.rename_file, {
       buffer = bufnr,
-      desc = "Rename file",
-    })
-
-    -- Non refactoring mappings
-
-    G.nmap("<leader>li", require("vtsls").commands.file_references, {
-      buffer = bufnr,
-      desc = "List sites where current file is imported",
+      desc = "[vtsls] commands.rename_file",
     })
 
     G.nmap("gd", require("vtsls").commands.goto_source_definition, {
       buffer = bufnr,
-      desc = "Goto source definition of symbol under cursor",
+      desc = "[vtsls] commands.goto_source_definition",
     })
   end,
 }
