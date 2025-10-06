@@ -437,7 +437,6 @@ local external = {
   -- AI-powered coding, seamlessly in Neovim
   {
     "https://github.com/olimorris/codecompanion.nvim",
-    enabled = false,
     dependencies = {
       {
         "https://github.com/ravitemer/codecompanion-history.nvim",
@@ -450,22 +449,32 @@ local external = {
         },
       },
     },
-    config = function(_, opts)
-      G.map(
-        { "n", "v" },
+    keys = {
+      {
+        modes = { "n", "v" },
         "<leader>ca",
-        require("codecompanion").actions,
-        { noremap = true, silent = true }
-      )
-      G.map(
-        { "n", "v" },
+        function()
+          require("codecompanion").actions()
+        end,
+        { noremap = true, silent = true },
+      },
+      {
+        modes = { "n", "v" },
         "<leader>ct",
-        require("codecompanion").toggle,
-        { noremap = true, silent = true }
-      )
-      G.vmap("ga", require("codecompanion").add, { noremap = true, silent = true })
-      require("codecompanion").setup(opts)
-    end,
+        function()
+          require("codecompanion").toggle()
+        end,
+        { noremap = true, silent = true },
+      },
+      {
+        modes = { "v" },
+        "ga",
+        function()
+          require("codecompanion").add()
+        end,
+        { noremap = true, silent = true },
+      },
+    },
   },
 }
 
