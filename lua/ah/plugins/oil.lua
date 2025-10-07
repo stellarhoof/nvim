@@ -31,7 +31,7 @@ return {
   config = function(_, opts)
     require("oil").setup(opts)
     G.nmap("-", vim.cmd.Oil, { desc = "Open buffer directory" })
-    G.au({ "FileType" }, {
+    vim.api.nvim_create_autocmd({ "FileType" }, {
       pattern = "oil",
       callback = function()
         vim.b.dir = require("oil").get_current_dir()

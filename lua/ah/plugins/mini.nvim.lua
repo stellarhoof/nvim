@@ -91,7 +91,7 @@ local function setup_snippets()
       expand = "",
     },
   })
-  G.au({ "VimEnter" }, {
+  vim.api.nvim_create_autocmd({ "VimEnter" }, {
     once = true,
     callback = function()
       table.insert(MiniSnippets.config.snippets, package_json_loader(G.root .. "/snippets"))

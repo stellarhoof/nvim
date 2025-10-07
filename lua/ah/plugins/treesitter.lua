@@ -36,27 +36,28 @@ local ensure_installed = {
 return {
   "https://github.com/nvim-treesitter/nvim-treesitter",
   build = ":TSUpdate",
-  config = function()
-    require("nvim-treesitter.configs").setup({
-      sync_install = true,
-      auto_install = false,
-      ignore_install = {},
-      ensure_installed = ensure_installed,
-      indent = {
-        enable = false,
-      },
-      highlight = {
-        enable = true,
-        -- Disable slow treesitter highlight for large files
-        disable = function(lang, buf)
-          local max_filesize = 100 * 1024 -- 100 KB
-          local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-          if ok and stats and stats.size > max_filesize then
-            print("Disabling treesitter highlighting...")
-            return true
-          end
-        end,
-      },
-    })
+  opts = {
+    sync_install = true,
+    auto_install = false,
+    ignore_install = {},
+    ensure_installed = ensure_installed,
+    indent = {
+      enable = false,
+    },
+    highlight = {
+      enable = true,
+      -- Disable slow treesitter highlight for large files
+      disable = function(_, buf)
+        local max_filesize = 100 * 1024 -- 100 KB
+        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+        if ok and stats and stats.size > max_filesize then
+          print("Disabling treesitter highlighting...")
+          return true
+        end
+      end,
+    },
+  },
+  config = function(_, opts)
+    require("nvim-treesitter.configs").setup(opts)
   end,
 }

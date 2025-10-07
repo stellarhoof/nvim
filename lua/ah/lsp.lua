@@ -7,7 +7,7 @@ vim.lsp.semantic_tokens.enable(false)
 vim.lsp.enable({ "vtsls", "biome", "eslint", "lua_ls", "tailwindcss" })
 
 -- https://github.com/jdhao/nvim-config/blob/main/lua/config/lsp.lua
-G.au({ "LspAttach" }, {
+vim.api.nvim_create_autocmd({ "LspAttach" }, {
   callback = function(args)
     local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
 

@@ -5,7 +5,7 @@ local colorschemes = {
     priority = 1000,
     dependencies = { "https://github.com/rktjmp/lush.nvim" },
     config = function()
-      G.au({ "ColorScheme" }, {
+      vim.api.nvim_create_autocmd({ "ColorScheme" }, {
         pattern = "zen*",
         desc = "Override zenbones colorscheme highlights",
         callback = function()
@@ -421,7 +421,7 @@ local external = {
     },
     config = function(_, opts)
       require("kulala").setup(opts)
-      G.au("FileType", {
+      vim.api.nvim_create_autocmd("FileType", {
         pattern = "http",
         callback = function()
           G.nmap(

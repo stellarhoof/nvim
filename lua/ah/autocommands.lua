@@ -1,14 +1,14 @@
-local group = G.aug("init", {})
+local group = vim.api.nvim_create_augroup("init", {})
 
 -- https://github.com/neovim/neovim/issues/1936
-G.au({ "FocusGained", "TermClose", "TermLeave" }, {
+vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
   group = group,
   desc = "Autoread current file",
   command = "checktime",
 })
 
 -- :h lua-highlight
-G.au({ "TextYankPost" }, {
+vim.api.nvim_create_autocmd({ "TextYankPost" }, {
   group = group,
   desc = "Highlight yanked text",
   callback = function()
@@ -16,7 +16,7 @@ G.au({ "TextYankPost" }, {
   end,
 })
 
-G.au({ "BufReadPost" }, {
+vim.api.nvim_create_autocmd({ "BufReadPost" }, {
   group = group,
   desc = "Go to last location when opening a buffer",
   callback = function(event)
@@ -39,7 +39,7 @@ G.au({ "BufReadPost" }, {
   end,
 })
 
-G.au({ "BufWritePre" }, {
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   group = group,
   desc = "Create missing directories when saving a file",
   callback = function(event)
@@ -50,7 +50,7 @@ G.au({ "BufWritePre" }, {
   end,
 })
 
-G.au({ "ColorScheme" }, {
+vim.api.nvim_create_autocmd({ "ColorScheme" }, {
   group = group,
   desc = "Override general colorscheme highlights",
   callback = function()
@@ -73,5 +73,5 @@ local function wshada_before()
   vim.g.COLORSCHEME = vim.g.colors_name
 end
 
-G.au({ "VimEnter" }, { group = group, callback = rshada_after })
-G.au({ "VimLeavePre" }, { group = group, callback = wshada_before })
+vim.api.nvim_create_autocmd({ "VimEnter" }, { group = group, callback = rshada_after })
+vim.api.nvim_create_autocmd({ "VimLeavePre" }, { group = group, callback = wshada_before })

@@ -7,7 +7,7 @@ return {
     vim.g.dirvish_dovish_map_keys = 0
   end,
   config = function()
-    G.au("FileType", {
+    vim.api.nvim_create_autocmd("FileType", {
       pattern = "dirvish",
       callback = function()
         vim.b.dir = vim.fn.bufname()

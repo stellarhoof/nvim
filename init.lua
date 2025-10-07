@@ -1,9 +1,8 @@
--- This directory
-
 -- Define global utilities
 local globals = require("ah.globals")
 
 -- TODO: Make all globals actually global with _G
+-- This directory
 globals.root = vim.fn.fnamemodify(debug.getinfo(1, "S").source:sub(2), ":h")
 
 -- Set editor options

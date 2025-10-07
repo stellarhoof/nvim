@@ -1,4 +1,6 @@
+---@module 'lazy'
 ---@module 'snacks'
+
 ---@type LazySpec
 return {
   "https://github.com/folke/snacks.nvim",
@@ -16,16 +18,20 @@ return {
         file = { truncate = 1000, icon_width = 3 },
       },
       sources = {
-        smart = { layout = { preset = "select", hidden = { "preview" } } },
-        files = { layout = { preset = "select", hidden = { "preview" } } },
-        git_files = { layout = { preset = "select", hidden = { "preview" } } },
-        buffers = { current = false, layout = { preset = "select", hidden = { "preview" } } },
-        help = { layout = { preset = "sidebar", layout = { width = 80 } } },
-        -- TODO: Preview colorscheme via keymap
-        colorschemes = { layout = { preset = "sidebar", hidden = { "preview" } } },
-        git_branches = { layout = { preset = "bottom", hidden = { "preview" } } },
-        grep = { layout = { preset = "vertical", fullscreen = true, hidden = { "preview" } } },
+        -- stylua: ignore start
+        recent          = { layout = { preset = "vertical", hidden = { "preview" } } },
+        files           = { layout = { preset = "vertical", hidden = { "preview" } } },
+        git_files       = { layout = { preset = "vertical", hidden = { "preview" } } },
+        buffers         = { layout = { preset = "vertical", hidden = { "preview" } }, current = false },
+        command_history = { layout = { preset = "vertical", hidden = { "preview" } } },
+        git_branches    = { layout = { preset = "vertical", hidden = { "preview" }, fullscreen = true } },
+        grep            = { layout = { preset = "vertical", hidden = { "preview" }, fullscreen = true } },
+        colorschemes    = { layout = { preset = "sidebar", hidden = { "preview" } } },
+        help            = { layout = { preset = "default", fullscreen = true } },
+        zoxide          = { layout = { preset = "sidebar", layout = { width = 50 } } },
+        -- stylua: ignore end
         projects = {
+          layout = { preset = "sidebar", layout = { width = 50 } },
           patterns = { ".git", "package.json", "tsconfig.json" },
           recent = false,
           dev = {
@@ -40,23 +46,26 @@ return {
     },
   },
   keys = {
-  -- stylua: ignore start
-    { "<leader>k", function() Snacks.picker() end, desc = "Picker" },
+    -- stylua: ignore start
+    { "<leader>k", function() Snacks.picker.pickers() end, desc = "Snacks.picker.pickers" },
     -- Common pickers
-    { "<leader>h", function() Snacks.picker.smart({ cwd = G.buf_cwd() }) end, desc = "Snacks.picker.smart" },
-    { "<leader>f", function() Snacks.picker.git_files({ cwd = G.buf_cwd() }) end, desc = "Snacks.picker.git_files" },
     { "<leader>,", function() Snacks.picker.buffers() end, desc = "Snacks.picker.buffers" },
-    { "<leader>/", function() Snacks.picker.grep() end, desc = "Snacks.picker.grep" },
+    { "<leader>/", function() Snacks.picker.grep({ cwd = G.buf_cwd() }) end, desc = "Snacks.picker.grep" },
+    { "<leader>:", function() Snacks.picker.command_history() end, desc = "Snacks.picker.command_history" },
+    { "<leader>?", function() Snacks.picker.help() end, desc = "Snacks.picker.help" },
+    { "<leader>r", function() Snacks.picker.recent({ cwd = G.buf_cwd() }) end, desc = "Snacks.picker.recent" },
+    { "<leader>f", function() Snacks.picker.git_files({ cwd = G.buf_cwd() }) end, desc = "Snacks.picker.git_files" },
     -- Git
+    -- TODO: Combine these two by providing a keymap to switch between local and
+    -- all branches
     { "<leader>gl", function() Snacks.picker.git_branches() end, desc = "Snacks.picker.git_branches" },
     { "<leader>gb", function() Snacks.picker.git_branches({ all = true }) end, desc = "Snacks.picker.git_branches (all)" },
     -- Search
     { "<leader>si", function() require("import").pick() end, desc = "imports" },
-    { "<leader>sh", function() Snacks.picker.help() end, desc = "Snacks.picker.help" },
-    { "<leader>sb", function() Snacks.picker.lines() end, desc = "Snacks.picker.lines" },
     { "<leader>sc", function() Snacks.picker.colorschemes() end, desc = "Snacks.picker.colorschemes" },
     { "<leader>sp", function() Snacks.picker.projects() end, desc = "Snacks.picker.projects" },
     { "<leader>sl", function() Snacks.picker.lazy() end, desc = "Snacks.picker.lazy" },
+    { "<leader>sz", function() Snacks.picker.zoxide() end, desc = "Snacks.picker.zoxide" },
     -- stylua: ignore end
   },
   config = function(_, opts)
