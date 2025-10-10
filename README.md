@@ -10,6 +10,7 @@
 - Disable completion in vim ui Select
 - Setup debugging
 - Picker: Cycle through list of cwds
+- Lists of quickfix lists
 
 # Mappings
 
@@ -40,4 +41,5 @@ https://github.com/OlegGulevskyy/better-ts-errors.nvim
 https://github.com/rgroli/other.nvim
 https://github.com/kevinhwang91/nvim-bqf
 https://github.com/CKolkey/ts-node-action
+https://github.com/rktjmp/highlight-current-n.nvim
 https://github.com/Wansmer/treesj (api is too messy)

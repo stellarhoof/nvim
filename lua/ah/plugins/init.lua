@@ -476,6 +476,13 @@ local external = {
       },
     },
   },
+
+  {
+    "https://github.com/MagicDuck/grug-far.nvim",
+    opts = {
+      normalModeSearch = false,
+    },
+  },
 }
 
 local other = {
