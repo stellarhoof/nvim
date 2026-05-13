@@ -51,7 +51,7 @@
   },
   "story": {
     "body": [
-      "import type { Meta, StoryObj } from '@storybook/react'",
+      "import type { Meta, StoryObj } from '@storybook/react-vite'",
       "",
       "import { ${1:$TM_FILENAME_BASE} } from './${1:$TM_FILENAME_BASE}.tsx'",
       "",

@@ -25,6 +25,7 @@ https://boltless.me/posts/neovim-config-without-plugins-2025/
 [How to write a linter using tree-sitter in an hour](https://siraben.dev/2022/03/22/tree-sitter-linter.html)
 [Lua wiki](http://lua-users.org/wiki/LuaDirectory)
 [Lua manual](http://www.lua.org/manual/5.4/)
+[Neovim wrapper with Nix from scratch](https://ayats.org/blog/neovim-wrapper)
 
 # Interesting
 
@@ -43,3 +44,9 @@ https://github.com/kevinhwang91/nvim-bqf
 https://github.com/CKolkey/ts-node-action
 https://github.com/rktjmp/highlight-current-n.nvim
 https://github.com/Wansmer/treesj (api is too messy)
+
+# AI
+
+https://github.com/yetone/avante.nvim
+https://github.com/pablopunk/pi.nvim
+https://github.com/carlos-algms/agentic.nvim

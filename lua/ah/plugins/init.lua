@@ -1,23 +1,3 @@
--- Colorscheme plugins
-local colorschemes = {
-  {
-    "https://github.com/mcchrish/zenbones.nvim",
-    priority = 1000,
-    dependencies = { "https://github.com/rktjmp/lush.nvim" },
-    config = function()
-      vim.api.nvim_create_autocmd({ "ColorScheme" }, {
-        pattern = "zen*",
-        desc = "Override zenbones colorscheme highlights",
-        callback = function()
-          G.hl_update("Constant", { italic = false })
-          G.hl_link("FloatBorder", "NormalFloat")
-          G.hl_link("FloatTitle", "NormalFloat", { bold = true })
-        end,
-      })
-    end,
-  },
-}
-
 -- Plugins that provide motions and/or movements
 local motions = {
   -- Move 'up' or 'down' without changing the cursor column.
@@ -71,27 +51,32 @@ local editing = {
   {
     "https://github.com/kylechui/nvim-surround",
     event = "VeryLazy",
-    opts = {
+    config = function()
+      vim.g.nvim_surround_no_normal_mappings = true
       -- https://github.com/ggandor/leap.nvim/discussions/59#discussioncomment-3943323
-      -- If the key ends in "_line", the delimiter pair is added on new lines.
-      -- If the key ends in "_cur", the surround is performed around the current line.
-      keymaps = {
-        insert = "<C-g>s",
-        insert_line = "<C-g>S",
-        normal = "s",
-        normal_cur = "ss",
-        normal_line = "S",
-        normal_cur_line = "SS",
-        visual = "s",
-        visual_line = "S",
-        delete = "ds",
-        change = "cs",
-      },
-      aliases = {
-        ["0"] = ")",
-        ["9"] = "(",
-      },
-    },
+      -- See `:h nvim-surround.keymaps`
+      vim.keymap.set("n", "s", "<Plug>(nvim-surround-normal)", {
+        desc = "Add a surrounding pair around a motion (normal mode)",
+      })
+      vim.keymap.set("x", "s", "<Plug>(nvim-surround-visual)", {
+        desc = "Add a surrounding pair around a visual selection",
+      })
+      vim.keymap.set("n", "ss", "<Plug>(nvim-surround-normal-cur)", {
+        desc = "Add a surrounding pair around the current line (normal mode)",
+      })
+      vim.keymap.set("n", "S", "<Plug>(nvim-surround-normal-line)", {
+        desc = "Add a surrounding pair around a motion, on new lines (normal mode)",
+      })
+      vim.keymap.set("x", "S", "<Plug>(nvim-surround-visual-line)", {
+        desc = "Add a surrounding pair around a visual selection, on new lines",
+      })
+      vim.keymap.set("n", "ds", "<Plug>(nvim-surround-delete)", {
+        desc = "Delete a surrounding pair",
+      })
+      vim.keymap.set("n", "cs", "<Plug>(nvim-surround-change)", {
+        desc = "Change a surrounding pair",
+      })
+    end,
   },
 
   -- Reorder delimited items.
@@ -218,6 +203,11 @@ local editing = {
       G.map({ "i", "c" }, "<c-u>", readline.backward_kill_line, { desc = "Backward kill line" })
     end,
   },
+
+  {
+    -- Make Vim handle line and column numbers in file names with a minimum of fuss
+    "https://github.com/wsdjeg/vim-fetch",
+  },
 }
 
 -- Plugins that enhance neovim's ui or provide ui components
@@ -225,6 +215,7 @@ local ui = {
   -- Extensible UI for Neovim notifications and LSP progress messages.
   {
     "https://github.com/j-hui/fidget.nvim",
+    enabled = false,
     opts = {
       progress = {
         display = {
@@ -261,19 +252,10 @@ local ui = {
     cmd = "Linediff",
   },
 
-  -- File type icons
-  {
-    "https://github.com/nvim-tree/nvim-web-devicons",
-    lazy = true,
-    -- enabled = false,
-    opts = { color_icons = false, default = true },
-  },
-
   -- Easily create and edit VSCode style snippets
   {
     "https://github.com/chrisgrieser/nvim-scissors",
     opts = {
-      jsonFormatter = "jq",
       backdrop = { enabled = false },
       snippetSelection = { picker = "telescope" },
       icons = { scissors = "" },
@@ -328,6 +310,11 @@ local ui = {
       vim.g.undotree_SplitWidth = 40
     end,
   },
+
+  -- Integration for https://pi.dev, the minimal coding agent
+  {
+    "https://github.com/pablopunk/pi.nvim",
+  },
 }
 
 -- Plugins that interact with external tools
@@ -362,47 +349,6 @@ local external = {
     },
   },
 
-  -- Lightweight yet powerful formatter plugin for Neovim
-  {
-    "https://github.com/stevearc/conform.nvim",
-    event = "VeryLazy",
-    opts = {
-      formatters = {
-        kulala = {
-          command = "kulala-fmt",
-          args = { "$FILENAME" },
-          stdin = false,
-        },
-      },
-      formatters_by_ft = {
-        -- sh = { "shfmt" },
-        nix = { "nixfmt" },
-        lua = { "stylua" },
-        python = { "isort", "black" },
-        markdown = { "prettierd" },
-        html = { "prettierd" },
-        http = { "kulala" },
-        svg = { "prettierd" },
-        json = { "biome-check", "prettierd" },
-        jsonc = { "biome-check", "prettierd" },
-        javascript = { "biome-check", "prettierd" },
-        javascriptreact = { "biome-check", "prettierd" },
-        typescript = { "biome-check", "prettierd" },
-        typescriptreact = { "biome-check", "prettierd" },
-      },
-      default_format_opts = {
-        stop_after_first = true,
-      },
-      format_on_save = {
-        timeout_ms = 500,
-        lsp_fallback = false,
-      },
-      format_after_save = {
-        lsp_fallback = false,
-      },
-    },
-  },
-
   -- A fast Neovim http client written in Lua.
   {
     "https://github.com/mistweaverco/kulala.nvim",
@@ -410,6 +356,8 @@ local external = {
     opts = {
       default_env = "dev",
       kulala_keymaps = false,
+      kulala_keymaps_prefix = "<leader>R",
+      global_keymaps = false,
       formatters = {
         json = { "jq", "." },
         xml = { "xmllint", "--format", "-" },
@@ -434,61 +382,50 @@ local external = {
     end,
   },
 
-  -- AI-powered coding, seamlessly in Neovim
-  {
-    "https://github.com/olimorris/codecompanion.nvim",
-    dependencies = {
-      {
-        "https://github.com/ravitemer/codecompanion-history.nvim",
-      },
-    },
-    opts = {
-      extensions = {
-        history = {
-          enabled = true,
-        },
-      },
-    },
-    keys = {
-      {
-        modes = { "n", "v" },
-        "<leader>ca",
-        function()
-          require("codecompanion").actions()
-        end,
-        { noremap = true, silent = true },
-      },
-      {
-        modes = { "n", "v" },
-        "<leader>ct",
-        function()
-          require("codecompanion").toggle()
-        end,
-        { noremap = true, silent = true },
-      },
-      {
-        modes = { "v" },
-        "ga",
-        function()
-          require("codecompanion").add()
-        end,
-        { noremap = true, silent = true },
-      },
-    },
-  },
-
   {
     "https://github.com/MagicDuck/grug-far.nvim",
     opts = {
-      normalModeSearch = false,
+      normalModeSearch = true,
+      startInInsertMode = false,
+      helpLine = { enabled = false },
+      showCompactInputs = true,
+      showInputsTopPadding = false,
+      showStatusIcon = false,
+      resultsSeparatorLineChar = " ",
+      icons = {
+        searchInput = "",
+        replaceInput = "",
+        filesFilterInput = "",
+        flagsInput = "",
+        pathsInput = "",
+      },
+      folding = {
+        foldcolumn = "0",
+      },
+      resultLocation = {
+        showNumberLabel = false,
+      },
     },
+    config = function(_, opts)
+      require("grug-far").setup(opts)
+      G.nmap(
+        "<leader>r",
+        require("grug-far").open,
+        { noremap = true, buffer = true, desc = "Run request under the cursor" }
+      )
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("grug-far-keybindings", { clear = true }),
+        pattern = { "grug-far" },
+        callback = function()
+          vim.wo.signcolumn = "no"
+          G.hl_link("GrugFarResultsPath", "Directory")
+        end,
+      })
+    end,
   },
 }
 
 local other = {
-  {
-    "https://github.com/neovim/nvim-lspconfig",
-  },
   -- Extra commands on top of vtsls. See `after/lsp/vtsls.lua`
   {
     "https://github.com/yioneko/nvim-vtsls",
@@ -509,7 +446,7 @@ local other = {
     },
   },
   {
-    "https://github.com/sindrets/diffview.nvim",
+    "https://github.com/dlyongemallo/diffview.nvim",
   },
 }
 

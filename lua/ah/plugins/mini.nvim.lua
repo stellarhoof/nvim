@@ -94,22 +94,10 @@ local function setup_snippets()
   vim.api.nvim_create_autocmd({ "VimEnter" }, {
     once = true,
     callback = function()
-      table.insert(MiniSnippets.config.snippets, package_json_loader(G.root .. "/snippets"))
+      local config_path = vim.fn.stdpath("config")
+      table.insert(MiniSnippets.config.snippets, package_json_loader(config_path .. "/snippets"))
     end,
   })
-end
-
-local function setup_icons()
-  require("mini.icons").setup()
-  G.hl_link("MiniIconsAzure", "Normal")
-  G.hl_link("MiniIconsBlue", "Normal")
-  G.hl_link("MiniIconsCyan", "Normal")
-  G.hl_link("MiniIconsGreen", "Normal")
-  G.hl_link("MiniIconsGrey", "Normal")
-  G.hl_link("MiniIconsOrange", "Normal")
-  G.hl_link("MiniIconsPurple", "Normal")
-  G.hl_link("MiniIconsRed", "Normal")
-  G.hl_link("MiniIconsYellow", "Normal")
 end
 
 return {
@@ -117,6 +105,7 @@ return {
   version = false,
   config = function()
     setup_snippets()
-    -- setup_icons()
+    require("mini.icons").setup()
+    require("mini.icons").mock_nvim_web_devicons()
   end,
 }

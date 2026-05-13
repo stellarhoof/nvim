@@ -125,7 +125,6 @@ return {
     sources = {
       -- default = { "lsp", "copilot", "path", "buffer" },
       default = { "lsp", "path", "buffer" },
-      per_filetype = { codecompanion = { "codecompanion" } },
       providers = {
         buffer = {
           enabled = function()

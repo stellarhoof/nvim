@@ -62,69 +62,65 @@ See `:h vim.opt` for more information.
 
 --]]
 
+-- Set by minimax
 vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
-vim.opt.winborder = "single"
-vim.opt.smoothscroll = true
-vim.opt.grepprg = "rg --vimgrep $*"
-vim.opt.exrc = true
-vim.opt.showtabline = 1
-vim.opt.laststatus = 2
-vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,t:block-TermCursor"
-vim.opt.updatetime = 300 -- CursorHold
--- vim.opt.pumheight = 15
-vim.opt.cpoptions = "aABceFs_q"
-vim.opt.smartcase = true
-vim.opt.ignorecase = true
-vim.opt.wrapscan = false
-vim.opt.shiftround = true
-vim.opt.startofline = false
-vim.opt.gdefault = true
-vim.opt.wildignorecase = true
-vim.opt.listchars = { tab = "»·", trail = ".", eol = "¬" }
-vim.opt.showbreak = "↪ "
-vim.opt.splitright = true
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
-vim.opt.softtabstop = 2
-vim.opt.swapfile = false
-vim.opt.textwidth = 80
-vim.opt.expandtab = true
-vim.opt.matchpairs = { "(:)", "{:}", "[:]", "<:>" }
-vim.opt.formatoptions = "jcroqlnt"
-vim.opt.complete = { ".", "b" }
-vim.opt.undofile = true
-vim.opt.conceallevel = 0
-vim.opt.signcolumn = "yes"
-vim.opt.foldtext = "" --
-vim.opt.foldmethod = "indent"
--- https://old.reddit.com/r/neovim/comments/1g41rjy/can_neovim_do_this_already_with_treesitter/
--- vim.opt.foldmethod = "expr"
--- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-vim.opt.foldcolumn = "0"
-vim.opt.foldlevel = 99
-vim.opt.foldminlines = 0
-vim.opt.linebreak = true
-vim.opt.breakindent = true
-vim.opt.fillchars = {
-  horiz = "─",
-  horizup = "┴",
-  horizdown = "┬",
-  vert = "│",
-  vertleft = "┤",
-  vertright = "├",
-  verthoriz = "┼",
-  diff = " ",
+vim.o.undofile = true
+vim.o.breakindent = true
+vim.o.linebreak = true
+vim.o.signcolumn = "yes"
+vim.o.splitright = true
+vim.o.winborder = "single"
+vim.o.fillchars =
+  "vert:║,horiz:═,horizdown:╦,horizup:╩,verthoriz:╬,vertleft:╣,vertright:╠,msgsep:═"
+vim.opt.listchars = {
+  tab = "»·",
+  trail = ".",
+  eol = "¬",
 }
-vim.opt.diffopt = {
-  "filler",
+vim.o.foldtext = ""
+vim.o.foldmethod = "indent"
+vim.o.foldlevel = 99
+vim.o.foldminlines = 0
+vim.o.expandtab = true
+vim.o.formatoptions = "rqnloj"
+vim.o.ignorecase = true
+vim.o.infercase = true
+vim.o.shiftwidth = 2
+vim.o.smartcase = true
+vim.o.tabstop = 2
+vim.o.virtualedit = "block"
+vim.o.iskeyword = "@,48-57,_,192-255,-"
+vim.o.complete = ".,b,kspell"
+vim.o.completeopt = "menuone,noselect,fuzzy,nosort"
+
+-- Not set by minimax
+vim.g.maplocalleader = "\\"
+-- Treat all numbers as unsigned when inc/dec them via C-A and C-X
+vim.o.nrformats = "unsigned"
+vim.o.smoothscroll = true
+vim.o.grepprg = "rg --vimgrep $*"
+vim.o.exrc = true
+vim.o.showtabline = 1
+vim.o.laststatus = 2
+vim.o.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,t:block-TermCursor"
+vim.opt.cpoptions:append("q")
+vim.o.wrapscan = false
+vim.o.shiftround = true
+vim.o.gdefault = true
+vim.o.wildignorecase = true
+vim.o.showbreak = "↪ "
+vim.o.softtabstop = 2
+vim.o.swapfile = false
+vim.o.textwidth = 80
+vim.opt.matchpairs:append({ "<:>" })
+vim.o.conceallevel = 0
+vim.opt.diffopt:append({
   "foldcolumn:0",
   "iwhiteall",
   "vertical",
-  "internal",
   "algorithm:minimal",
   "linematch:60",
-}
+})
 vim.opt.suffixes = {
   ".bak",
   "~",
@@ -181,3 +177,6 @@ vim.opt.wildignore = {
   ".git/",
   ".localized",
 }
+
+-- Enable experimental UI intended to replace the message grid in the TUI
+require("vim._core.ui2").enable({ enable = true })

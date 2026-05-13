@@ -4,7 +4,7 @@
 vim.lsp.semantic_tokens.enable(false)
 
 -- https://github.com/neovim/neovim/issues/32074
-vim.lsp.enable({ "vtsls", "biome", "eslint", "lua_ls", "tailwindcss" })
+vim.lsp.enable({ "vtsls", "biome", "eslint", "oxlint", "lua_ls", "tailwindcss" })
 
 -- https://github.com/jdhao/nvim-config/blob/main/lua/config/lsp.lua
 vim.api.nvim_create_autocmd({ "LspAttach" }, {

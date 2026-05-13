@@ -1,7 +1,7 @@
 -- Window movements
 G.nmap("<c-k>", "<cmd>wincmd k<cr>", { silent = true, desc = "Goto top split" })
 G.nmap("<c-j>", "<cmd>wincmd j<cr>", { silent = true, desc = "Goto bottom split" })
-G.nmap("<c-l>", "<cmd>wincmd l<cr>", { silent = true, unique = false, desc = "Goto right split" })
+G.nmap("<c-l>", "<cmd>wincmd l<cr>", { silent = true, desc = "Goto right split" })
 G.nmap("<c-h>", "<cmd>wincmd h<cr>", { silent = true, desc = "Goto left split" })
 
 -- Window sizing

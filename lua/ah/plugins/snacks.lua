@@ -69,9 +69,12 @@ return {
             "~/Code/headless-ui-libs",
             "~/Code/smartprocure",
             "~/Code/smartprocure/contexture/packages",
+            "~/.config/nvim",
+            "~/.config/home-manager",
           },
         },
         git_branches = {
+          all = true,
           layout = { preset = "vertical", hidden = { "preview" }, fullscreen = true },
           actions = {
             toggle_all = function(picker)
@@ -82,7 +85,7 @@ return {
           win = {
             input = {
               keys = {
-                ["<a-a>"] = { "toggle_all", mode = { "n", "i" }, desc = "Toggle all branches" },
+                ["<c-a>"] = { "toggle_all", mode = { "n", "i" }, desc = "Toggle all branches" },
               },
             },
           },
@@ -102,6 +105,7 @@ return {
     { "<leader>i", function() require("import").pick() end, desc = "imports" },
     { "<leader>b", function() Snacks.picker.git_branches() end, desc = "Snacks.picker.git_branches" },
     { "<leader>kk", function() Snacks.picker.pickers() end, desc = "Snacks.picker.pickers" },
+    { "<leader>kf", function() Snacks.picker.files() end, desc = "Snacks.picker.files" },
     { "<leader>kc", function() Snacks.picker.colorschemes() end, desc = "Snacks.picker.colorschemes" },
     { "<leader>kp", function() Snacks.picker.projects() end, desc = "Snacks.picker.projects" },
     { "<leader>kl", function() Snacks.picker.lazy() end, desc = "Snacks.picker.lazy" },
