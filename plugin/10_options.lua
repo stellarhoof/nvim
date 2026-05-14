@@ -177,6 +177,3 @@ vim.opt.wildignore = {
   ".git/",
   ".localized",
 }
-
--- Enable experimental UI intended to replace the message grid in the TUI
-require("vim._core.ui2").enable({ enable = true })

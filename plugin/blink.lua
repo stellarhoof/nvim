@@ -38,24 +38,12 @@ local function expand_snippet(cmp)
   end
 end
 
-return {
-  "https://github.com/saghen/blink.cmp",
-  -- Use a release tag to download pre-built binaries
-  version = "1.*",
-  opts_extend = { "sources.default" },
-  dependencies = {
-    -- {
-    --   "https://github.com/zbirenbaum/copilot.lua",
-    --   opts = {
-    --     suggestion = { enabled = false },
-    --     panel = { enabled = false },
-    --   },
-    -- },
-    -- {
-    --   "https://github.com/fang2hou/blink-copilot",
-    -- },
-  },
-  opts = {
+G.misc.safely("now", function()
+  vim.pack.add({
+    { src = "https://github.com/saghen/blink.cmp", version = "v1" }
+  }, { confirm = false })
+
+  require('blink.cmp').setup({
     keymap = {
       --[[
       Mappings in the `enter` preset:
@@ -147,5 +135,5 @@ return {
     --
     -- See the fuzzy documentation for more information.
     fuzzy = { implementation = "prefer_rust_with_warning" },
-  },
-}
+  })
+end)

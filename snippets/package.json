@@ -1,5 +1,4 @@
 {
-  "name": "my-snippets",
   "contributes": {
     "snippets": [
       {
@@ -38,7 +37,14 @@
           "typescriptreact"
         ],
         "path": "./typescript-react.json"
+      },
+      {
+        "language": [
+          "lua"
+        ],
+        "path": "./lua.json"
       }
     ]
-  }
+  },
+  "name": "my-snippets"
 }

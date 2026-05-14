@@ -114,3 +114,12 @@ end
 function G.hl_update(name, opts)
   G.hl_set(name, vim.tbl_deep_extend("force", G.hl_get(name), opts))
 end
+
+-- Enable experimental UI intended to replace the message grid in the TUI
+require("vim._core.ui2").enable({ enable = true })
+
+-- Set filetype of `mdx` for files with extension `.mdx`
+vim.filetype.add({ extension = { mdx = "mdx" } })
+
+-- Use the markdown parser for `mdx` filetypes
+vim.treesitter.language.register("markdown", "mdx")

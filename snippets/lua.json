@@ -1,0 +1,10 @@
+{
+  "padd": {
+    "body": [
+      "G.misc.safely(\"now\", function()",
+      "  vim.pack.add({ \"https://github.com\" })",
+      "end)"
+    ],
+    "prefix": "padd"
+  }
+}

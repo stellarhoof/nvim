@@ -104,16 +104,13 @@ local function configure_vscode_js_debug_adapter()
   }
 end
 
-return {
-  "https://github.com/mfussenegger/nvim-dap",
-  config = function()
-    configure_vscode_js_debug_adapter()
-
-    local dap = require("dap")
-    G.nmap("<f5>", dap.continue, { desc = "Debug: continue" })
-    G.nmap("<f9>", dap.toggle_breakpoint, { desc = "Debug: toggle breakpoint" })
-    G.nmap("<f10>", dap.step_over, { desc = "Deubg: step over" })
-    G.nmap("<f11>", dap.step_into, { desc = "Debug: step into" })
-    G.nmap("<f12>", dap.step_out, { desc = "Debug: step out" })
-  end,
-}
+G.misc.safely("now", function()
+  vim.pack.add({ "https://github.com/mfussenegger/nvim-dap" }, { confirm = false })
+  configure_vscode_js_debug_adapter()
+  local dap = require("dap")
+  G.nmap("<f5>", dap.continue, { desc = "Debug: continue" })
+  G.nmap("<f9>", dap.toggle_breakpoint, { desc = "Debug: toggle breakpoint" })
+  G.nmap("<f10>", dap.step_over, { desc = "Deubg: step over" })
+  G.nmap("<f11>", dap.step_into, { desc = "Debug: step into" })
+  G.nmap("<f12>", dap.step_out, { desc = "Debug: step out" })
+end)

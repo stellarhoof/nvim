@@ -1,18 +1,12 @@
----@module 'lazy'
----@module 'snacks'
+G.misc.safely("now", function()
+  vim.pack.add({
+    "https://github.com/folke/snacks.nvim",
+    "https://github.com/piersolenski/import.nvim",
+  }, { confirm = false })
 
----@type LazySpec
-return {
-  "https://github.com/folke/snacks.nvim",
-  dependencies = {
-    {
-      "https://github.com/piersolenski/import.nvim",
-      opts = { picker = "snacks" },
-    },
-  },
-  ---@type snacks.Config
-  opts = {
-    ---@type snacks.picker.Config
+  require("import").setup({ picker = "snacks" })
+
+  require("snacks").setup({
     picker = {
       main = {
         -- Open files in current window
@@ -92,30 +86,65 @@ return {
         },
       },
     },
-  },
-  keys = {
-    -- stylua: ignore start
-    { "<leader>,", function() Snacks.picker.buffers() end, desc = "Snacks.picker.buffers" },
-    { "<leader>e", function() Snacks.picker.explorer() end, desc = "Snacks.picker.explorer" },
-    { "<leader>s", function() Snacks.picker.grep({ cwd = G.buf_cwd() }) end, desc = "Snacks.picker.grep" },
-    { "<leader>:", function() Snacks.picker.command_history() end, desc = "Snacks.picker.command_history" },
-    { "<leader>?", function() Snacks.picker.help() end, desc = "Snacks.picker.help" },
-    { "<leader>h", function() Snacks.picker.recent({ cwd = G.buf_cwd() }) end, desc = "Snacks.picker.recent" },
-    { "<leader>f", function() Snacks.picker.git_files({ cwd = G.buf_cwd() }) end, desc = "Snacks.picker.git_files" },
-    { "<leader>i", function() require("import").pick() end, desc = "imports" },
-    { "<leader>b", function() Snacks.picker.git_branches() end, desc = "Snacks.picker.git_branches" },
-    { "<leader>kk", function() Snacks.picker.pickers() end, desc = "Snacks.picker.pickers" },
-    { "<leader>kf", function() Snacks.picker.files() end, desc = "Snacks.picker.files" },
-    { "<leader>kc", function() Snacks.picker.colorschemes() end, desc = "Snacks.picker.colorschemes" },
-    { "<leader>kp", function() Snacks.picker.projects() end, desc = "Snacks.picker.projects" },
-    { "<leader>kl", function() Snacks.picker.lazy() end, desc = "Snacks.picker.lazy" },
-    { "<leader>kz", function() Snacks.picker.zoxide() end, desc = "Snacks.picker.zoxide" },
-    -- stylua: ignore end
-  },
-  config = function(_, opts)
-    require("snacks").setup(opts)
-    require("snacks").util.set_hl({
-      SnacksPickerDir = { link = "Text" },
-    })
-  end,
-}
+  })
+
+  require("snacks").util.set_hl({
+    SnacksPickerDir = { link = "Text" },
+  })
+
+  G.nmap("<leader>,", function()
+    Snacks.picker.buffers()
+  end, { desc = "Snacks.picker.buffers" })
+
+  G.nmap("<leader>e", function()
+    Snacks.picker.explorer()
+  end, { desc = "Snacks.picker.explorer" })
+
+  G.nmap("<leader>s", function()
+    Snacks.picker.grep({ cwd = G.buf_cwd() })
+  end, { desc = "Snacks.picker.grep" })
+
+  G.nmap("<leader>:", function()
+    Snacks.picker.command_history()
+  end, { desc = "Snacks.picker.command_history" })
+
+  G.nmap("<leader>?", function()
+    Snacks.picker.help()
+  end, { desc = "Snacks.picker.help" })
+
+  G.nmap("<leader>h", function()
+    Snacks.picker.recent({ cwd = G.buf_cwd() })
+  end, { desc = "Snacks.picker.recent" })
+
+  G.nmap("<leader>f", function()
+    Snacks.picker.git_files({ cwd = G.buf_cwd() })
+  end, { desc = "Snacks.picker.git_files" })
+
+  G.nmap("<leader>i", function()
+    require("import").pick()
+  end, { desc = "imports" })
+
+  G.nmap("<leader>b", function()
+    Snacks.picker.git_branches()
+  end, { desc = "Snacks.picker.git_branches" })
+
+  G.nmap("<leader>kk", function()
+    Snacks.picker.pickers()
+  end, { desc = "Snacks.picker.pickers" })
+
+  G.nmap("<leader>kf", function()
+    Snacks.picker.files()
+  end, { desc = "Snacks.picker.files" })
+
+  G.nmap("<leader>kc", function()
+    Snacks.picker.colorschemes()
+  end, { desc = "Snacks.picker.colorschemes" })
+
+  G.nmap("<leader>kp", function()
+    Snacks.picker.projects()
+  end, { desc = "Snacks.picker.projects" })
+
+  G.nmap("<leader>kz", function()
+    Snacks.picker.zoxide()
+  end, { desc = "Snacks.picker.zoxide" })
+end)

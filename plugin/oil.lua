@@ -38,14 +38,19 @@ local function new_git_status()
   })
 end
 
-local git_status = new_git_status()
+G.misc.safely("now", function()
+  vim.api.nvim_create_autocmd({ "FileType" }, {
+    pattern = "oil",
+    callback = function()
+      vim.b.dir = require("oil").get_current_dir()
+    end,
+  })
 
--- Neovim file explorer: edit your filesystem like a buffer
-return {
-  "https://github.com/stevearc/oil.nvim",
-  ---@module 'oil'
-  ---@type oil.SetupOpts
-  opts = {
+  vim.pack.add({ "https://github.com/stevearc/oil.nvim" }, { confirm = false })
+
+  local git_status = new_git_status()
+
+  require("oil").setup({
     cleanup_delay_ms = false,
     view_options = {
       show_hidden = true,
@@ -88,22 +93,14 @@ return {
       -- Set to "unmodified" to only save unmodified buffers
       autosave_changes = true,
     },
-  },
-  config = function(_, opts)
-    require("oil").setup(opts)
-    G.nmap("-", vim.cmd.Oil, { desc = "Open buffer directory" })
-    vim.api.nvim_create_autocmd({ "FileType" }, {
-      pattern = "oil",
-      callback = function()
-        vim.b.dir = require("oil").get_current_dir()
-      end,
-    })
+  })
 
-    local refresh = require("oil.actions").refresh
-    local orig_refresh = refresh.callback
-    refresh.callback = function(...)
-      git_status = new_git_status()
-      orig_refresh(...)
-    end
-  end,
-}
+  local refresh = require("oil.actions").refresh
+  local orig_refresh = refresh.callback
+  refresh.callback = function(...)
+    git_status = new_git_status()
+    orig_refresh(...)
+  end
+
+  G.nmap("-", vim.cmd.Oil, { desc = "Open buffer directory" })
+end)
