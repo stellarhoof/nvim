@@ -7,15 +7,15 @@ G.misc.safely("now", function()
     icons = { scissors = "" },
   })
 
-  G.nmap("<leader>ne", function()
+  vim.keymap.set("n", "<leader>ne", function()
     require("scissors").editSnippet()
   end, { desc = "Edit snippet" })
 
-  G.nmap("<leader>na", function()
+  vim.keymap.set("n", "<leader>na", function()
     require("scissors").addNewSnippet()
   end, { desc = "Add snippet" })
 
-  G.xmap("<leader>na", function()
+  vim.keymap.set("x", "<leader>na", function()
     require("scissors").addNewSnippet()
   end, { desc = "Add snippet from selection" })
 end)

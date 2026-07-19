@@ -34,6 +34,6 @@ G.misc.safely("now", function()
     },
   })
 
-  G.map({ "n", "x", "o" }, "m", require("flash").jump, { desc = "Jump to words" })
-  G.map({ "n", "x", "o" }, "gm", require("flash").treesitter, { desc = "Select treesitter nodes" })
+  vim.keymap.set({ "n", "x", "o" }, "m", require("flash").jump, { desc = "Jump to words" })
+  vim.keymap.set({ "n", "x", "o" }, "gm", require("flash").treesitter, { desc = "Select treesitter nodes" })
 end)

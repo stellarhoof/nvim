@@ -15,19 +15,3 @@ vim.diagnostic.config({
     },
   },
 })
-
-G.nmap("<leader>dd", function()
-  vim.diagnostic.enable(not vim.diagnostic.is_enabled({ bufnr = 0 }), { bufnr = 0 })
-end, { desc = "Toggle diagnostics for current buffer" })
-
-G.nmap(
-  "<leader>dl",
-  vim.diagnostic.setloclist,
-  { desc = "Add current buffer diagnostics to loclist" }
-)
-
-G.nmap(
-  "<leader>dq",
-  vim.diagnostic.setqflist,
-  { desc = "Add all buffers diagnostics to quickfix list" }
-)

@@ -102,5 +102,5 @@ G.misc.safely("now", function()
     orig_refresh(...)
   end
 
-  G.nmap("-", vim.cmd.Oil, { desc = "Open buffer directory" })
+  vim.keymap.set("n", "-", vim.cmd.Oil, { desc = "Open buffer directory" })
 end)

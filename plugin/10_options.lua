@@ -1,126 +1,32 @@
 --[[
+Run `:options` for an interactive list of all current options.
 
-https://www.youtube.com/watch?app=desktop&v=Cp0iap9u29c
+Options values can be one if the following types:
+- global         : Global only.
+- global-local   : Global but can be overridden per buffer/window.
+- local          : Per buffer/window; has mutable global defaults that are copied from upon creating new buffers/windows.
+- local-noglobal : Per buffer/window; does not have mutable global defaults.
 
-Highly recommended to run `:options`
+- Window local values are remembered for each buffer.
 
-# Variables
+Lua interface for options (see `:h lua-options`)
 
-vim.g
-vim.b
-vim.b[id]
-vim.t
-vim.t[id]
-vim.w
-vim.w[id]
-
-# Options
-
-Options may be
-
-- Local to buffer
-- Local to window
-- Local to buffer or global (global-local)
-- Local to window or global (global-local)
-
-|        Command		       | global value	 | local value | lua equivalent  |
-|--------------------------|---------------|-------------|-----------------|
-|       :set option=value	 |     set		   |     set     | vim.o / vim.opt |
-|  :setlocal option=value	 |      -			   |     set     | vim.opt_local   |
-| :setglobal option=value	 |     set		   |      -      | vim.opt_global  |
-
-- vim.o: same as `:set`
-- vim.go: same as `:setglobal`
-
-The following options are equivalent to `:setlocal` for global-local options and
-`:set` otherwise
-
-## vim.bo, vim.bo[id]
-
-Set buffer options
-
-- If the option is local, behave as `:setlocal`
-- If the option is global-local, behave as `:set`
-
-## vim.wo, vim.wo[wid], vim.wo[wid][bnr]
-
-Set window options
-
-- If the option is local, behave as `:setlocal`
-- If the option is global-local, behave as `:set`
-
-## vim.opt, vim.opt_local, vim.opt_global
-
-Use these interfaces when manipulating list-style and map-style options
-
-- vim.opt: same as `:set`
-- vim.opt_local: same as `:setlocal`
-- vim.opt_global: same as `:setglobal`
-
-These have convenient methods on them like `:append`, `:prepent` and `:remove`.
-See `:h vim.opt` for more information.
-
+- `vim.o`         : gets or sets options (like `:set`)
+- `vim.go`        : gets or sets global options (like `:setglobal`)
+- `vim.bo`        : gets or sets buffer local options (like `:setlocal`)
+- `vim.wo`        : gets or sets window local options (like `:setlocal`)
+- `vim.opt`       : gets or sets list/map style options (like `:set`)
+- `vim.opt_local` : gets or sets list/map style options (like `:setlocal`)
+- `vim.opt_global`: gets or sets list/map style options (like `:setglobal`)
 --]]
 
--- Set by minimax
-vim.g.mapleader = " "
-vim.o.undofile = true
-vim.o.breakindent = true
-vim.o.linebreak = true
-vim.o.signcolumn = "yes"
-vim.o.splitright = true
-vim.o.winborder = "single"
-vim.o.fillchars =
-  "vert:║,horiz:═,horizdown:╦,horizup:╩,verthoriz:╬,vertleft:╣,vertright:╠,msgsep:═"
-vim.opt.listchars = {
-  tab = "»·",
-  trail = ".",
-  eol = "¬",
-}
-vim.o.foldtext = ""
-vim.o.foldmethod = "indent"
-vim.o.foldlevel = 99
-vim.o.foldminlines = 0
-vim.o.expandtab = true
-vim.o.formatoptions = "rqnloj"
-vim.o.ignorecase = true
-vim.o.infercase = true
-vim.o.shiftwidth = 2
-vim.o.smartcase = true
-vim.o.tabstop = 2
-vim.o.virtualedit = "block"
-vim.o.iskeyword = "@,48-57,_,192-255,-"
-vim.o.complete = ".,b,kspell"
-vim.o.completeopt = "menuone,noselect,fuzzy,nosort"
+-- General ======================================================================
 
--- Not set by minimax
+vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
--- Treat all numbers as unsigned when inc/dec them via C-A and C-X
-vim.o.nrformats = "unsigned"
-vim.o.smoothscroll = true
+vim.o.undofile = true
 vim.o.grepprg = "rg --vimgrep $*"
 vim.o.exrc = true
-vim.o.showtabline = 1
-vim.o.laststatus = 2
-vim.o.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,t:block-TermCursor"
-vim.opt.cpoptions:append("q")
-vim.o.wrapscan = false
-vim.o.shiftround = true
-vim.o.gdefault = true
-vim.o.wildignorecase = true
-vim.o.showbreak = "↪ "
-vim.o.softtabstop = 2
-vim.o.swapfile = false
-vim.o.textwidth = 80
-vim.opt.matchpairs:append({ "<:>" })
-vim.o.conceallevel = 0
-vim.opt.diffopt:append({
-  "foldcolumn:0",
-  "iwhiteall",
-  "vertical",
-  "algorithm:minimal",
-  "linematch:60",
-})
 vim.opt.suffixes = {
   ".bak",
   "~",
@@ -177,3 +83,74 @@ vim.opt.wildignore = {
   ".git/",
   ".localized",
 }
+
+-- UI ===========================================================================
+
+vim.o.breakindent = true
+vim.o.conceallevel = 0
+vim.o.laststatus = 2
+vim.o.showbreak = "↪ "
+vim.o.showtabline = 1
+vim.o.signcolumn = "yes"
+vim.o.smoothscroll = true
+vim.o.splitright = true
+vim.o.winborder = "single"
+vim.o.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,t:block-TermCursor"
+vim.opt.fillchars = {
+  diff = " ",
+  vert = "║",
+  horiz = "═",
+  horizdown = "╦",
+  horizup = "╩",
+  verthoriz = "╬",
+  vertleft = "╣",
+  vertright = "╠",
+  msgsep = "═",
+}
+vim.opt.listchars = {
+  tab = "»·",
+  trail = ".",
+  eol = "¬",
+}
+
+-- UI (folding) ====================================================================
+
+vim.o.foldtext = ""
+vim.o.foldmethod = "indent"
+vim.o.foldlevel = 99
+vim.o.foldminlines = 0
+
+-- Editing =========================================================================
+
+vim.o.expandtab = true
+vim.o.formatoptions = "rqnloj"
+vim.o.gdefault = true
+vim.o.ignorecase = true
+vim.o.infercase = true
+vim.o.iskeyword = "@,48-57,_,192-255,-"
+vim.o.nrformats = "unsigned" -- Treat all numbers as unsigned when inc/dec them via C-A and C-X
+vim.o.shiftround = true
+vim.o.shiftwidth = 2
+vim.o.smartcase = true
+vim.o.softtabstop = 2
+vim.o.swapfile = false
+vim.o.tabstop = 2
+vim.o.textwidth = 80
+vim.o.virtualedit = "block"
+vim.o.wildignorecase = true
+vim.o.wrapscan = false
+vim.opt.matchpairs:append({ "<:>" })
+vim.opt.cpoptions:append("q")
+vim.opt.diffopt:append({
+  "foldcolumn:0",
+  "iwhiteall",
+  "vertical",
+  "algorithm:patience",
+  "linematch:60",
+  "inline:char",
+})
+
+-- Completion =========================================================================
+
+vim.o.complete = ".,b,kspell"
+vim.o.completeopt = "menuone,noselect,fuzzy,nosort"

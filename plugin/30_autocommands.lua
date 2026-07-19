@@ -54,7 +54,7 @@ vim.api.nvim_create_autocmd({ "ColorScheme" }, {
   group = group,
   desc = "Override general colorscheme highlights",
   callback = function()
-    G.hl_clear("Folded")
+    vim.api.nvim_set_hl(0, "Folded", {})
   end,
 })
 

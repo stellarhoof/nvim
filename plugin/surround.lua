@@ -6,31 +6,34 @@ G.misc.safely("now", function()
 
   -- https://github.com/ggandor/leap.nvim/discussions/59#discussioncomment-3943323
   -- See `:h nvim-surround.keymaps`
-  G.nmap(
+  vim.keymap.set(
+    "n",
     "s",
     "<Plug>(nvim-surround-normal)",
     { desc = "Add a surrounding pair around a motion (normal mode)" }
   )
-  G.xmap(
+  vim.keymap.set("x", 
     "s",
     "<Plug>(nvim-surround-visual)",
     { desc = "Add a surrounding pair around a visual selection" }
   )
-  G.nmap(
+  vim.keymap.set(
+    "n",
     "ss",
     "<Plug>(nvim-surround-normal-cur)",
     { desc = "Add a surrounding pair around the current line (normal mode)" }
   )
-  G.nmap(
+  vim.keymap.set(
+    "n",
     "S",
     "<Plug>(nvim-surround-normal-line)",
     { desc = "Add a surrounding pair around a motion, on new lines (normal mode)" }
   )
-  G.xmap(
+  vim.keymap.set("x", 
     "S",
     "<Plug>(nvim-surround-visual-line)",
     { desc = "Add a surrounding pair around a visual selection, on new lines" }
   )
-  G.nmap("ds", "<Plug>(nvim-surround-delete)", { desc = "Delete a surrounding pair" })
-  G.nmap("cs", "<Plug>(nvim-surround-change)", { desc = "Change a surrounding pair" })
+  vim.keymap.set("n", "ds", "<Plug>(nvim-surround-delete)", { desc = "Delete a surrounding pair" })
+  vim.keymap.set("n", "cs", "<Plug>(nvim-surround-change)", { desc = "Change a surrounding pair" })
 end)

@@ -5,5 +5,10 @@ G.misc.safely("now", function()
 
   vim.pack.add({ "https://github.com/mbbill/undotree" }, { confirm = false })
 
-  G.nmap("<leader>uu", vim.cmd.UndotreeToggle, { silent = true, desc = "Toggle UndoTree" })
+  vim.keymap.set(
+    "n",
+    "<leader>uu",
+    vim.cmd.UndotreeToggle,
+    { silent = true, desc = "Toggle UndoTree" }
+  )
 end)

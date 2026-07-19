@@ -15,22 +15,22 @@ return {
     },
   },
   on_attach = function(_, bufnr)
-    G.nmap("grf", require("vtsls").commands.file_references, {
+    vim.keymap.set("n", "grf", require("vtsls").commands.file_references, {
       buffer = bufnr,
       desc = "[vtsls] commands.file_references",
     })
 
-    G.nmap("grs", require("vtsls").commands.source_actions, {
+    vim.keymap.set("n", "grs", require("vtsls").commands.source_actions, {
       buffer = bufnr,
       desc = "[vtsls] commands.source_actions",
     })
 
-    G.nmap("grm", require("vtsls").commands.rename_file, {
+    vim.keymap.set("n", "grm", require("vtsls").commands.rename_file, {
       buffer = bufnr,
       desc = "[vtsls] commands.rename_file",
     })
 
-    G.nmap("gd", require("vtsls").commands.goto_source_definition, {
+    vim.keymap.set("n", "gd", require("vtsls").commands.goto_source_definition, {
       buffer = bufnr,
       desc = "[vtsls] commands.goto_source_definition",
     })

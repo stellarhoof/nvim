@@ -40,10 +40,10 @@ end
 
 G.misc.safely("now", function()
   vim.pack.add({
-    { src = "https://github.com/saghen/blink.cmp", version = "v1" }
+    { src = "https://github.com/saghen/blink.cmp", version = "v1" },
   }, { confirm = false })
 
-  require('blink.cmp').setup({
+  require("blink.cmp").setup({
     keymap = {
       --[[
       Mappings in the `enter` preset:

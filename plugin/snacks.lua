@@ -58,11 +58,11 @@ G.misc.safely("now", function()
           patterns = { ".git", "package.json", "tsconfig.json" },
           recent = false,
           dev = {
-            "~/Code",
-            "~/Code/stellarhoof",
-            "~/Code/headless-ui-libs",
-            "~/Code/smartprocure",
-            "~/Code/smartprocure/contexture/packages",
+            "~/Projects",
+            "~/Projects/stellarhoof",
+            "~/Projects/headless-ui-libs",
+            "~/Projects/smartprocure",
+            "~/Projects/smartprocure/contexture/packages",
             "~/.config/nvim",
             "~/.config/home-manager",
           },
@@ -92,59 +92,59 @@ G.misc.safely("now", function()
     SnacksPickerDir = { link = "Text" },
   })
 
-  G.nmap("<leader>,", function()
+  vim.keymap.set("n", "<leader>,", function()
     Snacks.picker.buffers()
   end, { desc = "Snacks.picker.buffers" })
 
-  G.nmap("<leader>e", function()
+  vim.keymap.set("n", "<leader>e", function()
     Snacks.picker.explorer()
   end, { desc = "Snacks.picker.explorer" })
 
-  G.nmap("<leader>s", function()
-    Snacks.picker.grep({ cwd = G.buf_cwd() })
+  vim.keymap.set("n", "<leader>s", function()
+    Snacks.picker.grep({ cwd = G.buf_cwd(), hidden = true })
   end, { desc = "Snacks.picker.grep" })
 
-  G.nmap("<leader>:", function()
+  vim.keymap.set("n", "<leader>:", function()
     Snacks.picker.command_history()
   end, { desc = "Snacks.picker.command_history" })
 
-  G.nmap("<leader>?", function()
+  vim.keymap.set("n", "<leader>?", function()
     Snacks.picker.help()
   end, { desc = "Snacks.picker.help" })
 
-  G.nmap("<leader>h", function()
+  vim.keymap.set("n", "<leader>h", function()
     Snacks.picker.recent({ cwd = G.buf_cwd() })
   end, { desc = "Snacks.picker.recent" })
 
-  G.nmap("<leader>f", function()
+  vim.keymap.set("n", "<leader>f", function()
     Snacks.picker.git_files({ cwd = G.buf_cwd() })
   end, { desc = "Snacks.picker.git_files" })
 
-  G.nmap("<leader>i", function()
+  vim.keymap.set("n", "<leader>i", function()
     require("import").pick()
   end, { desc = "imports" })
 
-  G.nmap("<leader>b", function()
+  vim.keymap.set("n", "<leader>b", function()
     Snacks.picker.git_branches()
   end, { desc = "Snacks.picker.git_branches" })
 
-  G.nmap("<leader>kk", function()
+  vim.keymap.set("n", "<leader>kk", function()
     Snacks.picker.pickers()
   end, { desc = "Snacks.picker.pickers" })
 
-  G.nmap("<leader>kf", function()
+  vim.keymap.set("n", "<leader>kf", function()
     Snacks.picker.files()
   end, { desc = "Snacks.picker.files" })
 
-  G.nmap("<leader>kc", function()
+  vim.keymap.set("n", "<leader>kc", function()
     Snacks.picker.colorschemes()
   end, { desc = "Snacks.picker.colorschemes" })
 
-  G.nmap("<leader>kp", function()
+  vim.keymap.set("n", "<leader>kp", function()
     Snacks.picker.projects()
   end, { desc = "Snacks.picker.projects" })
 
-  G.nmap("<leader>kz", function()
+  vim.keymap.set("n", "<leader>kz", function()
     Snacks.picker.zoxide()
   end, { desc = "Snacks.picker.zoxide" })
 end)

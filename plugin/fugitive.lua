@@ -63,12 +63,12 @@ G.misc.safely("now", function()
     end
   end
 
-  G.nmap("[c", function()
+  vim.keymap.set("n", "[c", function()
     vim.cmd.cpfile()
     diff_current_quickfix_entry()
   end, { unique = false })
 
-  G.nmap("]c", function()
+  vim.keymap.set("n", "]c", function()
     vim.cmd.cnfile()
     diff_current_quickfix_entry()
   end, { unique = false })
@@ -84,13 +84,13 @@ G.misc.safely("now", function()
   local gx_desc =
     "Open filepath or URI under cursor or current file with system handler (file explorer, web browser, …)"
 
-  G.nmap("gx", function()
+  vim.keymap.set("n", "gx", function()
     if open_uri(vim.fn.expand("<cfile>")) then
       vim.cmd.GBrowse()
     end
   end, { desc = gx_desc })
 
-  G.xmap("gx", function()
+  vim.keymap.set("x", "gx", function()
     if open_uri(get_active_visual_lines()) then
       vim.cmd.GBrowse({ range = { vim.fn.line("v"), vim.fn.line(".") } })
     end

@@ -3,7 +3,7 @@ G.misc.safely("now", function()
     pattern = { "grug-far" },
     callback = function()
       vim.wo.signcolumn = "no"
-      G.hl_link("GrugFarResultsPath", "Directory")
+      vim.api.nvim_set_hl(0, "GrugFarResultsPath", { link = "Directory" })
     end,
   })
 
@@ -32,9 +32,7 @@ G.misc.safely("now", function()
     },
   })
 
-  G.nmap(
-    "<leader>r",
-    require("grug-far").open,
-    { noremap = true, buffer = true, desc = "Run request under the cursor" }
-  )
+  vim.keymap.set("n", "<leader>r", function()
+    require("grug-far").open({ prefills = { paths = vim.b.dir } })
+  end, { noremap = true, desc = "Open search and replace" })
 end)

@@ -20,17 +20,8 @@ G.misc.safely("now", function()
     "https://github.com/pablopunk/pi.nvim",
     -- Extra commands on top of vtsls. See `after/lsp/vtsls.lua`
     "https://github.com/yioneko/nvim-vtsls",
-    "https://github.com/dlyongemallo/diffview.nvim",
     "https://github.com/nvim-lua/plenary.nvim",
     "https://github.com/konfekt/vim-alias",
-  }, { confirm = false })
-
-  vim.cmd.Alias({ args = { "w", "up" }, bang = true })
-  vim.cmd.Alias({ args = { "man", "Man" }, bang = true })
-end)
-
-G.misc.safely("now", function()
-  vim.pack.add({
     -- Pairs of handy bracket mappings
     "https://github.com/tpope/vim-unimpaired",
     -- Close and rename html/jsx elements with the power of treesitter
@@ -39,5 +30,10 @@ G.misc.safely("now", function()
     "https://github.com/kylechui/nvim-surround",
   }, { confirm = false })
 
-  G.nmap("co", "<plug>(unimpaired-toggle)")
+  vim.cmd.Alias({ args = { "w", "up" }, bang = true })
+  vim.cmd.Alias({ args = { "man", "Man" }, bang = true })
+
+  vim.keymap.set("n", "co", "<plug>(unimpaired-toggle)")
+
+  require("nvim-autopairs").setup({})
 end)

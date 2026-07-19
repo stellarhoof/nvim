@@ -7,35 +7,35 @@ G.misc.safely("now", function()
 
   require("substitute").setup({ highlight_substituted_text = { enabled = false } })
 
-  G.nmap("gs", function()
+  vim.keymap.set("n", "gs", function()
     require("substitute").operator()
   end, { noremap = true, desc = "Substitute text object with contents of default register" })
 
-  G.nmap("gss", function()
+  vim.keymap.set("n", "gss", function()
     require("substitute").line()
   end, { noremap = true, desc = "Substitute line with contents of default register" })
 
-  G.nmap("gS", function()
+  vim.keymap.set("n", "gS", function()
     require("substitute").eol()
   end, { noremap = true, desc = "Substitute up to EOL with contents of default register" })
 
-  G.xmap("gs", function()
+  vim.keymap.set("x", "gs", function()
     require("substitute").visual()
   end, { noremap = true, desc = "Substitute visual selection with contents of default register" })
 
-  G.nmap("ge", function()
+  vim.keymap.set("n", "ge", function()
     require("substitute.exchange").operator()
   end, { noremap = true, desc = "Exchange with text object" })
 
-  G.nmap("gee", function()
+  vim.keymap.set("n", "gee", function()
     require("substitute.exchange").line()
   end, { noremap = true, desc = "Exchange with line" })
 
-  G.nmap("gE", function()
+  vim.keymap.set("n", "gE", function()
     require("substitute.exchange").cancel()
   end, { noremap = true, desc = "Exchange up to EOL" })
 
-  G.xmap("ge", function()
+  vim.keymap.set("x", "ge", function()
     require("substitute.exchange").visual()
   end, { noremap = true, desc = "Exchange with visual selection" })
 end)

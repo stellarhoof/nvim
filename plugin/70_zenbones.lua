@@ -6,10 +6,8 @@ G.misc.safely("now", function()
     desc = "Override zenbones colorscheme highlights",
     pattern = "zen*",
     callback = function()
-      G.hl_update("Constant", { italic = false })
-      G.hl_update("Comment", { italic = false })
-      G.hl_link("FloatBorder", "NormalFloat")
-      G.hl_link("FloatTitle", "NormalFloat", { bold = true })
+      vim.api.nvim_set_hl(0, "Comment", { italic = false, update = true })
+      vim.api.nvim_set_hl(0, "FloatBorder", { link = "NormalFloat" })
     end,
   })
 

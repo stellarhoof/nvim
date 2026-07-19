@@ -28,14 +28,6 @@ local languages = {
   "yaml",
 }
 
--- Enable tree-sitter after opening a file for a target language
-local filetypes = {}
-for _, lang in ipairs(languages) do
-  for _, ft in ipairs(vim.treesitter.language.get_filetypes(lang)) do
-    table.insert(filetypes, ft)
-  end
-end
-
 G.misc.safely("now", function()
   vim.api.nvim_create_autocmd("PackChanged", {
     desc = "Update tree-sitter parsers after plugin is updated",
@@ -47,6 +39,18 @@ G.misc.safely("now", function()
     end,
   })
 
+  vim.pack.add({ "https://github.com/nvim-treesitter/nvim-treesitter" }, { confirm = false })
+
+  require("nvim-treesitter").install(languages)
+
+  -- Enable tree-sitter after opening a file for a target language
+  local filetypes = {}
+  for _, lang in ipairs(languages) do
+    for _, ft in ipairs(vim.treesitter.language.get_filetypes(lang)) do
+      table.insert(filetypes, ft)
+    end
+  end
+
   vim.api.nvim_create_autocmd("FileType", {
     desc = "Start streesitter on supported filetypes",
     pattern = filetypes,
@@ -54,8 +58,4 @@ G.misc.safely("now", function()
       vim.treesitter.start(ev.buf)
     end,
   })
-
-  vim.pack.add({ "https://github.com/nvim-treesitter/nvim-treesitter" }, { confirm = false })
-
-  require("nvim-treesitter").install(languages)
 end)

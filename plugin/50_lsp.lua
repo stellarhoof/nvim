@@ -4,7 +4,7 @@
 vim.lsp.semantic_tokens.enable(false)
 
 -- https://github.com/neovim/neovim/issues/32074
-vim.lsp.enable({ "vtsls", "biome", "eslint", "oxlint", "lua_ls", "tailwindcss" })
+vim.lsp.enable({ "vtsls", "eslint", "oxlint", "lua_ls", "tailwindcss" })
 
 -- https://github.com/jdhao/nvim-config/blob/main/lua/config/lsp.lua
 vim.api.nvim_create_autocmd({ "LspAttach" }, {
@@ -17,7 +17,7 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
     local method = vim.lsp.protocol.Methods
 
     if client:supports_method(method.workspace_symbol) then
-      G.nmap("<leader>lw", vim.lsp.buf.workspace_symbol, {
+      vim.keymap.set("n", "<leader>lw", vim.lsp.buf.workspace_symbol, {
         unique = false,
         buffer = args.buf,
         desc = "List workspace symbols",
@@ -25,7 +25,7 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
     end
 
     if client:supports_method(method.workspace_diagnostics) then
-      G.nmap("<leader>ld", vim.lsp.buf.workspace_diagnostics, {
+      vim.keymap.set("n", "<leader>ld", vim.lsp.buf.workspace_diagnostics, {
         unique = false,
         buffer = args.buf,
         desc = "List workspace diagnostics",

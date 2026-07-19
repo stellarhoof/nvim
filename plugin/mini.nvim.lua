@@ -101,7 +101,7 @@ local function setup_snippets()
 end
 
 G.misc.safely("now", function()
-  vim.pack.add({ "https://github.com/echasnovski/mini.nvim", }, { confirm = false })
+  vim.pack.add({ "https://github.com/echasnovski/mini.nvim" }, { confirm = false })
   setup_snippets()
   require("mini.icons").setup()
   require("mini.icons").mock_nvim_web_devicons()
