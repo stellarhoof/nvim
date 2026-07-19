@@ -1,15 +1,4 @@
-local group = vim.api.nvim_create_augroup("init", {})
-
--- https://github.com/neovim/neovim/issues/1936
-vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
-  group = group,
-  desc = "Autoread current file",
-  command = "checktime",
-})
-
--- :h lua-highlight
 vim.api.nvim_create_autocmd({ "TextYankPost" }, {
-  group = group,
   desc = "Highlight yanked text",
   callback = function()
     vim.hl.on_yank({ timeout = 200 })
@@ -17,7 +6,6 @@ vim.api.nvim_create_autocmd({ "TextYankPost" }, {
 })
 
 vim.api.nvim_create_autocmd({ "BufReadPost" }, {
-  group = group,
   desc = "Go to last location when opening a buffer",
   callback = function(event)
     local ignore_buftype = { "quickfix", "nofile", "help" }
@@ -40,7 +28,6 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
 })
 
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-  group = group,
   desc = "Create missing directories when saving a file",
   callback = function(event)
     if not event.match:match("^%w%w+://") then
@@ -49,29 +36,3 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
     end
   end,
 })
-
-vim.api.nvim_create_autocmd({ "ColorScheme" }, {
-  group = group,
-  desc = "Override general colorscheme highlights",
-  callback = function()
-    vim.api.nvim_set_hl(0, "Folded", {})
-  end,
-})
-
-local function rshada_after()
-  vim.api.nvim_set_option_value("bg", vim.g.BACKGROUND, {})
-  if vim.g.COLORSCHEME ~= "" and vim.g.COLORSCHEME ~= vim.g.colors_name then
-    local ok, _ = pcall(vim.cmd.colorscheme, vim.g.COLORSCHEME)
-    if ok == true then
-      vim.api.nvim_exec_autocmds("ColorScheme", { pattern = vim.g.COLORSCHEME })
-    end
-  end
-end
-
-local function wshada_before()
-  vim.g.BACKGROUND = vim.api.nvim_get_option_value("bg", {})
-  vim.g.COLORSCHEME = vim.g.colors_name
-end
-
-vim.api.nvim_create_autocmd({ "VimEnter" }, { group = group, callback = rshada_after })
-vim.api.nvim_create_autocmd({ "VimLeavePre" }, { group = group, callback = wshada_before })

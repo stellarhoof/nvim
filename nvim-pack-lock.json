@@ -10,11 +10,11 @@
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "diffview-plus.nvim": {
-      "rev": "fd688b76e260a26db4b22561af4db16596165e73",
+      "rev": "424b724e7699730b818466532f0ca42930313273",
       "src": "https://github.com/dlyongemallo/diffview-plus.nvim"
     },
     "diffview.nvim": {
-      "rev": "fd688b76e260a26db4b22561af4db16596165e73",
+      "rev": "424b724e7699730b818466532f0ca42930313273",
       "src": "https://github.com/dlyongemallo/diffview.nvim"
     },
     "fidget.nvim": {
@@ -66,7 +66,7 @@
       "src": "https://github.com/williamboman/mason.nvim"
     },
     "mini.nvim": {
-      "rev": "05a80b0340a92136a93ab04346cf97de3f165948",
+      "rev": "a35f08f63b73f0ffac045cd175fb2a22e167c39c",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "nvim-autopairs": {
@@ -78,7 +78,7 @@
       "src": "https://github.com/mfussenegger/nvim-dap"
     },
     "nvim-lspconfig": {
-      "rev": "d5b6e3db4c17b0146f63a2fc47e2027a754b2cb1",
+      "rev": "e7ca2c95ba316a8b846d3f3546d407908c5c4ccb",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-scissors": {
@@ -90,7 +90,7 @@
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-treesitter": {
-      "rev": "4916d6592ede8c07973490d9322f187e07dfefac",
+      "rev": "24977147550d53589e53b874ec75e14e4fbc304e",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-various-textobjs": {
@@ -183,7 +183,7 @@
     },
     "zenbones.nvim": {
       "rev": "8304d8df9b823ff11e103afa62f38c39f534abe6",
-      "src": "https://github.com/mcchrish/zenbones.nvim"
+      "src": "https://github.com/zenbones-theme/zenbones.nvim"
     }
   }
 }
