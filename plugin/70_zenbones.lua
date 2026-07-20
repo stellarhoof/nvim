@@ -17,5 +17,5 @@ G.misc.safely("now", function()
     end,
   })
 
-  vim.cmd.colorscheme("zenwritten")
+  vim.cmd.colorscheme("zenbones")
 end)

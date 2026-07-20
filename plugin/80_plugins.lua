@@ -28,12 +28,39 @@ G.misc.safely("now", function()
     "https://github.com/tronikelis/ts-autotag.nvim",
     -- Add/change/delete surrounding delimiter pairs with ease.
     "https://github.com/kylechui/nvim-surround",
+    -- Lightweight yet powerful formatter plugin for Neovim
+    "https://github.com/stevearc/conform.nvim",
+    -- Single tabpage interface for easily cycling through diffs for all
+    -- modified files for any git rev
+    "https://github.com/dlyongemallo/diffview-plus.nvim",
   }, { confirm = false })
 
   vim.cmd.Alias({ args = { "w", "up" }, bang = true })
   vim.cmd.Alias({ args = { "man", "Man" }, bang = true })
+  vim.cmd.Alias({ args = { "dt", "DiffviewToggle" } })
 
   vim.keymap.set("n", "co", "<plug>(unimpaired-toggle)")
 
   require("nvim-autopairs").setup({})
+
+  require("conform").setup({
+    formatters_by_ft = {
+      -- sh = { "shfmt" },
+      nix = { "nixfmt" },
+      lua = { "stylua" },
+      python = { "isort", "black" },
+      markdown = { "prettierd" },
+      html = { "prettierd" },
+      http = { "kulala-fmt" },
+      svg = { "prettierd" },
+      json = { "oxfmt", "prettierd" },
+      jsonc = { "oxfmt", "prettierd" },
+      javascript = { "oxfmt", "prettierd" },
+      javascriptreact = { "oxfmt", "prettierd" },
+      typescript = { "oxfmt", "prettierd" },
+      typescriptreact = { "oxfmt", "prettierd" },
+    },
+    format_on_save = {},
+    default_format_opts = { stop_after_first = true },
+  })
 end)

@@ -42,7 +42,7 @@ G.misc.safely("now", function()
         buffers         = { layout = "window", current = false },
         command_history = { layout = { preset = "vertical", hidden = { "preview" } } },
         grep            = { layout = { preset = "vertical", hidden = { "preview" }, fullscreen = true } },
-        colorschemes    = { layout = { preset = "sidebar", hidden = { "preview" } } },
+        colorschemes    = { layout = { preset = "sidebar" } },
         help            = { layout = { preset = "default", fullscreen = true } },
         zoxide          = { layout = { preset = "sidebar", layout = { width = 50 } } },
         -- stylua: ignore end
