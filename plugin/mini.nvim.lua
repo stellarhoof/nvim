@@ -118,10 +118,61 @@ local function setup_completion()
   })
 end
 
+local function setup_statusline()
+  local icons = require("mini.icons")
+  local statusline = require("mini.statusline")
+
+  local function active_statusline()
+    local mode, mode_hl = statusline.section_mode({ trunc_width = 120 })
+    local searchcount = statusline.section_searchcount({ trunc_width = 75 })
+    if searchcount ~= "" then
+      searchcount = "󱎸 " .. searchcount
+    end
+    return statusline.combine_groups({
+      {
+        hl = mode_hl,
+        strings = { mode },
+      },
+      "%<", -- Mark general truncate point
+      {
+        hl = "MiniStatuslineFilename",
+        strings = {
+          icons.get("filetype", vim.bo.filetype),
+          statusline.section_filename({ trunc_width = 140 }),
+        },
+      },
+      "%=", -- End left alignment
+      { hl = mode_hl, strings = { searchcount } },
+    })
+  end
+
+  local function inactive_statusline()
+    return statusline.combine_groups({
+      {
+        hl = "MiniStatuslineFilename",
+        strings = {
+          icons.get("filetype", vim.bo.filetype),
+          statusline.section_filename({ trunc_width = 140 }),
+        },
+      },
+    })
+  end
+
+  statusline.setup({
+    content = {
+      active = active_statusline,
+      inactive = inactive_statusline,
+    },
+  })
+
+  vim.api.nvim_set_hl(0, "MiniStatuslineFilename", { bold = true })
+end
+
 G.misc.safely("now", function()
   vim.pack.add({ "https://github.com/echasnovski/mini.nvim" }, { confirm = false })
   setup_snippets()
   setup_completion()
+  setup_statusline()
   require("mini.icons").setup({})
   require("mini.icons").mock_nvim_web_devicons()
 end)

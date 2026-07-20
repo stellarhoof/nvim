@@ -96,6 +96,7 @@ vim.o.smoothscroll = true
 vim.o.splitright = true
 vim.o.winborder = "single"
 vim.o.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,t:block-TermCursor"
+vim.opt.shortmess:append("S")
 vim.opt.fillchars = {
   diff = " ",
   vert = "║",
