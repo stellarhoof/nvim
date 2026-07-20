@@ -20,7 +20,7 @@ vim.keymap.set({ "n", "v" }, "j", "gj", { noremap = true, desc = "Move down a wr
 
 vim.keymap.set("t", "jk", "<c-\\><c-n>", { noremap = true, desc = "Exit terminal mode" })
 
-vim.keymap.set({ "i", "n", "s", "x" }, "<c-s>", vim.cmd.wall, { desc = "Write all buffers" })
+vim.keymap.set({ "n" }, "<c-s>", vim.cmd.wall, { desc = "Write all buffers" })
 
 vim.keymap.set(
   "n",

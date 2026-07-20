@@ -1,6 +1,3 @@
--- TODO: Check `vim.lsp.inline_completion`
-
--- Turn off semantic tokens
 vim.lsp.semantic_tokens.enable(false)
 
 -- https://github.com/neovim/neovim/issues/32074

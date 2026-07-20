@@ -67,35 +67,53 @@ local function package_json_loader(snippets_dir)
   end
 end
 
---[[
-Default mappings:
-- <c-j>: Expand snippet
-- <c-l>: Move to next tabstop (wraps)
-- <c-h>: Move to previous tabstop (wraps)
-- <c-n>: Select next tabstop choice
-- <c-p>: Select previous tabstop choice
-- <c-c>: Stop current snippet session (works from any buffer). A session can
-        also be stopped by exiting insert mode from the final tabstop.
-
-How to trigger auto-completion on `<c-j>` where a completion menu is
-presented if there are more than one snippet match and documentation pane is
-open by default in this case. Otherwise it selects the only choice.
-
-Can expanding a snippet perform actions such as adding imports?
---]]
 local function setup_snippets()
-  require("mini.snippets").setup({
-    mappings = {
-      -- Disable default `<c-j>` mapping since we're using blink.cmp to trigger
-      -- snippet expansions.
-      expand = "",
+  -- <c-j>: Expand snippet
+  -- <c-l>: Move to next tabstop (wraps)
+  -- <c-h>: Move to previous tabstop (wraps)
+  -- <c-n>: Select next tabstop choice
+  -- <c-p>: Select previous tabstop choice
+  -- <c-c>: Stop current snippet session (works from any buffer)
+  require("mini.snippets").setup({})
+
+  -- Provide snippet completion items via an in-process LSP server
+  require("mini.snippets").start_lsp_server({})
+
+  G.misc.safely("later", function()
+    table.insert(
+      MiniSnippets.config.snippets,
+      package_json_loader(vim.fn.stdpath("config") .. "/snippets")
+    )
+  end)
+end
+
+local function setup_completion()
+  local source_func = "omnifunc"
+
+  require("mini.completion").setup({
+    delay = {
+      -- Disable autocomplete. Trigger via `i_<c-space>`.
+      completion = math.huge,
+      -- Disable automatic popup of signature help. Trigger via `i_<c-s>`
+      signature = math.huge,
+    },
+    lsp_completion = {
+      source_func = source_func,
+      auto_setup = false, -- Do not setup completion on `BufEnter`
     },
   })
-  vim.api.nvim_create_autocmd({ "VimEnter" }, {
-    once = true,
+
+  vim.api.nvim_create_autocmd({ "FileType" }, {
+    desc = "Disable completion in some filetypes",
+    pattern = "snacks*",
     callback = function()
-      local config_path = vim.fn.stdpath("config")
-      table.insert(MiniSnippets.config.snippets, package_json_loader(config_path .. "/snippets"))
+      vim.b.minicompletion_disable = true
+    end,
+  })
+
+  vim.api.nvim_create_autocmd({ "LspAttach" }, {
+    callback = function(args)
+      vim.bo[args.buf][source_func] = "v:lua.MiniCompletion.completefunc_lsp"
     end,
   })
 end
@@ -103,6 +121,7 @@ end
 G.misc.safely("now", function()
   vim.pack.add({ "https://github.com/echasnovski/mini.nvim" }, { confirm = false })
   setup_snippets()
-  require("mini.icons").setup()
+  setup_completion()
+  require("mini.icons").setup({})
   require("mini.icons").mock_nvim_web_devicons()
 end)

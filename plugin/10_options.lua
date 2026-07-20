@@ -152,5 +152,4 @@ vim.opt.diffopt:append({
 
 -- Completion =========================================================================
 
-vim.o.complete = ".,b,kspell"
-vim.o.completeopt = "menuone,noselect,fuzzy,nosort"
+vim.opt.completeopt = { "menuone", "noselect", "fuzzy" }
