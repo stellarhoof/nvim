@@ -1,3 +1,5 @@
+-- See `:h default-mappings`
+
 vim.keymap.set("n", "<c-k>", "<cmd>wincmd k<cr>", { silent = true, desc = "Goto top split" })
 vim.keymap.set("n", "<c-j>", "<cmd>wincmd j<cr>", { silent = true, desc = "Goto bottom split" })
 vim.keymap.set("n", "<c-l>", "<cmd>wincmd l<cr>", { silent = true, desc = "Goto right split" })

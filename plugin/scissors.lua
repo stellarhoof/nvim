@@ -1,4 +1,4 @@
-G.misc.safely("now", function()
+now(function()
   vim.pack.add({ "https://github.com/chrisgrieser/nvim-scissors" }, { confirm = false })
 
   require("scissors").setup({

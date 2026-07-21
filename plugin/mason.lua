@@ -1,4 +1,4 @@
-G.misc.safely("now", function()
+now(function()
   vim.pack.add({
     "https://github.com/williamboman/mason.nvim",
     "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim",

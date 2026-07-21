@@ -104,7 +104,7 @@ local function configure_vscode_js_debug_adapter()
   }
 end
 
-G.misc.safely("now", function()
+now(function()
   vim.pack.add({ "https://github.com/mfussenegger/nvim-dap" }, { confirm = false })
   configure_vscode_js_debug_adapter()
   local dap = require("dap")

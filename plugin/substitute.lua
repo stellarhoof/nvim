@@ -1,4 +1,4 @@
-G.misc.safely("now", function()
+now(function()
   -- Operators to substitute and exchange text.
   -- Lua version of
   --  https://github.com/svermeulen/vim-subversive

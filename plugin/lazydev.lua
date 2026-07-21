@@ -1,4 +1,4 @@
-G.misc.safely("now", function()
+now(function()
   vim.pack.add({ "https://github.com/folke/lazydev.nvim" }, { confirm = false })
 
   require("lazydev").setup({

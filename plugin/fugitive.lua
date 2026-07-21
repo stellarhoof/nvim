@@ -1,4 +1,4 @@
-G.misc.safely("now", function()
+now(function()
   -- Copied from $VIMRUNTIME/lua/vim/_defaults.lua
   local function open_uri(uri)
     if not uri or uri == "" then

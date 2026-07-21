@@ -38,7 +38,7 @@ local function new_git_status()
   })
 end
 
-G.misc.safely("now", function()
+now(function()
   vim.api.nvim_create_autocmd({ "FileType" }, {
     pattern = "oil",
     callback = function()

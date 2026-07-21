@@ -1,4 +1,4 @@
-G.misc.safely("now", function()
+now(function()
   vim.api.nvim_create_autocmd("FileType", {
     pattern = "http",
     callback = function()

@@ -1,4 +1,4 @@
-G.misc.safely("now", function()
+now(function()
   vim.g.nvim_surround_no_normal_mappings = true
 
   -- Add/change/delete surrounding delimiter pairs with ease.
@@ -12,7 +12,8 @@ G.misc.safely("now", function()
     "<Plug>(nvim-surround-normal)",
     { desc = "Add a surrounding pair around a motion (normal mode)" }
   )
-  vim.keymap.set("x", 
+  vim.keymap.set(
+    "x",
     "s",
     "<Plug>(nvim-surround-visual)",
     { desc = "Add a surrounding pair around a visual selection" }
@@ -29,7 +30,8 @@ G.misc.safely("now", function()
     "<Plug>(nvim-surround-normal-line)",
     { desc = "Add a surrounding pair around a motion, on new lines (normal mode)" }
   )
-  vim.keymap.set("x", 
+  vim.keymap.set(
+    "x",
     "S",
     "<Plug>(nvim-surround-visual-line)",
     { desc = "Add a surrounding pair around a visual selection, on new lines" }

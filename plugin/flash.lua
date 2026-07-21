@@ -1,6 +1,6 @@
 -- Navigate your code with search labels, enhanced character motions and
 -- Treesitter integration
-G.misc.safely("now", function()
+now(function()
   vim.pack.add({ "https://github.com/folke/flash.nvim" }, { confirm = false })
 
   require("flash").setup({
@@ -35,5 +35,10 @@ G.misc.safely("now", function()
   })
 
   vim.keymap.set({ "n", "x", "o" }, "m", require("flash").jump, { desc = "Jump to words" })
-  vim.keymap.set({ "n", "x", "o" }, "gm", require("flash").treesitter, { desc = "Select treesitter nodes" })
+  vim.keymap.set(
+    { "n", "x", "o" },
+    "gm",
+    require("flash").treesitter,
+    { desc = "Select treesitter nodes" }
+  )
 end)

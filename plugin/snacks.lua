@@ -1,4 +1,4 @@
-G.misc.safely("now", function()
+now(function()
   vim.pack.add({
     "https://github.com/folke/snacks.nvim",
     "https://github.com/piersolenski/import.nvim",

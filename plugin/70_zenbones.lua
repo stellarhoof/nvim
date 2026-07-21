@@ -1,4 +1,4 @@
-G.misc.safely("now", function()
+now(function()
   vim.g.zenbones_darkness = "stark"
   vim.g.zenwritten_darkness = "stark"
 

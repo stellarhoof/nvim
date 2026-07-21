@@ -1,4 +1,4 @@
-G.misc.safely("now", function()
+now(function()
   vim.pack.add({ "https://github.com/chrisgrieser/nvim-various-textobjs" }, { confirm = false })
 
   local textobj = require("various-textobjs")

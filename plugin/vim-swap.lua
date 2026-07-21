@@ -1,4 +1,4 @@
-G.misc.safely("now", function()
+now(function()
   vim.g.swap_no_default_key_mappings = 1
 
   vim.pack.add({ "https://github.com/machakann/vim-swap" }, { confirm = false })

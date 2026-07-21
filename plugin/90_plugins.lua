@@ -1,4 +1,4 @@
-G.misc.safely("now", function()
+now(function()
   vim.pack.add({
     -- Move 'up' or 'down' without changing the cursor column.
     "https://github.com/vim-utils/vim-vertical-move",

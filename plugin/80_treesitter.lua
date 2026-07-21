@@ -1,3 +1,6 @@
+-- Use the markdown parser for `mdx` filetypes
+vim.treesitter.language.register("markdown", "mdx")
+
 -- Installed and auto enable parsers for the following languages.
 -- See `:=require('nvim-treesitter').get_available()`
 local languages = {
@@ -28,7 +31,7 @@ local languages = {
   "yaml",
 }
 
-G.misc.safely("now", function()
+now(function()
   vim.api.nvim_create_autocmd("PackChanged", {
     desc = "Update tree-sitter parsers after plugin is updated",
     pattern = "nvim-treesitter",

@@ -1,4 +1,4 @@
-G.misc.safely("now", function()
+now(function()
   -- Readline motions and deletions in Neovim.
   vim.pack.add({ "https://github.com/sysedwinistrator/readline.nvim" }, { confirm = false })
 
@@ -18,9 +18,19 @@ G.misc.safely("now", function()
 
   -- Edit word
   vim.keymap.set({ "i", "c" }, "<m-d>", readline.kill_word, { desc = "Forward kill word" })
-  vim.keymap.set({ "i", "c" }, "<m-bs>", readline.backward_kill_word, { desc = "Backward kill word" })
+  vim.keymap.set(
+    { "i", "c" },
+    "<m-bs>",
+    readline.backward_kill_word,
+    { desc = "Backward kill word" }
+  )
 
   -- Edit line
   vim.keymap.set({ "i", "c" }, "<c-k>", readline.kill_line, { desc = "Forward kill line" })
-  vim.keymap.set({ "i", "c" }, "<c-u>", readline.backward_kill_line, { desc = "Backward kill line" })
+  vim.keymap.set(
+    { "i", "c" },
+    "<c-u>",
+    readline.backward_kill_line,
+    { desc = "Backward kill line" }
+  )
 end)

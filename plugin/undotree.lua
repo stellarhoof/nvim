@@ -1,4 +1,4 @@
-G.misc.safely("now", function()
+now(function()
   vim.g.undotree_DiffAutoOpen = 0
   vim.g.undotree_SetFocusWhenToggle = 1
   vim.g.undotree_SplitWidth = 40
