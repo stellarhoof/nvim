@@ -63,12 +63,13 @@ now(function()
   vim.api.nvim_set_hl(0, "MiniStatuslineFilename", { bold = true })
 end)
 
--- <c-j>: Expand snippet
--- <c-l>: Move to next tabstop (wraps)
--- <c-h>: Move to previous tabstop (wraps)
--- <c-n>: Select next tabstop choice
--- <c-p>: Select previous tabstop choice
--- <c-c>: Stop current snippet session (works from any buffer)
+-- Insert mode snippets. Mappings are:
+-- - `<c-j>`: Expand snippet
+-- - `<c-l>`: Move to next tabstop (wraps)
+-- - `<c-h>`: Move to previous tabstop (wraps)
+-- - `<c-n>`: Select next tabstop choice
+-- - `<c-p>`: Select previous tabstop choice
+-- - `<c-c>`: Stop current snippet session (works from any buffer)
 later(function()
   require("mini.snippets").setup({})
 
@@ -150,6 +151,7 @@ later(function()
   )
 end)
 
+-- Insert mode completion.
 later(function()
   local source_func = "omnifunc"
 
@@ -195,12 +197,7 @@ later(function()
   vim.lsp.config("*", { capabilities = require("mini.completion").get_lsp_capabilities() })
 end)
 
--- Show next key clues in a popup window. Useful for discovery of key mappings. Example usage:
--- - Press `<leader>` and wait for 1 second. A window with information about
---   next available keys should appear.
--- - Press one of the listed keys. Window updates immediately to show
---   information about new next available keys.
--- - Press keys until they resolve into an existing mapping.
+-- Show next key clues in a popup window. Useful for discovery of key mappings.
 later(function()
   local miniclue = require("mini.clue")
   miniclue.setup({
