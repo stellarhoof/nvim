@@ -1,9 +1,5 @@
 {
   "plugins": {
-    "conform.nvim": {
-      "rev": "619363c30309d29ffa631e67c8183f2a72caa373",
-      "src": "https://github.com/stevearc/conform.nvim"
-    },
     "diffview-plus.nvim": {
       "rev": "62dc5adf4e77489a2a6d3bf36ef6e4ac5738b634",
       "src": "https://github.com/dlyongemallo/diffview-plus.nvim"
@@ -13,7 +9,7 @@
       "src": "https://github.com/folke/flash.nvim"
     },
     "grug-far.nvim": {
-      "rev": "1cc080f55706b38aabfa97d40acb6adf59ac4a5a",
+      "rev": "6e05398cf6cad05b3fb46569db96b1ccfcbbd402",
       "src": "https://github.com/MagicDuck/grug-far.nvim"
     },
     "import.nvim": {
@@ -21,12 +17,8 @@
       "src": "https://github.com/piersolenski/import.nvim"
     },
     "kulala.nvim": {
-      "rev": "6ca180be842e4470c51226e6720b2b2b68275d58",
+      "rev": "e4e8615dc07d9423f3dd52ad5af962db09d26a52",
       "src": "https://github.com/mistweaverco/kulala.nvim"
-    },
-    "lazydev.nvim": {
-      "rev": "ff2cbcba459b637ec3fd165a2be59b7bbaeedf0d",
-      "src": "https://github.com/folke/lazydev.nvim"
     },
     "linediff.vim": {
       "rev": "c3780609769a93f4f59421b6324355f37e0ee6c5",
@@ -37,7 +29,7 @@
       "src": "https://github.com/rktjmp/lush.nvim"
     },
     "mini.nvim": {
-      "rev": "a35f08f63b73f0ffac045cd175fb2a22e167c39c",
+      "rev": "946ae64e0ee807ae3c41f382f0114b4ed4915b2c",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "nvim-autopairs": {
@@ -49,7 +41,7 @@
       "src": "https://github.com/mfussenegger/nvim-dap"
     },
     "nvim-lspconfig": {
-      "rev": "98b0b8a52742afc9e2e2078e2e451f91beef1717",
+      "rev": "b7b920947f21339ee41fbb38c79d6445e12900aa",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-scissors": {
@@ -61,11 +53,11 @@
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-treesitter": {
-      "rev": "7248feaca45e4d944591497964bc19afa89ad1c6",
+      "rev": "61df84986b4b4ec469ee745a182e433d49f8c27e",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-various-textobjs": {
-      "rev": "fed132a88454e52c9691f4751090031944af4a7e",
+      "rev": "604d4c57a5a702c5b25698502713a5f4da6c439e",
       "src": "https://github.com/chrisgrieser/nvim-various-textobjs"
     },
     "nvim-vtsls": {
@@ -79,10 +71,6 @@
     "pi.nvim": {
       "rev": "9b619b4f9fb96fa4dc1a6a7776a651980cd819a0",
       "src": "https://github.com/pablopunk/pi.nvim"
-    },
-    "plenary.nvim": {
-      "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
-      "src": "https://github.com/nvim-lua/plenary.nvim"
     },
     "readline.nvim": {
       "rev": "a3faa5d3313ba3b26061d5f10fd737e742fd1620",
@@ -135,14 +123,6 @@
     "vim-swap": {
       "rev": "9358bfdc5e377aa13e7c2c2dd8699ba32b0dcf83",
       "src": "https://github.com/machakann/vim-swap"
-    },
-    "vim-unimpaired": {
-      "rev": "db65482581a28e4ccf355be297f1864a4e66985c",
-      "src": "https://github.com/tpope/vim-unimpaired"
-    },
-    "vim-vertical-move": {
-      "rev": "5dfd85af3d543b7d57e43a85ffc6e000902047ab",
-      "src": "https://github.com/vim-utils/vim-vertical-move"
     },
     "zenbones.nvim": {
       "rev": "8304d8df9b823ff11e103afa62f38c39f534abe6",

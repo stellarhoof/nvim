@@ -33,20 +33,23 @@ https://ast-grep.github.io/
 
 # Plugins
 
-https://old.reddit.com/r/neovim/comments/1d5j2c9/announcing_nvimimpairative_an_helper_plugin_for/
 https://github.com/andrewferrier/debugprint.nvim
+
+- https://github.com/ThePrimeagen/refactoring.nvim has all the features I need
+- In case I need more, https://github.com/chrisgrieser/nvim-chainsaw is smaller
+
 https://github.com/cbochs/grapple.nvim
-https://github.com/cbochs/portal.nvim
-https://github.com/carbon-steel/detour.nvim
+https://github.com/cbochs/portal.nvim (unmantained)
 https://github.com/OlegGulevskyy/better-ts-errors.nvim
 https://github.com/rgroli/other.nvim
 https://github.com/kevinhwang91/nvim-bqf
 https://github.com/CKolkey/ts-node-action
 https://github.com/rktjmp/highlight-current-n.nvim
 https://github.com/Wansmer/treesj (api is too messy)
-
-# AI
-
-https://github.com/yetone/avante.nvim
-https://github.com/pablopunk/pi.nvim
+https://github.com/inkarkat/vim-UnconditionalPaste
+https://github.com/justinmk/guh.nvim
+https://github.com/barrettruth/diffs.nvim
+https://github.com/juniorsundar/refer.nvim
 https://github.com/carlos-algms/agentic.nvim
+https://github.com/nvim-mini/mini.nvim/discussions/2523
+https://github.com/ThePrimeagen/refactoring.nvim

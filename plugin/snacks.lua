@@ -1,7 +1,7 @@
-now(function()
+now(function ()
   vim.pack.add({
     "https://github.com/folke/snacks.nvim",
-    "https://github.com/piersolenski/import.nvim",
+    "https://github.com/piersolenski/import.nvim"
   }, { confirm = false })
 
   require("import").setup({ picker = "snacks" })
@@ -10,32 +10,31 @@ now(function()
     picker = {
       main = {
         -- Open files in current window
-        current = true,
+        current = true
       },
       formatters = {
-        file = { truncate = 1000, icon_width = 3 },
+        file = { truncate = 1000, icon_width = 3 }
       },
       layouts = {
         window = {
           preset = "vscode",
           layout = {
-            row = function()
+            row = function ()
               return vim.api.nvim_win_get_position(0)[1]
             end,
-            col = function()
+            col = function ()
               return vim.api.nvim_win_get_position(0)[2]
             end,
-            height = function()
+            height = function ()
               return vim.api.nvim_win_get_height(0)
             end,
-            width = function()
+            width = function ()
               return vim.api.nvim_win_get_width(0)
-            end,
-          },
-        },
+            end
+          }
+        }
       },
       sources = {
-        -- stylua: ignore start
         recent          = { layout = "window" },
         files           = { layout = "window" },
         git_files       = { layout = "window" },
@@ -45,15 +44,15 @@ now(function()
         colorschemes    = { layout = { preset = "sidebar" } },
         help            = { layout = { preset = "default", fullscreen = true } },
         zoxide          = { layout = { preset = "sidebar", layout = { width = 50 } } },
-        -- stylua: ignore end
-        explorer = {
+        explorer        = {
           layout = {
             auto_hide = { "input" },
-            layout = { layout = { width = 50 } },
+            layout = { layout = { width = 50 } }
           },
           diagnostics = false,
+          hidden = true
         },
-        projects = {
+        projects        = {
           layout = { preset = "sidebar", hidden = { "preview" }, layout = { width = 50 } },
           patterns = { ".git", "package.json", "tsconfig.json" },
           recent = false,
@@ -64,87 +63,101 @@ now(function()
             "~/Projects/smartprocure",
             "~/Projects/smartprocure/contexture/packages",
             "~/.config/nvim",
-            "~/.config/home-manager",
-          },
+            "~/.config/home-manager"
+          }
         },
-        git_branches = {
+        git_branches    = {
           all = true,
           layout = { preset = "vertical", hidden = { "preview" }, fullscreen = true },
           actions = {
-            toggle_all = function(picker)
+            toggle_all = function (picker)
               picker.opts["all"] = not picker.opts["all"]
               picker:find()
-            end,
+            end
           },
           win = {
             input = {
               keys = {
-                ["<c-a>"] = { "toggle_all", mode = { "n", "i" }, desc = "Toggle all branches" },
-              },
-            },
-          },
-        },
-      },
-    },
+                ["<c-a>"] = { "toggle_all", mode = { "n", "i" }, desc = "Toggle all branches" }
+              }
+            }
+          }
+        }
+      }
+    }
   })
 
   require("snacks").util.set_hl({
-    SnacksPickerDir = { link = "Text" },
+    SnacksPickerDir = { link = "Text" }
   })
 
-  vim.keymap.set("n", "<leader>,", function()
+  vim.keymap.set("n", "<leader>,", function ()
     Snacks.picker.buffers()
-  end, { desc = "Snacks.picker.buffers" })
+  end, { desc = "Snacks.picker.buffers" }
+  )
 
-  vim.keymap.set("n", "<leader>e", function()
+  vim.keymap.set("n", "<leader>e", function ()
     Snacks.picker.explorer()
-  end, { desc = "Snacks.picker.explorer" })
+  end, { desc = "Snacks.picker.explorer" }
+  )
 
-  vim.keymap.set("n", "<leader>s", function()
+  vim.keymap.set("n", "<leader>s", function ()
     Snacks.picker.grep({ cwd = G.buf_cwd(), hidden = true })
-  end, { desc = "Snacks.picker.grep" })
+  end, { desc = "Snacks.picker.grep" }
+  )
 
-  vim.keymap.set("n", "<leader>:", function()
+  vim.keymap.set("n", "<leader>:", function ()
     Snacks.picker.command_history()
-  end, { desc = "Snacks.picker.command_history" })
+  end, { desc = "Snacks.picker.command_history" }
+  )
 
-  vim.keymap.set("n", "<leader>?", function()
+  vim.keymap.set("n", "<leader>?", function ()
     Snacks.picker.help()
-  end, { desc = "Snacks.picker.help" })
+  end, { desc = "Snacks.picker.help" }
+  )
 
-  vim.keymap.set("n", "<leader>h", function()
+  vim.keymap.set("n", "<leader>h", function ()
     Snacks.picker.recent({ cwd = G.buf_cwd() })
-  end, { desc = "Snacks.picker.recent" })
+  end, { desc = "Snacks.picker.recent" }
+  )
 
-  vim.keymap.set("n", "<leader>f", function()
+  vim.keymap.set("n", "<leader>f", function ()
     Snacks.picker.git_files({ cwd = G.buf_cwd() })
-  end, { desc = "Snacks.picker.git_files" })
+  end, { desc = "Snacks.picker.git_files" }
+  )
 
-  vim.keymap.set("n", "<leader>i", function()
+  vim.keymap.set("n", "<leader>i", function ()
     require("import").pick()
-  end, { desc = "imports" })
+  end, { desc = "imports" }
+  )
 
-  vim.keymap.set("n", "<leader>b", function()
+  vim.keymap.set("n", "<leader>b", function ()
     Snacks.picker.git_branches()
-  end, { desc = "Snacks.picker.git_branches" })
+  end, { desc = "Snacks.picker.git_branches" }
+  )
 
-  vim.keymap.set("n", "<leader>kk", function()
+  vim.keymap.set("n", "<leader>kk", function ()
     Snacks.picker.pickers()
-  end, { desc = "Snacks.picker.pickers" })
+  end, { desc = "Snacks.picker.pickers" }
+  )
 
-  vim.keymap.set("n", "<leader>kf", function()
+  vim.keymap.set("n", "<leader>kf", function ()
     Snacks.picker.files()
-  end, { desc = "Snacks.picker.files" })
+  end, { desc = "Snacks.picker.files" }
+  )
 
-  vim.keymap.set("n", "<leader>kc", function()
+  vim.keymap.set("n", "<leader>kc", function ()
     Snacks.picker.colorschemes()
-  end, { desc = "Snacks.picker.colorschemes" })
+  end, { desc = "Snacks.picker.colorschemes" }
+  )
 
-  vim.keymap.set("n", "<leader>kp", function()
+  vim.keymap.set("n", "<leader>kp", function ()
     Snacks.picker.projects()
-  end, { desc = "Snacks.picker.projects" })
+  end, { desc = "Snacks.picker.projects" }
+  )
 
-  vim.keymap.set("n", "<leader>kz", function()
+  vim.keymap.set("n", "<leader>kz", function ()
     Snacks.picker.zoxide()
-  end, { desc = "Snacks.picker.zoxide" })
+  end, { desc = "Snacks.picker.zoxide" }
+  )
 end)

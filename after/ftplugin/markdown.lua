@@ -1,3 +1,5 @@
+-- Check https://github.com/noisesfromspace/touchup.nvim
+
 vim.wo.linebreak = true
 vim.wo.breakindent = false
 vim.wo.wrap = true

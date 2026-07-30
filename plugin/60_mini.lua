@@ -5,21 +5,29 @@ vim.pack.add({ "https://github.com/nvim-mini/mini.nvim" }, { confirm = false })
 -- condition being met. Errors during the function's execution are reported as
 -- |vim.notify()| warnings.
 
--- stylua: ignore start
-_G.now = function(f) require('mini.misc').safely("now", f) end
-_G.later = function(f) require('mini.misc').safely("later", f) end
-_G.on_event = function(ev, f) require('mini.misc').safely("event:" .. ev, f) end
-_G.on_filetype = function(ft, f) require('mini.misc').safely("filetype:" .. ft, f) end
--- stylua: ignore end
+_G.now = function (f)
+  require("mini.misc").safely("now", f)
+end
+_G.later = function (f)
+  require("mini.misc").safely("later", f)
+end
+_G.on_event = function (ev, f)
+  require("mini.misc").safely("event:" .. ev, f)
+end
+_G.on_filetype = function (ft, f)
+  require("mini.misc").safely("filetype:" .. ft, f)
+end
 
 -- Icon provider. Used by other plugins to render icons.
 require("mini.icons").setup({})
 
 -- Statusline. See `:h 'statusline'` and `:h 'mini.statusline'`.
-now(function()
+now(function ()
   local function active_statusline()
     local mode, mode_hl = require("mini.statusline").section_mode({ trunc_width = 120 })
-    local searchcount = require("mini.statusline").section_searchcount({ trunc_width = 75 })
+    local searchcount = require("mini.statusline").section_searchcount({
+      trunc_width = 75,
+    })
     if searchcount ~= "" then
       searchcount = "󱎸 " .. searchcount
     end
@@ -70,11 +78,11 @@ end)
 -- - `<c-n>`: Select next tabstop choice
 -- - `<c-p>`: Select previous tabstop choice
 -- - `<c-c>`: Stop current snippet session (works from any buffer)
-later(function()
+later(function ()
   require("mini.snippets").setup({})
 
-  -- Provide snippet completion items via an in-process LSP server
-  require("mini.snippets").start_lsp_server({})
+  -- -- Provide snippet completion items via an in-process LSP server
+  -- require("mini.snippets").start_lsp_server({})
 
   -- Load snippets using VSCode snippets manifest (`package.json` file) to map
   -- languages to their corresponding snippets files.
@@ -129,7 +137,7 @@ later(function()
       end
     end
 
-    return function(context)
+    return function (context)
       local patterns = lang_patterns[(context or {}).lang]
       if not patterns then
         return {}
@@ -152,13 +160,13 @@ later(function()
 end)
 
 -- Insert mode completion.
-later(function()
+later(function ()
   local source_func = "omnifunc"
 
   require("mini.completion").setup({
     delay = {
       -- Disable autocomplete. Trigger via `i_<c-space>`.
-      completion = math.huge,
+      -- completion = math.huge,
       -- Disable automatic signature help popup. Trigger via `i_<c-s>`
       signature = math.huge,
     },
@@ -166,7 +174,7 @@ later(function()
       source_func = source_func,
       -- Do not setup completion on `BufEnter`; it will be done on `LspAttach`.
       auto_setup = false,
-      process_items = function(items, base)
+      process_items = function (items, base)
         return require("mini.completion").default_process_items(
           items,
           base,
@@ -180,25 +188,30 @@ later(function()
 
   vim.api.nvim_create_autocmd({ "FileType" }, {
     desc = "Disable completion in some filetypes",
-    pattern = "snacks*",
-    callback = function()
+    pattern = "snacks*,markdown",
+    callback = function ()
       vim.b.minicompletion_disable = true
     end,
   })
 
   vim.api.nvim_create_autocmd({ "LspAttach" }, {
-    callback = function(args)
+    callback = function (args)
       vim.bo[args.buf][source_func] = "v:lua.MiniCompletion.completefunc_lsp"
     end,
   })
 
   -- Advertise to servers that Neovim now supports certain set of completion and
   -- signature features through 'mini.completion'.
-  vim.lsp.config("*", { capabilities = require("mini.completion").get_lsp_capabilities() })
+  vim.lsp.config(
+    "*",
+    {
+      capabilities = require("mini.completion").get_lsp_capabilities(),
+    }
+  )
 end)
 
 -- Show next key clues in a popup window. Useful for discovery of key mappings.
-later(function()
+later(function ()
   local miniclue = require("mini.clue")
   miniclue.setup({
     -- These keys trigger the clue window.

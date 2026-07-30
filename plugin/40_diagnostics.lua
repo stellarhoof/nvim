@@ -3,8 +3,10 @@ vim.diagnostic.config({
   float = { source = true },
   jump = {
     wrap = false,
-    float = true,
     severity = { min = vim.diagnostic.severity.HINT },
+    on_jump = function(_, bufnr)
+      vim.diagnostic.open_float({ bufnr = bufnr, scope = "cursor", focus = false })
+    end,
   },
   signs = {
     text = {
