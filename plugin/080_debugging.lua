@@ -79,15 +79,9 @@ local function configure_vscode_js_debug_adapter()
     runtimeExecutable = "/Users/ah/.nix-profile/bin/brave",
   }
 
-  dap.configurations.javascript = {
-    node_launch_config,
-    chrome_launch_config,
-  }
+  dap.configurations.javascript = { node_launch_config, chrome_launch_config }
 
-  dap.configurations.javascriptreact = {
-    node_launch_config,
-    chrome_launch_config,
-  }
+  dap.configurations.javascriptreact = { node_launch_config, chrome_launch_config }
 
   dap.configurations.typescript = {
     -- vim.tbl_extend("force", vim.deepcopy(node_launch_config), {
@@ -104,13 +98,13 @@ local function configure_vscode_js_debug_adapter()
   }
 end
 
-now(function()
-  vim.pack.add({ "https://github.com/mfussenegger/nvim-dap" }, { confirm = false })
-  configure_vscode_js_debug_adapter()
-  local dap = require("dap")
-  vim.keymap.set("n", "<f5>", dap.continue, { desc = "Debug: continue" })
-  vim.keymap.set("n", "<f9>", dap.toggle_breakpoint, { desc = "Debug: toggle breakpoint" })
-  vim.keymap.set("n", "<f10>", dap.step_over, { desc = "Deubg: step over" })
-  vim.keymap.set("n", "<f11>", dap.step_into, { desc = "Debug: step into" })
-  vim.keymap.set("n", "<f12>", dap.step_out, { desc = "Debug: step out" })
-end)
+vim.pack.add({ "https://github.com/mfussenegger/nvim-dap" }, { confirm = false })
+configure_vscode_js_debug_adapter()
+local dap = require("dap")
+vim.keymap.set("n", "<f5>", dap.continue, { desc = "Debug: continue" })
+vim.keymap.set("n", "<f9>", dap.toggle_breakpoint, {
+  desc = "Debug: toggle breakpoint",
+})
+vim.keymap.set("n", "<f10>", dap.step_over, { desc = "Deubg: step over" })
+vim.keymap.set("n", "<f11>", dap.step_into, { desc = "Debug: step into" })
+vim.keymap.set("n", "<f12>", dap.step_out, { desc = "Debug: step out" })

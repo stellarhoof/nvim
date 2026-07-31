@@ -1,3 +1,30 @@
+# Useful help pags
+
+- |default-mappings|
+- |standard-plugin-list|
+
+# Options
+
+Run `:options` for an interactive list of all current options.
+
+Options values can be one if the following types:
+- global         : Global only.
+- global-local   : Global but can be overridden per buffer/window.
+- local          : Per buffer/window; has mutable global defaults that are copied from upon creating new buffers/windows.
+- local-noglobal : Per buffer/window; does not have mutable global defaults.
+
+- Window local values are remembered for each buffer.
+
+Lua interface for options (see `:h lua-options`)
+
+- `vim.o`         : gets or sets options (like `:set`)
+- `vim.go`        : gets or sets global options (like `:setglobal`)
+- `vim.bo`        : gets or sets buffer local options (like `:setlocal`)
+- `vim.wo`        : gets or sets window local options (like `:setlocal`)
+- `vim.opt`       : gets or sets list/map style options (like `:set`)
+- `vim.opt_local` : gets or sets list/map style options (like `:setlocal`)
+- `vim.opt_global`: gets or sets list/map style options (like `:setglobal`)
+
 # Fugitive code review
 
 1. Load all changed files between current branch and `base_branch` in quickfix list

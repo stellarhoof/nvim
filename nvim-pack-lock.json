@@ -1,5 +1,9 @@
 {
   "plugins": {
+    "atone.nvim": {
+      "rev": "b5ebb6b27693fa759899b33c6fac787611e08a39",
+      "src": "https://github.com/XXiaoA/atone.nvim"
+    },
     "diffview-plus.nvim": {
       "rev": "62dc5adf4e77489a2a6d3bf36ef6e4ac5738b634",
       "src": "https://github.com/dlyongemallo/diffview-plus.nvim"
@@ -29,7 +33,7 @@
       "src": "https://github.com/rktjmp/lush.nvim"
     },
     "mini.nvim": {
-      "rev": "946ae64e0ee807ae3c41f382f0114b4ed4915b2c",
+      "rev": "8bf5c57bc82dd590932faa41bfde9fd6d40a9433",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "nvim-autopairs": {
@@ -48,12 +52,16 @@
       "rev": "77dfcafd53088c7941f2d383541aa8fdda7fd7b7",
       "src": "https://github.com/chrisgrieser/nvim-scissors"
     },
+    "nvim-startuptime": {
+      "rev": "8191acfecefb1c562b37ea4e20dba5fb54e16779",
+      "src": "https://github.com/seblyng/nvim-startuptime"
+    },
     "nvim-surround": {
       "rev": "8b47db616ef658b8fc27e61db2896aa2f40134de",
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-treesitter": {
-      "rev": "61df84986b4b4ec469ee745a182e433d49f8c27e",
+      "rev": "0f32dff7f19476629c77467f887b95e5e2d33509",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-various-textobjs": {
@@ -125,7 +133,7 @@
       "src": "https://github.com/machakann/vim-swap"
     },
     "zenbones.nvim": {
-      "rev": "8304d8df9b823ff11e103afa62f38c39f534abe6",
+      "rev": "5260372fd3ffa38f6f929f5426526457c2927512",
       "src": "https://github.com/zenbones-theme/zenbones.nvim"
     }
   }
