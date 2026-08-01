@@ -19,25 +19,6 @@ vim.o.smoothscroll = true
 -- Do not wrap searches after first/last match.
 vim.o.wrapscan = false
 
--- Filter quickfix list.
-vim.cmd.packadd("cfilter")
-
--- Visualize neovim startuptime information.
-vim.pack.add({ "https://github.com/seblyng/nvim-startuptime" }, { confirm = false })
-
--- Define command line mode aliases.
-vim.pack.add({ "https://github.com/konfekt/vim-alias" }, { confirm = false })
-vim.cmd.Alias({ args = { "w", "up" }, bang = true })
-
--- mini.nvim is used all throughout this config so add it early on.
-vim.pack.add({ "https://github.com/nvim-mini/mini.nvim" }, { confirm = false })
-_G.now = function (f)
-  require("mini.misc").safely("now", f)
-end
-_G.later = function (f)
-  require("mini.misc").safely("later", f)
-end
-
 vim.keymap.set({ "n" }, "<c-s>", vim.cmd.wall, {
   desc = "Write all buffers",
 })
@@ -83,3 +64,26 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
     end
   end,
 })
+
+-- Define command line mode aliases.
+vim.pack.add({ "https://github.com/konfekt/vim-alias" }, { confirm = false })
+
+-- mini.nvim is used all throughout this config so add it early on.
+vim.pack.add({ "https://github.com/nvim-mini/mini.nvim" }, { confirm = false })
+
+_G.now = function (f)
+  require("mini.misc").safely("now", f)
+end
+_G.later = function (f)
+  require("mini.misc").safely("later", f)
+end
+
+-- Filter quickfix list.
+later(function ()
+  vim.cmd.packadd("cfilter")
+end)
+
+-- Visualize neovim startuptime information.
+later(function ()
+  vim.pack.add({ "https://github.com/seblyng/nvim-startuptime" }, { confirm = false })
+end)

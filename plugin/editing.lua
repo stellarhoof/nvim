@@ -4,6 +4,7 @@ vim.o.gdefault = true
 vim.o.ignorecase = true
 -- Unset 'ignorecase' if search pattern contains uppercase characters.
 vim.o.smartcase = true
+vim.o.infercase = true
 
 -- Do not treat dashes in the middle of words as negative signs when inc/dec
 -- with i_CTRL-X and i_CTRL-A.
@@ -95,7 +96,8 @@ later(function ()
   })
 end)
 
--- TODO: Missing textobjs: subword, url, filepath, argument
+-- TODO: Delete between commas should act on a single line
+-- TODO: Missing textobjs: subword, url, filepath
 -- TODO: Use approach in https://github.com/nvim-mini/mini.nvim/issues/387 for
 -- swapping
 later(function ()
@@ -128,20 +130,21 @@ later(function ()
   })
 end)
 
--- Enable dot-repeat on supported plugin maps.
-vim.pack.add({ "https://github.com/tpope/vim-repeat" }, { confirm = false })
-
--- Sets 'commentstring' based on the cursor location in a file.
-vim.pack.add({ "https://github.com/folke/ts-comments.nvim" }, { confirm = false })
+-- Move 'up' or 'down' without changing the cursor column.
+-- "https://github.com/vim-utils/vim-vertical-move",
 
 -- Simple alignment operator.
 vim.pack.add({ "https://github.com/tommcdo/vim-lion" }, { confirm = false })
 
 -- Close and rename html/jsx tags.
-vim.pack.add({ "https://github.com/tronikelis/ts-autotag.nvim" }, { confirm = false })
+later(function ()
+  vim.pack.add({ "https://github.com/tronikelis/ts-autotag.nvim" }, { confirm = false })
+end)
 
--- Move 'up' or 'down' without changing the cursor column.
--- "https://github.com/vim-utils/vim-vertical-move",
+-- Sets 'commentstring' based on the cursor location in a file.
+later(function ()
+  vim.pack.add({ "https://github.com/folke/ts-comments.nvim" }, { confirm = false })
+end)
 
 -- Navigate code with search labels, enhanced character motions and treesitter integration.
 later(function ()

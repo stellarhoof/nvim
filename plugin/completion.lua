@@ -7,12 +7,10 @@ vim.opt.completeopt = {
   "fuzzy",
   -- Show popup menu for completions even when there's only one match.
   "menuone",
-  -- Do not insert text for a match until a match is selected.
-  "noinsert",
+  -- Do not automatically select a completion item.
+  "noselect",
   -- Show extra information about the currently selected item in a popup window.
   "popup",
-  -- Preselect completion item if indicated by LSP server.
-  "preselect",
 }
 
 -- Insert mode completion.

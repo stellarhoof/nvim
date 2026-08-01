@@ -1,7 +1,7 @@
 -- Installed and auto enable parsers for the following languages.
 -- See `require('nvim-treesitter').get_available()`
 local languages = {
-  "bash", "css", "diff", "dockerfile", "fish", "git_config", "git_rebase",
+  "bash", "css", "diff", "dockerfile", "lua", "fish", "git_config", "git_rebase",
   "gitattributes", "gitcommit", "gitignore", "graphql", "html", "http", "javascript",
   "jsdoc", "json", "json5", "nix", "python", "regex", "sql", "tsx", "typescript", "xml",
   "yaml",
@@ -12,18 +12,9 @@ later(function ()
     desc = "Keep parsers in sync with tree-sitter plugin",
     pattern = { "nvim-treesitter" },
     callback = function (ev)
-      if not ev.data.active then
-        vim.cmd.packadd("nvim-treesitter")
-      end
-      if ev.data.kind == "install" then
-        require("nvim-treesitter").install(languages)
-      end
       if ev.data.kind == "update" then
-        require("nvim-treesitter").install(languages)
+        if not ev.data.active then vim.cmd.packadd('nvim-treesitter') end
         require("nvim-treesitter").update(languages)
-      end
-      if ev.data.kind == "delete" then
-        require("nvim-treesitter").uninstall(languages)
       end
     end,
   })
@@ -32,6 +23,8 @@ later(function ()
     { "https://github.com/nvim-treesitter/nvim-treesitter" }, { confirm = false }
   )
 
+  require("nvim-treesitter").install(languages)
+
   local filetypes = vim
     .iter(languages)
     :map(vim.treesitter.language.get_filetypes)
@@ -39,7 +32,7 @@ later(function ()
     :totable()
 
   vim.api.nvim_create_autocmd("FileType", {
-    desc = "Start streesitter on supported filetypes",
+    desc = "Start treesitter on supported filetypes",
     pattern = filetypes,
     callback = function (ev)
       vim.treesitter.start(ev.buf)

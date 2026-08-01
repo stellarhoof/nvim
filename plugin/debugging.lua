@@ -1,5 +1,6 @@
 -- :h dap.txt
 
+-- TODO: https://github.com/igorlfs/nvim-dap-view
 -- Resources
 -- https://www.youtube.com/watch?v=Ul_WPhS2bis
 -- https://theosteiner.de/debugging-javascript-frameworks-in-neovim
@@ -105,6 +106,6 @@ vim.keymap.set("n", "<f5>", dap.continue, { desc = "Debug: continue" })
 vim.keymap.set("n", "<f9>", dap.toggle_breakpoint, {
   desc = "Debug: toggle breakpoint",
 })
-vim.keymap.set("n", "<f10>", dap.step_over, { desc = "Deubg: step over" })
+vim.keymap.set("n", "<f10>", dap.step_over, { desc = "Debug: step over" })
 vim.keymap.set("n", "<f11>", dap.step_into, { desc = "Debug: step into" })
 vim.keymap.set("n", "<f12>", dap.step_out, { desc = "Debug: step out" })

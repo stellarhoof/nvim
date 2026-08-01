@@ -1,3 +1,14 @@
+-- Handle line and column numbers in file names.
+vim.pack.add({ "https://github.com/wsdjeg/vim-fetch" }, { confirm = false })
+
+-- Integration for https://pi.dev, the minimal coding agent
+-- Check https://github.com/monkeymonk/prompt.nvim
+-- Check https://github.com/dabstractor/pi-nvim-bridge
+-- Check https://github.com/zgs225/pi2.nvim
+later(function ()
+  vim.pack.add({ "https://github.com/pablopunk/pi.nvim" }, { confirm = false })
+end)
+
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "http" },
   callback = function ()

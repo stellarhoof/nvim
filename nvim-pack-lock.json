@@ -1,12 +1,12 @@
 {
   "plugins": {
-    "atone.nvim": {
-      "rev": "b5ebb6b27693fa759899b33c6fac787611e08a39",
-      "src": "https://github.com/XXiaoA/atone.nvim"
-    },
     "diffview-plus.nvim": {
       "rev": "62dc5adf4e77489a2a6d3bf36ef6e4ac5738b634",
       "src": "https://github.com/dlyongemallo/diffview-plus.nvim"
+    },
+    "fff": {
+      "rev": "1eb913e509b846e77111cde2aeeb77a05243c003",
+      "src": "https://github.com/dmtrKovalenko/fff"
     },
     "flash.nvim": {
       "rev": "b6346946d10d07998efee029fb0f7a593806d0cd",
@@ -16,81 +16,41 @@
       "rev": "6e05398cf6cad05b3fb46569db96b1ccfcbbd402",
       "src": "https://github.com/MagicDuck/grug-far.nvim"
     },
-    "import.nvim": {
-      "rev": "7f6116ce53a9176f8e7aaf3e41cc60be11c7d8ee",
-      "src": "https://github.com/piersolenski/import.nvim"
+    "guh.nvim": {
+      "rev": "943779f7cdb0acee203985ad531fb53ff95d9c8e",
+      "src": "https://github.com/justinmk/guh.nvim"
     },
     "kulala.nvim": {
       "rev": "e4e8615dc07d9423f3dd52ad5af962db09d26a52",
       "src": "https://github.com/mistweaverco/kulala.nvim"
-    },
-    "linediff.vim": {
-      "rev": "c3780609769a93f4f59421b6324355f37e0ee6c5",
-      "src": "https://github.com/AndrewRadev/linediff.vim"
     },
     "lush.nvim": {
       "rev": "9c60ec2279d62487d942ce095e49006af28eed6e",
       "src": "https://github.com/rktjmp/lush.nvim"
     },
     "mini.nvim": {
-      "rev": "8bf5c57bc82dd590932faa41bfde9fd6d40a9433",
+      "rev": "bcb4b2688b38f5c48ada025abe130d41840e11d5",
       "src": "https://github.com/nvim-mini/mini.nvim"
-    },
-    "nvim-autopairs": {
-      "rev": "7b9923abad60b903ece7c52940e1321d39eccc79",
-      "src": "https://github.com/windwp/nvim-autopairs"
     },
     "nvim-dap": {
       "rev": "9e848e09a697ee95302a3ef2dd43fd6eb709e570",
       "src": "https://github.com/mfussenegger/nvim-dap"
     },
     "nvim-lspconfig": {
-      "rev": "b7b920947f21339ee41fbb38c79d6445e12900aa",
+      "rev": "1c0d8f70dbc8827263eedc3cf7021ceba0f68689",
       "src": "https://github.com/neovim/nvim-lspconfig"
-    },
-    "nvim-scissors": {
-      "rev": "77dfcafd53088c7941f2d383541aa8fdda7fd7b7",
-      "src": "https://github.com/chrisgrieser/nvim-scissors"
     },
     "nvim-startuptime": {
       "rev": "8191acfecefb1c562b37ea4e20dba5fb54e16779",
       "src": "https://github.com/seblyng/nvim-startuptime"
     },
-    "nvim-surround": {
-      "rev": "8b47db616ef658b8fc27e61db2896aa2f40134de",
-      "src": "https://github.com/kylechui/nvim-surround"
-    },
     "nvim-treesitter": {
-      "rev": "0f32dff7f19476629c77467f887b95e5e2d33509",
+      "rev": "7b6cc8949f9999c5ed91436cbe24aa5f99c42025",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
-    },
-    "nvim-various-textobjs": {
-      "rev": "604d4c57a5a702c5b25698502713a5f4da6c439e",
-      "src": "https://github.com/chrisgrieser/nvim-various-textobjs"
-    },
-    "nvim-vtsls": {
-      "rev": "0b5f73c9e50ce95842ea07bb3f05c7d66d87d14a",
-      "src": "https://github.com/yioneko/nvim-vtsls"
-    },
-    "oil.nvim": {
-      "rev": "b73018b75affd13fa38e2fc94ef753b465f770d7",
-      "src": "https://github.com/stevearc/oil.nvim"
     },
     "pi.nvim": {
       "rev": "9b619b4f9fb96fa4dc1a6a7776a651980cd819a0",
       "src": "https://github.com/pablopunk/pi.nvim"
-    },
-    "readline.nvim": {
-      "rev": "a3faa5d3313ba3b26061d5f10fd737e742fd1620",
-      "src": "https://github.com/sysedwinistrator/readline.nvim"
-    },
-    "snacks.nvim": {
-      "rev": "882c996cf28183f4d63640de0b4c02ec886d01f2",
-      "src": "https://github.com/folke/snacks.nvim"
-    },
-    "substitute.nvim": {
-      "rev": "0d2077398552f069abccbd964a26dd7cd26882cd",
-      "src": "https://github.com/gbprod/substitute.nvim"
     },
     "ts-autotag.nvim": {
       "rev": "6178353d9003e91eb053d69cf9a4d72e28137daa",
@@ -128,12 +88,8 @@
       "rev": "5496d7c94581c4c9ad7430357449bb57fc59f501",
       "src": "https://github.com/tpope/vim-rhubarb"
     },
-    "vim-swap": {
-      "rev": "9358bfdc5e377aa13e7c2c2dd8699ba32b0dcf83",
-      "src": "https://github.com/machakann/vim-swap"
-    },
     "zenbones.nvim": {
-      "rev": "5260372fd3ffa38f6f929f5426526457c2927512",
+      "rev": "8304d8df9b823ff11e103afa62f38c39f534abe6",
       "src": "https://github.com/zenbones-theme/zenbones.nvim"
     }
   }

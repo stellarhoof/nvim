@@ -178,50 +178,100 @@ vim.diagnostic.config({
 })
 
 -- Icon provider. Used by other plugins to render icons.
-require("mini.icons").setup({})
+now(function ()
+  require("mini.icons").setup()
+end)
 
 -- Statusline. See |statusline| and |mini.statusline|.
-require("mini.statusline").setup({
-  content = {
-    active = function ()
-      local statusline = require("mini.statusline")
-      local mode, mode_hl = statusline.section_mode({ trunc_width = 120 })
-      local searchcount = statusline.section_searchcount({ trunc_width = 75 })
-      if searchcount ~= "" then
-        searchcount = "󱎸 " .. searchcount
-      end
-      return statusline.combine_groups({
-        { hl = mode_hl, strings = { mode } },
-        "%<", -- Mark general truncate point
-        {
-          hl = "MiniStatuslineFilename",
-          strings = {
-            require("mini.icons").get("filetype", vim.bo.filetype),
-            statusline.section_filename({ trunc_width = 140 }),
+now(function ()
+  require("mini.statusline").setup({
+    content = {
+      active = function ()
+        local statusline = require("mini.statusline")
+        local mode, mode_hl = statusline.section_mode({ trunc_width = 120 })
+        local searchcount = statusline.section_searchcount({ trunc_width = 75 })
+        if searchcount ~= "" then
+          searchcount = "󱎸 " .. searchcount
+        end
+        return statusline.combine_groups({
+          { hl = mode_hl, strings = { mode } },
+          "%<", -- Mark general truncate point
+          {
+            hl = "MiniStatuslineFilename",
+            strings = {
+              require("mini.icons").get("filetype", vim.bo.filetype),
+              statusline.section_filename({ trunc_width = 140 }),
+            },
           },
-        },
-        "%=", -- End left alignment
-        { hl = mode_hl, strings = { searchcount } },
-      })
-    end,
-    inactive = function ()
-      local statusline = require("mini.statusline")
-      return statusline.combine_groups({
-        {
-          hl = "MiniStatuslineFilename",
-          strings = {
-            require("mini.icons").get("filetype", vim.bo.filetype),
-            statusline.section_filename({ trunc_width = 140 }),
+          "%=", -- End left alignment
+          { hl = mode_hl, strings = { searchcount } },
+        })
+      end,
+      inactive = function ()
+        local statusline = require("mini.statusline")
+        return statusline.combine_groups({
+          {
+            hl = "MiniStatuslineFilename",
+            strings = {
+              require("mini.icons").get("filetype", vim.bo.filetype),
+              statusline.section_filename({ trunc_width = 140 }),
+            },
           },
-        },
-      })
+        })
+      end,
+    },
+  })
+  vim.api.nvim_set_hl(0, "MiniStatuslineFilename", { bold = true })
+end)
+
+-- File explorer.
+now(function ()
+  require("mini.files").setup()
+  -- https://github.com/nvim-mini/mini.nvim/discussions/2173
+end)
+
+-- Find and replace.
+later(function ()
+  vim.pack.add({ "https://github.com/MagicDuck/grug-far.nvim" }, { confirm = false })
+
+  require("grug-far").setup({
+    normalModeSearch = true,
+    startInInsertMode = false,
+    helpLine = { enabled = false },
+    showCompactInputs = true,
+    showInputsTopPadding = false,
+    showStatusIcon = false,
+    resultsSeparatorLineChar = " ",
+    icons = {
+      searchInput = "",
+      replaceInput = "",
+      filesFilterInput = "",
+      flagsInput = "",
+      pathsInput = "",
+    },
+    folding = {
+      foldcolumn = "0",
+    },
+    resultLocation = {
+      showNumberLabel = false,
+    },
+  })
+
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "grug-far" },
+    callback = function ()
+      vim.wo.signcolumn = "no"
+      vim.api.nvim_set_hl(0, "GrugFarResultsPath", { link = "Directory" })
     end,
-  },
-})
+  })
 
-vim.api.nvim_set_hl(0, "MiniStatuslineFilename", { bold = true })
+  vim.keymap.set("n", "<leader>r", function ()
+    require("grug-far").open({ prefills = { paths = vim.b.dir } })
+  end, { noremap = true, desc = "Open search and replace" }
+  )
+end)
 
--- Visualize the undo tree.
+-- Undo tree visualizer.
 later(function ()
   vim.pack.add({ "https://github.com/mbbill/undotree" }, { confirm = false })
   vim.g.undotree_DiffAutoOpen = 0
@@ -231,11 +281,6 @@ later(function ()
     silent = true,
     desc = "Toggle Undotree",
   })
-end)
-
--- Perform diffs on blocks of code.
-later(function ()
-  vim.pack.add({ "https://github.com/AndrewRadev/linediff.vim" }, { confirm = false })
 end)
 
 -- Tabpage interface for cycling through diffs.
@@ -293,7 +338,8 @@ later(function ()
   })
 end)
 
--- TODO: Copy some of the tweaks in zenbones to the default colorscheme
+-- -- TODO: Copy some of the tweaks in zenbones to the default colorscheme
+-- -- TODO: Check https://github.com/kyzabuilds/xeno.nvim
 -- vim.g.zenbones_darkness = "stark"
 -- vim.g.zenwritten_darkness = "stark"
 --
