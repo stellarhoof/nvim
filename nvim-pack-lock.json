@@ -1,5 +1,9 @@
 {
   "plugins": {
+    "conform.nvim": {
+      "rev": "619363c30309d29ffa631e67c8183f2a72caa373",
+      "src": "https://github.com/stevearc/conform.nvim"
+    },
     "diffview-plus.nvim": {
       "rev": "62dc5adf4e77489a2a6d3bf36ef6e4ac5738b634",
       "src": "https://github.com/dlyongemallo/diffview-plus.nvim"
@@ -9,19 +13,16 @@
       "src": "https://github.com/dmtrKovalenko/fff"
     },
     "flash.nvim": {
-      "rev": "b6346946d10d07998efee029fb0f7a593806d0cd",
-      "src": "https://github.com/folke/flash.nvim"
+      "rev": "c92888d432bebeb145dad09c07ab65cc7c577184",
+      "src": "https://github.com/folke/flash.nvim",
+      "version": "'c92888d432bebeb145dad09c07ab65cc7c577184'"
     },
     "grug-far.nvim": {
       "rev": "6e05398cf6cad05b3fb46569db96b1ccfcbbd402",
       "src": "https://github.com/MagicDuck/grug-far.nvim"
     },
-    "guh.nvim": {
-      "rev": "943779f7cdb0acee203985ad531fb53ff95d9c8e",
-      "src": "https://github.com/justinmk/guh.nvim"
-    },
     "kulala.nvim": {
-      "rev": "e4e8615dc07d9423f3dd52ad5af962db09d26a52",
+      "rev": "7c10bd7b56f11dca25e5e948f817ca4eee1cb669",
       "src": "https://github.com/mistweaverco/kulala.nvim"
     },
     "lush.nvim": {
@@ -79,10 +80,6 @@
     "vim-lion": {
       "rev": "ce46593ecd60e6051fb6e4d3986d2fc9f5a618b1",
       "src": "https://github.com/tommcdo/vim-lion"
-    },
-    "vim-repeat": {
-      "rev": "65846025c15494983dafe5e3b46c8f88ab2e9635",
-      "src": "https://github.com/tpope/vim-repeat"
     },
     "vim-rhubarb": {
       "rev": "5496d7c94581c4c9ad7430357449bb57fc59f501",

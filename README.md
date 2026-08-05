@@ -12,11 +12,10 @@
 - Make component props into object and viceversa
 - Make component from () into {return}
 - Exit current block in insert mode via <tab> or another keybinding. Use matchup plugin instead of tabout
-- Workspace diagnostics
-- Disable completion in vim ui Select
 - Setup debugging
 - Picker: Cycle through list of cwds
 - Lists of quickfix lists
+- Jump to identifier references without populating quickfix
 
 # Plugins
 
@@ -34,14 +33,26 @@ https://github.com/ThePrimeagen/refactoring.nvim
 https://github.com/noisesfromspace/touchup.nvim
 https://github.com/nemanjamalesija/ts-expand-hover.nvim
 https://github.com/celeste3z/celeste_comment.nvim
+https://github.com/zgs225/pi2.nvim
+https://github.com/mawkler/jsx-element.nvim
+https://github.com/chrisgrieser/nvim-genghis
+https://github.com/y3owk1n/time-machine.nvim
+https://github.com/igorlfs/nvim-dap-view
 
-https://github.com/hasansujon786/nvim-navbuddy
+## Plugins to improve diff mode
+
+https://github.com/CoreyKaylor/diffbandit.nvim
+https://github.com/airblade/vim-gitgutter
 
 ## Plugins with cool ideas
 
+https://github.com/hasansujon786/nvim-navbuddy
 https://github.com/stevanmilic/nvim-lspimport
-https://github.com/rachartier/tiny-inline-diagnostic.nvim
 https://github.com/mawkler/refjump.nvim
+https://github.com/nemanjamalesija/ts-expand-hover.nvim
+https://github.com/chrisgrieser/nvim-rulebook
+https://github.com/axieax/urlview.nvim
+https://github.com/TheLazyCat00/termfile-nvim
 
 # Interesting
 

@@ -8,10 +8,18 @@ vim.opt.completeopt = {
   -- Show popup menu for completions even when there's only one match.
   "menuone",
   -- Do not automatically select a completion item.
-  "noselect",
+  "noinsert",
   -- Show extra information about the currently selected item in a popup window.
   "popup",
 }
+
+vim.api.nvim_create_autocmd({ "FileType" }, {
+  desc = "Disable mini.completion in some filetypes",
+  pattern = { "snacks_picker_input", "markdown", "gitcommit" },
+  callback = function ()
+    vim.b.minicompletion_disable = true
+  end,
+})
 
 -- Insert mode completion.
 later(function ()
@@ -47,15 +55,6 @@ later(function ()
     desc = "Use mini.completion as lsp's " .. source_func,
     callback = function (args)
       vim.bo[args.buf][source_func] = "v:lua.MiniCompletion.completefunc_lsp"
-    end,
-  })
-
-  -- TODO: Disable native autocompletion in these filetypes as well.
-  vim.api.nvim_create_autocmd({ "FileType" }, {
-    desc = "Disable mini.completion in some filetypes",
-    pattern = { "snacks_picker_input", "markdown" },
-    callback = function ()
-      vim.b.minicompletion_disable = true
     end,
   })
 end)

@@ -8,6 +8,11 @@ later(function ()
   vim.lsp.enable({ "emmylua_ls", "nixd", "oxfmt", "oxlint", "tailwindcss", "vtsls" })
 end)
 
+
+
+
+
+
 vim.api.nvim_create_autocmd({ "LspAttach" }, {
   callback = function (ev)
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
@@ -20,30 +25,26 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
     vim.lsp.semantic_tokens.enable(false, { bufnr = ev.buf })
 
     if client:supports_method("workspace/symbol") then
-      vim.keymap.set("n", "<leader>lw", vim.lsp.buf.workspace_symbol, {
+      vim.keymap.set("n", "<leader>lws", vim.lsp.buf.workspace_symbol, {
         unique = false,
         buffer = ev.buf,
         desc = "List workspace symbols",
       })
     end
 
-    if client:supports_method("workspace/diagnostic") then
-      vim.keymap.set("n", "<leader>ld", vim.lsp.buf.workspace_diagnostics, {
+    if client:supports_method("textDocument/documentSymbol") then
+      vim.keymap.set("n", "<leader>lds", vim.lsp.buf.document_symbol, {
         unique = false,
         buffer = ev.buf,
-        desc = "List workspace diagnostics",
+        desc = "List document symbols",
       })
     end
 
-    -- Format buffer on save.
-    -- Usually not needed if server supports "textDocument/willSaveWaitUntil".
-    if not client:supports_method("textDocument/willSaveWaitUntil")
-      and client:supports_method("textDocument/formatting") then
-      vim.api.nvim_create_autocmd("BufWritePre", {
+    if client:supports_method("workspace/diagnostic") then
+      vim.keymap.set("n", "<leader>lwd", vim.lsp.buf.workspace_diagnostics, {
+        unique = false,
         buffer = ev.buf,
-        callback = function ()
-          vim.lsp.buf.format({ bufnr = ev.buf, id = client.id, timeout_ms = 1000 })
-        end,
+        desc = "List workspace diagnostics",
       })
     end
   end,

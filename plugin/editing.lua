@@ -148,7 +148,15 @@ end)
 
 -- Navigate code with search labels, enhanced character motions and treesitter integration.
 later(function ()
-  vim.pack.add({ "https://github.com/folke/flash.nvim" }, { confirm = false })
+  vim.pack.add({
+    {
+      src = "https://github.com/folke/flash.nvim",
+      version = "c92888d432bebeb145dad09c07ab65cc7c577184",
+    },
+  },
+    {
+      confirm = false,
+    })
   require("flash").setup({
     modes = {
       search = { enabled = false },
@@ -165,5 +173,21 @@ later(function ()
   })
   vim.keymap.set({ "n", "x", "o" }, "gm", require("flash").treesitter, {
     desc = "Select treesitter nodes",
+  })
+end)
+
+-- Preserves extmarks and folds
+-- Fixes bad-behaving LSP formatters
+-- Enables range formatting for all formatters
+-- Formats embedded code blocks
+later(function ()
+  vim.pack.add({ "https://github.com/stevearc/conform.nvim" }, { confirm = false })
+  require("conform").setup({
+    formatters_by_ft = {
+      http = { "kulala-fmt" },
+      python = { "isort", "black" },
+      sh = { "shfmt" },
+    },
+    format_on_save = { timeout_ms = 500, lsp_format = "fallback" },
   })
 end)

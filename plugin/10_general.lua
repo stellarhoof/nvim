@@ -65,6 +65,12 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
   end,
 })
 
+-- Disable various built-in plugins
+vim.g.loaded_matchparen = 1
+vim.g.loaded_nvim_dir_plugin = true
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- Define command line mode aliases.
 vim.pack.add({ "https://github.com/konfekt/vim-alias" }, { confirm = false })
 

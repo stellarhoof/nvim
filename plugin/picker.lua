@@ -1,35 +1,30 @@
--- https://github.com/ibhagwan/fzf-lua
 -- https://github.com/nvim-mini/mini.nvim/discussions/2523
--- https://github.com/comfysage/artio.nvim
+-- https://github.com/edisj/msgarea.nvim
+-- Interesting: https://github.com/comfysage/artio.nvim
 
 -- Fast file finder with fuzzy searching, frecency, and in-memory index.
 later(function ()
-  vim.api.nvim_create_autocmd("PackChanged", {
-    pattern = { "fff" },
-    callback = function (ev)
-      if ev.data.kind == "install" or ev.data.kind == "update" then
-        if not ev.data.active then vim.cmd.packadd('fff.nvim') end
-        require("fff.download").download_or_build_binary()
-      end
-    end,
-  })
   vim.pack.add({ "https://github.com/dmtrKovalenko/fff" }, { confirm = false })
 end)
 
 later(function ()
-  local pick, extra = require("mini.pick"), require("mini.extra")
+  local mini_pick, mini_extra = require("mini.pick"), require("mini.extra")
 
-  pick.setup()
-  extra.setup()
-  pick.registry.fffiles = require("site.mini.pick.fff")
+  mini_pick.setup()
+
+  mini_extra.setup()
+
+  mini_pick.registry.fffiles = require("site.mini.pick.fff")
+
+  vim.api.nvim_set_hl(0, "MiniPickMatchRanges", { link = "Keyword" })
 
   vim.keymap.set({ "n" }, "<leader>,", function ()
-    pick.builtin.buffers()
+    mini_pick.builtin.buffers()
   end, { desc = "Buffers" }
   )
 
   vim.keymap.set({ "n" }, "<leader>s", function ()
-    pick.builtin.grep_live({}, {
+    mini_pick.builtin.grep_live({}, {
       window = {
         config = function ()
           return { row = 0, col = 0, width = vim.o.columns, height = vim.o.lines }
@@ -40,7 +35,7 @@ later(function ()
   )
 
   vim.keymap.set({ "n" }, "<leader>?", function ()
-    pick.builtin.help({ default_split = "vertical" }, {
+    mini_pick.builtin.help({ default_split = "vertical" }, {
       window = {
         config = function ()
           return { row = 0, col = 0, width = vim.o.columns, height = vim.o.lines }
@@ -51,17 +46,17 @@ later(function ()
   )
 
   vim.keymap.set({ "n" }, "<leader>h", function ()
-    extra.pickers.oldfiles()
+    mini_extra.pickers.oldfiles()
   end, { desc = "Oldfiles" }
   )
 
   vim.keymap.set({ "n" }, "<leader>f", function ()
-    pick.registry.fffiles()
-  end, { desc = "Snacks.picker.git_files" }
+    mini_pick.registry.fffiles()
+  end, { desc = "Files" }
   )
 
   vim.keymap.set({ "n" }, "<leader>b", function ()
-    extra.pickers.git_branches()
-  end, { desc = "Snacks.picker.git_branches" }
+    mini_extra.pickers.git_branches()
+  end, { desc = "Git branches" }
   )
 end)

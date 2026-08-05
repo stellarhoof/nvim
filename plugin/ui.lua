@@ -1,6 +1,9 @@
 -- Wrapped lines have the same indentation level as the beginning of that line.
 vim.o.breakindent = true
 
+-- Do not show current mode in the cmdline.
+vim.o.showmode = false
+
 -- String to show at the start of wrapped lines.
 vim.o.showbreak = "↪ "
 
@@ -11,10 +14,14 @@ vim.o.conceallevel = 0
 vim.o.signcolumn = "yes"
 
 -- Default border style of floating windows.
-vim.o.winborder = "single"
+vim.opt.winborder = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" }
+vim.opt.pumborder = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" }
 
 -- Do not show search count message when searching. Custom statusline shows it.
 vim.opt.shortmess:append("S")
+
+-- Don't show completion messages in the cmdline.
+vim.opt.shortmess:append("c")
 
 -- Do not display custom text in fold lines.
 vim.o.foldtext = ""
@@ -29,6 +36,7 @@ vim.o.foldminlines = 0
 vim.opt.fillchars = {
   -- Do not show characters for deleted lines in diffs. Highlighting is enough.
   diff = " ",
+  vert = " ",
 }
 
 -- Characters to show in 'list' mode.
@@ -66,7 +74,7 @@ vim.opt.diffopt:append({
   -- Not sure.
   "linematch:60",
   -- Highlight character-wise diffs.
-  "inline:char",
+  "inline:word",
 })
 
 -- `:help CTRL-L-default`
@@ -224,12 +232,6 @@ now(function ()
   vim.api.nvim_set_hl(0, "MiniStatuslineFilename", { bold = true })
 end)
 
--- File explorer.
-now(function ()
-  require("mini.files").setup()
-  -- https://github.com/nvim-mini/mini.nvim/discussions/2173
-end)
-
 -- Find and replace.
 later(function ()
   vim.pack.add({ "https://github.com/MagicDuck/grug-far.nvim" }, { confirm = false })
@@ -267,7 +269,7 @@ later(function ()
 
   vim.keymap.set("n", "<leader>r", function ()
     require("grug-far").open({ prefills = { paths = vim.b.dir } })
-  end, { noremap = true, desc = "Open search and replace" }
+  end, { noremap = true, desc = "Search and replace" }
   )
 end)
 
@@ -288,6 +290,7 @@ later(function ()
   vim.pack.add({ "https://github.com/dlyongemallo/diffview-plus.nvim" }, {
     confirm = false,
   })
+  vim.cmd.Alias({ args = { "df", "DiffviewOpen" } })
 end)
 
 -- Show next key clues in a popup window. Useful for discovery of key mappings.
@@ -329,33 +332,9 @@ later(function ()
       { mode = { "n" }, keys = "<leader>d", desc = "+Diagnostics" },
       { mode = { "n" }, keys = "<leader>l", desc = "+LSP" },
       { mode = { "n" }, keys = "<leader>u", desc = "+UI" },
-      { mode = { "n" }, keys = "<leader>k", desc = "+Snacks" },
-      { mode = { "n" }, keys = "<leader>n", desc = "+Snippets" },
     },
     window = {
       config = { width = 60 },
     },
   })
 end)
-
--- -- TODO: Copy some of the tweaks in zenbones to the default colorscheme
--- -- TODO: Check https://github.com/kyzabuilds/xeno.nvim
--- vim.g.zenbones_darkness = "stark"
--- vim.g.zenwritten_darkness = "stark"
---
--- vim.pack.add({
---   "https://github.com/rktjmp/lush.nvim",
---   "https://github.com/zenbones-theme/zenbones.nvim",
--- }, { confirm = false })
---
--- vim.api.nvim_create_autocmd({ "ColorScheme" }, {
---   desc = "Override zenbones colorscheme highlights",
---   pattern = { "zen*" },
---   callback = function ()
---     vim.api.nvim_set_hl(0, "Folded", {})
---     vim.api.nvim_set_hl(0, "Comment", { italic = false, update = true })
---     vim.api.nvim_set_hl(0, "FloatBorder", { link = "NormalFloat" })
---   end,
--- })
---
--- vim.cmd.colorscheme("zenbones")

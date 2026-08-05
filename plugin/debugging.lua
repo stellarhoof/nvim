@@ -1,6 +1,6 @@
 -- :h dap.txt
 
--- TODO: https://github.com/igorlfs/nvim-dap-view
+-- https://github.com/igorlfs/nvim-dap-view
 -- Resources
 -- https://www.youtube.com/watch?v=Ul_WPhS2bis
 -- https://theosteiner.de/debugging-javascript-frameworks-in-neovim

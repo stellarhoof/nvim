@@ -7,35 +7,32 @@ local languages = {
   "yaml",
 }
 
-later(function ()
-  vim.api.nvim_create_autocmd("PackChanged", {
-    desc = "Keep parsers in sync with tree-sitter plugin",
-    pattern = { "nvim-treesitter" },
-    callback = function (ev)
-      if ev.data.kind == "update" then
-        if not ev.data.active then vim.cmd.packadd('nvim-treesitter') end
-        require("nvim-treesitter").update(languages)
-      end
-    end,
-  })
+vim.api.nvim_create_autocmd("PackChanged", {
+  desc = "Keep parsers in sync with tree-sitter plugin",
+  pattern = { "nvim-treesitter" },
+  callback = function (ev)
+    if not ev.data.active then vim.cmd.packadd('nvim-treesitter') end
+    if ev.data.kind == "update" then
+      require("nvim-treesitter").install(languages)
+      require("nvim-treesitter").update(languages)
+    elseif ev.data.kind == "install" then
+      require("nvim-treesitter").install(languages)
+    elseif ev.data.kind == "delete" then
+      require("nvim-treesitter").uninstall(languages)
+    end
+  end,
+})
 
-  vim.pack.add(
-    { "https://github.com/nvim-treesitter/nvim-treesitter" }, { confirm = false }
-  )
+vim.pack.add(
+  { "https://github.com/nvim-treesitter/nvim-treesitter" }, { confirm = false }
+)
 
-  require("nvim-treesitter").install(languages)
-
-  local filetypes = vim
-    .iter(languages)
-    :map(vim.treesitter.language.get_filetypes)
-    :flatten()
-    :totable()
-
-  vim.api.nvim_create_autocmd("FileType", {
-    desc = "Start treesitter on supported filetypes",
-    pattern = filetypes,
-    callback = function (ev)
+vim.api.nvim_create_autocmd("FileType", {
+  desc = "Start treesitter on supported filetypes",
+  pattern = "*",
+  callback = function (ev)
+    pcall(function ()
       vim.treesitter.start(ev.buf)
-    end,
-  })
-end)
+    end)
+  end,
+})

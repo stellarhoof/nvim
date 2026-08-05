@@ -32,7 +32,7 @@ return function (_local_opts)
       show = function (buf_id, items)
         local buf_lines = vim.iter(items):map(function (item)
           local icon, _, _ = require("mini.icons").get("file", item.name)
-          return string.format(" %s  %s ", icon, item.relative_path)
+          return string.format(" %s %s ", icon, item.relative_path)
         end):totable()
 
         -- Set buffer contents
@@ -42,7 +42,7 @@ return function (_local_opts)
         vim.api.nvim_buf_clear_namespace(buf_id, ranges_ns_id, 0, -1)
 
         -- Add matches ranges highlights
-        local prefix_len = 7 -- Length of prefix text before file path starts
+        local prefix_len = 6 -- Length of prefix text before file path starts
         for row, item in ipairs(items) do
           for _, range in ipairs(item.match_ranges) do
             local start_col = range[1] + prefix_len
@@ -50,7 +50,7 @@ return function (_local_opts)
             vim.api.nvim_buf_set_extmark(buf_id, ranges_ns_id, row - 1, start_col, {
               hl_group = "MiniPickMatchRanges",
               hl_mode = "combine",
-              priority = 200,
+              priority = 300,
               end_col = end_col,
             })
           end

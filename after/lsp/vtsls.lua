@@ -14,4 +14,10 @@ return {
       autoUseWorkspaceTsdk = true,
     },
   },
+  on_attach = function (client, bufnr)
+    -- Disable formatting capabilities. We'll be using a dedicated formatter
+    -- instead.
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
+  end,
 }
