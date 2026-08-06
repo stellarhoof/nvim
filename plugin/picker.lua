@@ -1,6 +1,8 @@
 -- https://github.com/nvim-mini/mini.nvim/discussions/2523
 -- https://github.com/edisj/msgarea.nvim
 -- Interesting: https://github.com/comfysage/artio.nvim
+-- TODO: helpgrep results
+-- Project picker idea: https://github.com/nvim-mini/mini.nvim/discussions/1141
 
 -- Fast file finder with fuzzy searching, frecency, and in-memory index.
 later(function ()

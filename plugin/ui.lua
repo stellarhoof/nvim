@@ -208,7 +208,7 @@ now(function ()
             hl = "MiniStatuslineFilename",
             strings = {
               require("mini.icons").get("filetype", vim.bo.filetype),
-              statusline.section_filename({ trunc_width = 140 }),
+              vim.bo.buftype == "terminal" and "%t" or "%f%m%r",
             },
           },
           "%=", -- End left alignment
@@ -331,6 +331,8 @@ later(function ()
       -- Custom mappings
       { mode = { "n" }, keys = "<leader>d", desc = "+Diagnostics" },
       { mode = { "n" }, keys = "<leader>l", desc = "+LSP" },
+      { mode = { "n" }, keys = "<leader>lw", desc = "+Workspace" },
+      { mode = { "n" }, keys = "<leader>ld", desc = "+Document" },
       { mode = { "n" }, keys = "<leader>u", desc = "+UI" },
     },
     window = {

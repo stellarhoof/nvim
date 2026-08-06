@@ -7,9 +7,6 @@ vim.g.maplocalleader = "\\"
 -- Automatically save undo history to file.
 vim.o.undofile = true
 
--- Enables project-local configuration via `.nvim.lua`, `.nvimrc`, or `.exrc` files.
-vim.o.exrc = true
-
 -- Vertical splits show to the right by default.
 vim.o.splitright = true
 

@@ -1,5 +1,8 @@
+---@type vim.lsp.Config
 return {
+  -- TODO: Why don't the types work here?
   -- https://github.com/yioneko/vtsls/blob/41ad8c9d3f9dbd122ce3259564f34d020b7d71d9/packages/service/configuration.schema.json
+  ---@type lspconfig.settings.vtsls
   settings = {
     typescript = {
       updateImportsOnFileMove = "always",

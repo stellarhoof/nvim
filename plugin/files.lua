@@ -5,11 +5,13 @@ now(function ()
   -- Can use more resolution if you want like { 60, 20, 20, 10, 5 }
   local widths = { 40, 20, 20 }
 
+  local mini_files = require("mini.files")
+
   -- https://github.com/nvim-mini/mini.nvim/discussions/2173
   vim.api.nvim_create_autocmd("User", {
     pattern = "MiniFilesWindowUpdate",
     callback = function (ev)
-      local state = require("mini.files").get_explorer_state()
+      local state = mini_files.get_explorer_state()
       if state == nil then return end
 
       -- Compute "depth offset" - how many windows are between this and focused
@@ -51,7 +53,19 @@ now(function ()
     end,
   })
 
-  require("mini.files").setup({
+  vim.api.nvim_create_autocmd("User", {
+    pattern = "MiniFilesExplorerOpen",
+    callback = function ()
+      mini_files.set_bookmark("w", vim.fn.getcwd, { desc = "Working directory" })
+      mini_files.set_bookmark("n", "~/Notes", { desc = "Notes" })
+      mini_files.set_bookmark("c", vim.fn.stdpath("config") .. "", { desc = "Config" })
+      mini_files.set_bookmark("p", vim.fn.stdpath("data") .. "/site/pack/core/opt", {
+        desc = "Plugins",
+      })
+    end,
+  })
+
+  mini_files.setup({
     mappings = {
       go_in_plus = "<cr>",
       go_out_plus = "",
@@ -59,7 +73,7 @@ now(function ()
   })
 
   vim.keymap.set({ "n" }, "<leader>e", function ()
-    require("mini.files").open(vim.api.nvim_buf_get_name(0))
+    mini_files.open(vim.api.nvim_buf_get_name(0))
   end, { desc = "Files explorer" }
   )
 end)
