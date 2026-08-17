@@ -1,3 +1,5 @@
+-- Interesting mapping: https://github.com/neovim/neovim/discussions/34076
+
 -- Enables the :subsitute "/g" flag by default.
 vim.o.gdefault = true
 -- Ignore case in search patterns.
@@ -34,6 +36,16 @@ vim.o.virtualedit = "block"
 
 -- When joining >2 lines, keep cursor at same position as if joining 2 lines.
 vim.opt.cpoptions:append("q")
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "*" },
+  callback = function ()
+    -- Do not auto-insert hard newlines in while typing. Manual (gq/gw) formatting
+    -- still respects |textwidth|.
+    vim.opt.formatoptions:remove("t")
+    vim.opt.formatoptions:remove("c")
+  end,
+})
 
 vim.keymap.set({ "i" }, "jk", "<esc>", {
   noremap = true,
@@ -190,4 +202,5 @@ later(function ()
     },
     format_on_save = { timeout_ms = 500, lsp_format = "fallback" },
   })
+  vim.o.formatexpr = require("conform").formatexpr
 end)

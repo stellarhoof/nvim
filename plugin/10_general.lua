@@ -42,6 +42,16 @@ vim.api.nvim_create_autocmd({ "BufWritePre", "FileWritePre" }, {
   end,
 })
 
+-- vim.api.nvim_create_autocmd("BufReadPost", {
+--   desc = "Detect buffer's project root and change buffer's cwd to it",
+--   callback = function (ev)
+--     local root = vim.fs.root(ev.buf, { ".git" })
+--     if root then
+--       vim.cmd.bcd(root)
+--     end
+--   end,
+-- })
+
 vim.api.nvim_create_autocmd({ "BufReadPost" }, {
   desc = "Go to last location when opening a buffer",
   callback = function (event)
