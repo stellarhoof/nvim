@@ -5,6 +5,17 @@
 [Lua manual](http://www.lua.org/manual/5.4/)
 [Neovim wrapper with Nix from scratch](https://ayats.org/blog/neovim-wrapper)
 
+# Terminals
+
+- https://github.com/thdxg/macterm
+- https://github.com/umputun/agterm
+- https://github.com/manaflow-ai/cmux
+- https://github.com/coder/mux
+- https://github.com/supabitapp/supacode
+- https://github.com/neurosnap/zmx
+- https://github.com/stablyai/orca
+- https://github.com/nicosuave/gmx
+
 # TODO
 
 - Extract code into function
@@ -43,6 +54,7 @@ https://github.com/igorlfs/nvim-dap-view
 
 https://github.com/CoreyKaylor/diffbandit.nvim
 https://github.com/airblade/vim-gitgutter
+https://github.com/Severeoverfl0w/difft.nvim
 
 ## Plugins with cool ideas
 
@@ -53,10 +65,12 @@ https://github.com/nemanjamalesija/ts-expand-hover.nvim
 https://github.com/chrisgrieser/nvim-rulebook
 https://github.com/axieax/urlview.nvim
 https://github.com/TheLazyCat00/termfile-nvim
+https://github.com/CarGDev/codetyper.nvim
 
 # Interesting
 
 https://github.com/ast-grep/ast-grep
+https://old.reddit.com/r/neovim/comments/1vj4zcp/neovim_the_session_revolution/
 
 # Useful help pags
 

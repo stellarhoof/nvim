@@ -56,12 +56,79 @@ now(function ()
   vim.api.nvim_create_autocmd("User", {
     pattern = "MiniFilesExplorerOpen",
     callback = function ()
+      -- Set custom bookmarks
+      mini_files.set_bookmark("~", "~", { desc = "Home directory" })
       mini_files.set_bookmark("w", vim.fn.getcwd, { desc = "Working directory" })
-      mini_files.set_bookmark("n", "~/Notes", { desc = "Notes" })
-      mini_files.set_bookmark("c", vim.fn.stdpath("config") .. "", { desc = "Config" })
-      mini_files.set_bookmark("p", vim.fn.stdpath("data") .. "/site/pack/core/opt", {
-        desc = "Plugins",
+      mini_files.set_bookmark("p", "~/Projects/github.com/stellarhoof", {
+        desc = "My projects",
       })
+      mini_files.set_bookmark("n", "~/Projects/github.com/stellarhoof/notes", {
+        desc = "Notes",
+      })
+      mini_files.set_bookmark("c", vim.fn.stdpath("config") .. "", { desc = "Config" })
+    end,
+  })
+
+  local function with_cwd(callback)
+    local state = require("mini.files").get_explorer_state()
+    if state then
+      callback(state.branch[state.depth_focus])
+    end
+  end
+
+  local rhs = function (direction)
+    return function ()
+      -- Make new window and set it as target
+      local state = mini_files.get_explorer_state()
+      if state then
+        local new_target = vim.api.nvim_win_call(state.target_window, function ()
+          vim.cmd(direction .. " split")
+          return vim.api.nvim_get_current_win()
+        end)
+        mini_files.set_target_window(new_target)
+      end
+    end
+  end
+
+  vim.api.nvim_create_autocmd("User", {
+    pattern = "MiniFilesBufferCreate",
+    callback = function (args)
+      local buf_id = args.data.buf_id
+
+      vim.keymap.set({ "n" }, "<c-c>", mini_files.close, {
+        buffer = buf_id,
+        desc = "Exit",
+      })
+
+      vim.keymap.set({ "n" }, "<c-s>", rhs("horizontal"), {
+        buffer = buf_id,
+        desc = "Split horizontal",
+      })
+      vim.keymap.set({ "n" }, "<c-v>", rhs("vertical"), {
+        buffer = buf_id,
+        desc = "Split belowright vertical",
+      })
+      vim.keymap.set({ "n" }, "<c-t>", rhs("tab"), {
+        buffer = buf_id,
+        desc = "Open in new tab",
+      })
+
+      -- Set custom mappings
+      vim.keymap.set({ "n" }, "<leader>s", function ()
+        with_cwd(function (cwd)
+          mini_files.close()
+          require("mini.pick").builtin.grep_live({}, { source = { cwd = cwd } })
+        end)
+      end, { buffer = buf_id }
+      )
+
+      vim.keymap.set({ "n" }, "<leader>f", function ()
+        with_cwd(function (cwd)
+          mini_files.close()
+          require("mini.pick").builtin.files({}, { source = { cwd = cwd } })
+        end)
+      end, { buffer = buf_id }
+      )
     end,
   })
 

@@ -8,21 +8,22 @@ later(function ()
   vim.lsp.enable({ "emmylua_ls", "nixd", "oxfmt", "oxlint", "tailwindcss", "vtsls" })
 end)
 
-
-
-
-
-
 vim.api.nvim_create_autocmd({ "LspAttach" }, {
   callback = function (ev)
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
     assert(client, "no lsp client")
 
-    -- Temporary until the LSP formatexpr can make comments wrap via `gqq`
-    vim.bo[ev.buf].formatexpr = nil
-
     -- Not a big fan of semantic tokens.
     vim.lsp.semantic_tokens.enable(false, { bufnr = ev.buf })
+
+    -- The LSP server decides the "workspace root" of a buffer,
+    -- but the Nvim |current-directory| does not follow it, so
+    -- commands like |:make|, |:grep| and |:terminal| do not run
+    -- from the workspace root. Use |:bcd| to sync each buffer's
+    -- directory to its LSP workspace root. See |lsp-buf-working-dir|
+    -- if client.root_dir then
+    --   vim.cmd.bcd(client.root_dir)
+    -- end
 
     if client:supports_method("workspace/symbol") then
       vim.keymap.set("n", "<leader>lws", vim.lsp.buf.workspace_symbol, {

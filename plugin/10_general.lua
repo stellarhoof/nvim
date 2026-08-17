@@ -42,6 +42,16 @@ vim.api.nvim_create_autocmd({ "BufWritePre", "FileWritePre" }, {
   end,
 })
 
+-- vim.api.nvim_create_autocmd("BufReadPost", {
+--   desc = "Detect buffer's project root and change buffer's cwd to it",
+--   callback = function (ev)
+--     local root = vim.fs.root(ev.buf, { ".git" })
+--     if root then
+--       vim.cmd.bcd(root)
+--     end
+--   end,
+-- })
+
 vim.api.nvim_create_autocmd({ "BufReadPost" }, {
   desc = "Go to last location when opening a buffer",
   callback = function (event)
@@ -70,6 +80,8 @@ vim.g.loaded_netrwPlugin = 1
 
 -- Define command line mode aliases.
 vim.pack.add({ "https://github.com/konfekt/vim-alias" }, { confirm = false })
+
+vim.cmd.Alias({ args = { "w", "up" } })
 
 -- mini.nvim is used all throughout this config so add it early on.
 vim.pack.add({ "https://github.com/nvim-mini/mini.nvim" }, { confirm = false })

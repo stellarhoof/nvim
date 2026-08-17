@@ -4,6 +4,9 @@ vim.o.breakindent = true
 -- Do not show current mode in the cmdline.
 vim.o.showmode = false
 
+-- Always show tabline
+vim.o.showtabline = 2
+
 -- String to show at the start of wrapped lines.
 vim.o.showbreak = "↪ "
 
@@ -149,7 +152,7 @@ do
 
   vim.keymap.set({ "n" }, "<leader>ud", function ()
     vim.cmd(vim.wo.diff and "diffoff" or "diffthis")
-  end, { desc = "Toggle diff mode" }
+  end, { silent = false, desc = "Toggle diff mode" }
   )
 
   vim.keymap.set({ "n" }, "<leader>ul", function ()
@@ -222,7 +225,7 @@ now(function ()
             hl = "MiniStatuslineFilename",
             strings = {
               require("mini.icons").get("filetype", vim.bo.filetype),
-              statusline.section_filename({ trunc_width = 140 }),
+              vim.bo.buftype == "terminal" and "%t" or "%f%m%r",
             },
           },
         })
