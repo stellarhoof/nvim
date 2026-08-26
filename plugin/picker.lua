@@ -66,9 +66,7 @@ later(function ()
   vim.keymap.set({ "n" }, "<leader>s", function ()
     mini_pick.builtin.grep_live({}, {
       source = { cwd = vim.b.dir },
-      window = {
-        config = fullscreen_layout,
-      },
+      window = { config = fullscreen_layout },
     })
   end, { desc = "Grep results" }
   )
