@@ -1,13 +1,13 @@
 {
   "=": {
-    "body": "($1) => (${2:$TM_SELECTED_TEXT})",
+    "body": "($1) => (${2})",
     "desc": "Arrow function",
     "prefix": "="
   },
   "=r": {
     "body": [
       "(${1:args}) => {$0",
-      "  return ${2:$TM_SELECTED_TEXT}",
+      "  return ${2}",
       "}"
     ],
     "desc": "Arrow function with block",
@@ -58,7 +58,7 @@
   "f": {
     "body": [
       "function ${1:name}(${2:args}) {$0",
-      "  return ${3:$TM_SELECTED_TEXT}",
+      "  return ${3}",
       "}"
     ],
     "desc": "Named function",
@@ -81,7 +81,7 @@
   "if": {
     "body": [
       "if (${1:condition}) {",
-      "  ${0:$TM_SELECTED_TEXT}",
+      "  ${0}",
       "}"
     ],
     "desc": "If statement",
@@ -124,7 +124,7 @@
   "try": {
     "body": [
       "try {",
-      "  ${1:$TM_SELECTED_TEXT}",
+      "  ${1}",
       "} catch (${2:e}) {",
       "  $3 ",
       "}"

@@ -46,8 +46,6 @@ later(function ()
 
   mini_extra.setup()
 
-  mini_pick.registry.fffiles = require("site.mini.pick.fff")
-
   vim.api.nvim_set_hl(0, "MiniPickMatchRanges", { link = "Keyword" })
 
   vim.keymap.set({ "n" }, "<leader>,", function ()
@@ -55,8 +53,23 @@ later(function ()
   end, { desc = "Buffers" }
   )
 
+  vim.keymap.set({ "n" }, "<leader>f", function ()
+    mini_pick.builtin.files({}, { source = { cwd = vim.b.dir } })
+  end, { desc = "Files" }
+  )
+
+  vim.keymap.set({ "n" }, "<leader>i", function ()
+    require("site.mini.pick.fff")()
+  end, { desc = "Indexed Files" }
+  )
+
   vim.keymap.set({ "n" }, "<leader>s", function ()
-    mini_pick.builtin.grep_live({}, { window = { config = fullscreen_layout } })
+    mini_pick.builtin.grep_live({}, {
+      source = { cwd = vim.b.dir },
+      window = {
+        config = fullscreen_layout,
+      },
+    })
   end, { desc = "Grep results" }
   )
 
@@ -73,10 +86,5 @@ later(function ()
   vim.keymap.set({ "n" }, "<leader>b", function ()
     mini_extra.pickers.git_branches()
   end, { desc = "Git branches" }
-  )
-
-  vim.keymap.set({ "n" }, "<leader>f", function ()
-    mini_pick.registry.fffiles()
-  end, { desc = "Indexed Files" }
   )
 end)

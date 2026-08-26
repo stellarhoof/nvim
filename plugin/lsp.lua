@@ -5,7 +5,7 @@
 -- Quickstart configs for neovim's native lsp.
 later(function ()
   vim.pack.add({ "https://github.com/neovim/nvim-lspconfig" }, { confirm = false })
-  vim.lsp.enable({ "emmylua_ls", "nixd", "oxfmt", "oxlint", "tailwindcss", "vtsls" })
+  vim.lsp.enable({ "emmylua_ls", "oxfmt", "oxlint", "tailwindcss", "vtsls" })
 end)
 
 vim.api.nvim_create_autocmd({ "LspAttach" }, {

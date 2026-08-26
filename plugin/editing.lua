@@ -83,10 +83,44 @@ vim.keymap.set({ "n" }, "gp", '"`[" . strpart(getregtype(), 0, 1) . "`]"', {
   desc = "Visually select last pasted text",
 })
 
--- Move lines in normal mode and visual selections.
-later(function ()
-  require("mini.move").setup()
-end)
+-- Move lines/blocks
+do
+  function N_move_above()
+    vim.cmd("silent! move --" .. vim.v.count1)
+  end
+  vim.keymap.set({ "n" }, "[e", function ()
+    vim.go.operatorfunc = "v:lua.N_move_above"
+    return "g@l"
+  end, { expr = true, desc = "Move current line up" }
+  )
+
+  function X_move_above()
+    vim.cmd("silent! '<,'>move '<--" .. vim.v.count1)
+  end
+  vim.keymap.set({ "x" }, "[e", function ()
+    vim.go.operatorfunc = "v:lua.X_move_above"
+    return "g@l"
+  end, { expr = true, desc = "Move current selection up" }
+  )
+
+  function N_move_below()
+    vim.cmd("silent! move +" .. vim.v.count1)
+  end
+  vim.keymap.set({ "n" }, "]e", function ()
+    vim.go.operatorfunc = "v:lua.N_move_below"
+    return "g@l"
+  end, { expr = true, desc = "Move current line down" }
+  )
+
+  function X_move_below()
+    vim.cmd("silent! '<,'>move '>+" .. vim.v.count1)
+  end
+  vim.keymap.set({ "x" }, "]e", function ()
+    vim.go.operatorfunc = "v:lua.X_move_below"
+    return "g@l"
+  end, { expr = true, desc = "Move current selection up" }
+  )
+end
 
 -- Auto-insert pairs of delimiters.
 later(function ()
@@ -95,7 +129,15 @@ end)
 
 -- Create/change/delete surrounding delimiter pairs.
 later(function ()
-  require("mini.surround").setup()
+  require("mini.surround").setup({
+    -- Similar to vim-surround
+    mappings = { add = "s", delete = "ds", find = "", find_left = "", replace = "cs" },
+    -- Place surroundings on separate lines in linewise mode.
+    -- Place surroundings on each line in blockwise mode.
+    respect_selection_type = true,
+  })
+  -- Make special mapping for "add surrounding for line"
+  vim.keymap.set("n", "ss", "s_", { remap = true })
 end)
 
 -- Various text editing operators.
@@ -117,6 +159,15 @@ later(function ()
     custom_textobjects = {
       i = require("mini.extra").gen_ai_spec.indent(),
     },
+    mappings = {
+      -- Unset these mappings as they override default neovim's incremental selection mappings
+      around_next = "",
+      inside_next = "",
+      around_last = "",
+      inside_last = "",
+    },
+    -- prev/next matches take priority over enclosing surroundings which I find unintuitive.
+    search_method = "cover",
   })
 end)
 
@@ -148,14 +199,16 @@ end)
 -- Simple alignment operator.
 vim.pack.add({ "https://github.com/tommcdo/vim-lion" }, { confirm = false })
 
--- Close and rename html/jsx tags.
-later(function ()
-  vim.pack.add({ "https://github.com/tronikelis/ts-autotag.nvim" }, { confirm = false })
-end)
-
 -- Sets 'commentstring' based on the cursor location in a file.
 later(function ()
   vim.pack.add({ "https://github.com/folke/ts-comments.nvim" }, { confirm = false })
+end)
+
+later(function ()
+  vim.g.user_emmet_leader_key = "<c-,>"
+  vim.g.user_emmet_expandabbr_key = "<c-,><c-,>"
+  vim.g.user_emmet_mode = "i"
+  vim.pack.add({ "https://github.com/mattn/emmet-vim" }, { confirm = false })
 end)
 
 -- Navigate code with search labels, enhanced character motions and treesitter integration.
@@ -199,6 +252,7 @@ later(function ()
       http = { "kulala-fmt" },
       python = { "isort", "black" },
       sh = { "shfmt" },
+      fish = { "fish_indent" },
     },
     format_on_save = { timeout_ms = 500, lsp_format = "fallback" },
   })

@@ -49,6 +49,7 @@ https://github.com/mawkler/jsx-element.nvim
 https://github.com/chrisgrieser/nvim-genghis
 https://github.com/y3owk1n/time-machine.nvim
 https://github.com/igorlfs/nvim-dap-view
+https://github.com/kndndrj/nvim-dbee
 
 ## Plugins to improve diff mode
 
@@ -66,6 +67,7 @@ https://github.com/chrisgrieser/nvim-rulebook
 https://github.com/axieax/urlview.nvim
 https://github.com/TheLazyCat00/termfile-nvim
 https://github.com/CarGDev/codetyper.nvim
+https://github.com/jfojtl/intent-diff.nvim
 
 # Interesting
 
