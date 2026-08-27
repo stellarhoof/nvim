@@ -10,7 +10,26 @@ later(function ()
 end)
 
 local function fullscreen_layout()
-  return { row = 0, col = 0, width = vim.o.columns, height = vim.o.lines }
+  return {
+    anchor = "NW",
+    row = 1,
+    col = 1,
+    width = vim.o.columns,
+    height = vim.o.lines - 2,
+    border = "none",
+  }
+end
+
+local function window_layout()
+  local pos = vim.api.nvim_win_get_position(0)
+  return {
+    anchor = "NW",
+    row = pos[1],
+    col = pos[2],
+    width = vim.api.nvim_win_get_width(0),
+    height = vim.api.nvim_win_get_height(0) - 2,
+    border = "none",
+  }
 end
 
 local function centered_layout(_opts)
@@ -49,17 +68,24 @@ later(function ()
   vim.api.nvim_set_hl(0, "MiniPickMatchRanges", { link = "Keyword" })
 
   vim.keymap.set({ "n" }, "<leader>,", function ()
-    mini_pick.builtin.buffers()
+    mini_pick.builtin.buffers({
+      window = { config = window_layout },
+    })
   end, { desc = "Buffers" }
   )
 
   vim.keymap.set({ "n" }, "<leader>f", function ()
-    mini_pick.builtin.files({}, { source = { cwd = vim.b.dir } })
+    mini_pick.builtin.files({}, {
+      source = { cwd = vim.b.dir },
+      window = { config = window_layout },
+    })
   end, { desc = "Files" }
   )
 
   vim.keymap.set({ "n" }, "<leader>i", function ()
-    require("site.mini.pick.fff")()
+    require("site.mini.pick.fff")({
+      window = { config = window_layout },
+    })
   end, { desc = "Indexed Files" }
   )
 
@@ -77,7 +103,9 @@ later(function ()
   )
 
   vim.keymap.set({ "n" }, "<leader>h", function ()
-    mini_extra.pickers.oldfiles()
+    mini_extra.pickers.oldfiles({
+      window = { config = window_layout },
+    })
   end, { desc = "Oldfiles" }
   )
 
