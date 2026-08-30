@@ -103,7 +103,7 @@ later(function ()
   )
 
   vim.keymap.set({ "n" }, "<leader>h", function ()
-    mini_extra.pickers.oldfiles({
+    mini_extra.pickers.oldfiles({}, {
       window = { config = window_layout },
     })
   end, { desc = "Oldfiles" }
