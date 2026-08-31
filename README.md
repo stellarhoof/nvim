@@ -68,6 +68,7 @@ https://github.com/axieax/urlview.nvim
 https://github.com/TheLazyCat00/termfile-nvim
 https://github.com/CarGDev/codetyper.nvim
 https://github.com/jfojtl/intent-diff.nvim
+https://github.com/XXiaoA/encore.nvim
 
 # Interesting
 
@@ -85,19 +86,20 @@ https://old.reddit.com/r/neovim/comments/1vj4zcp/neovim_the_session_revolution/
 Run `:options` for an interactive list of all current options.
 
 Options values can be one if the following types:
-- global         : Global only.
-- global-local   : Global but can be overridden per buffer/window.
-- local          : Per buffer/window; has mutable global defaults that are copied from upon creating new buffers/windows.
+
+- global : Global only.
+- global-local : Global but can be overridden per buffer/window.
+- local : Per buffer/window; has mutable global defaults that are copied from upon creating new buffers/windows.
 - local-noglobal : Per buffer/window; does not have mutable global defaults.
 
 - Window local values are remembered for each buffer.
 
 Lua interface for options (see `:h lua-options`)
 
-- `vim.o`         : gets or sets options (like `:set`)
-- `vim.go`        : gets or sets global options (like `:setglobal`)
-- `vim.bo`        : gets or sets buffer local options (like `:setlocal`)
-- `vim.wo`        : gets or sets window local options (like `:setlocal`)
-- `vim.opt`       : gets or sets list/map style options (like `:set`)
+- `vim.o` : gets or sets options (like `:set`)
+- `vim.go` : gets or sets global options (like `:setglobal`)
+- `vim.bo` : gets or sets buffer local options (like `:setlocal`)
+- `vim.wo` : gets or sets window local options (like `:setlocal`)
+- `vim.opt` : gets or sets list/map style options (like `:set`)
 - `vim.opt_local` : gets or sets list/map style options (like `:setlocal`)
 - `vim.opt_global`: gets or sets list/map style options (like `:setglobal`)
