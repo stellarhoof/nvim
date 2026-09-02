@@ -14,9 +14,9 @@ local function fullscreen_layout()
     anchor = "NW",
     row = 1,
     col = 1,
-    width = vim.o.columns,
+    width = vim.o.columns - 2,
     height = vim.o.lines - 2,
-    border = "none",
+    border = { " ", " ", " ", " ", " ", " ", " ", " " },
   }
 end
 
@@ -26,9 +26,9 @@ local function window_layout()
     anchor = "NW",
     row = pos[1],
     col = pos[2],
-    width = vim.api.nvim_win_get_width(0),
+    width = vim.api.nvim_win_get_width(0) - 2,
     height = vim.api.nvim_win_get_height(0) - 2,
-    border = "none",
+    border = { " ", " ", " ", " ", " ", " ", " ", " " },
   }
 end
 
