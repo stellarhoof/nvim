@@ -45,6 +45,7 @@ https://github.com/noisesfromspace/touchup.nvim
 https://github.com/nemanjamalesija/ts-expand-hover.nvim
 https://github.com/celeste3z/celeste_comment.nvim
 https://github.com/zgs225/pi2.nvim
+https://www.reddit.com/r/neovim/comments/1wg8ghl/piagentnvim_a_pragmatic_pi_integration/
 https://github.com/mawkler/jsx-element.nvim
 https://github.com/chrisgrieser/nvim-genghis
 https://github.com/y3owk1n/time-machine.nvim
