@@ -12,10 +12,10 @@ vim.g.zenbones = config
 vim.g.zenwritten = config
 vim.g.defaultbones = config
 
-vim.pack.add({
-  "https://github.com/rktjmp/lush.nvim",
-  "https://github.com/zenbones-theme/zenbones.nvim",
-}, { confirm = false })
+-- vim.pack.add({
+--   "https://github.com/rktjmp/lush.nvim",
+--   "https://github.com/zenbones-theme/zenbones.nvim",
+-- }, { confirm = false })
 
 vim.api.nvim_create_autocmd({ "ColorScheme" }, {
   desc = "Override zenbones colorscheme highlights",
@@ -60,6 +60,10 @@ vim.api.nvim_create_autocmd({ "ColorScheme" }, {
   end,
 })
 
-vim.cmd.colorscheme("zenbones")
--- vim.cmd.colorscheme("zenwritten")
--- vim.cmd.colorscheme("default")
+if vim.fn.has('linux') then
+  vim.cmd.colorscheme("matugen")
+else
+  vim.cmd.colorscheme("zenbones")
+  -- vim.cmd.colorscheme("zenwritten")
+  -- vim.cmd.colorscheme("default")
+end
