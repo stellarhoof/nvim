@@ -62,6 +62,10 @@ vim.api.nvim_create_autocmd({ "ColorScheme" }, {
 
 if vim.fn.has('linux') then
   vim.cmd.colorscheme("matugen")
+  -- Register a signal handler for SIGUSR1 (matugen updates)
+  vim.uv.new_signal():start('sigusr1', vim.schedule_wrap(function() 
+    vim.cmd.colorscheme('matugen')
+  end))
 else
   vim.cmd.colorscheme("zenbones")
   -- vim.cmd.colorscheme("zenwritten")
