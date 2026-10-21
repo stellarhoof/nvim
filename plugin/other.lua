@@ -27,14 +27,47 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Check https://github.com/monkeymonk/prompt.nvim
--- Check https://github.com/dabstractor/pi-nvim-bridge
 
--- Integration for https://pi.dev, the minimal coding agent
--- later(function ()
---   vim.pack.add({ "https://github.com/pablopunk/pi.nvim" }, { confirm = false })
--- end)
+later(function ()
+  vim.pack.add({ "https://www.github.com/nvim-lua/plenary.nvim" })
 
--- later(function ()
---   vim.pack.add({ "https://github.com/zgs225/pi2.nvim" }, { confirm = false })
---   require("pi").setup()
--- end)
+  vim.pack.add({
+    {
+      src = "https://www.github.com/olimorris/codecompanion.nvim",
+      version = vim.version.range("^20.0.0"),
+    },
+  })
+
+  require("codecompanion").setup({
+    interactions = {
+      chat = {
+        keymaps = {
+          -- Change the map for the completion trigger
+          completion = { modes = { n = "<tab>", i = "<tab>" }, opts = {} },
+        },
+        sessions = {
+          enabled = true,
+          autosave = true,
+          continuous_save = true,
+          save_dir = vim.fs.joinpath(
+            vim.fn.stdpath("data"), "codecompanion", "sessions"
+          ),
+        },
+      },
+      cli = {
+        agent = "pi",
+        agents = {
+          pi = { cmd = "pi" },
+          auggie = { cmd = "auggie", description = "Augment Code" },
+        },
+      },
+    },
+  })
+
+  vim.api.nvim_create_autocmd({ "User" }, {
+    pattern = "CodeCompanionChatCreated",
+    callback = function ()
+      vim.wo.winpinned = true
+    end,
+  })
+end)

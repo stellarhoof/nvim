@@ -68,7 +68,7 @@ later(function ()
   vim.api.nvim_set_hl(0, "MiniPickMatchRanges", { link = "Keyword" })
 
   vim.keymap.set({ "n" }, "<leader>,", function ()
-    mini_pick.builtin.buffers({
+    mini_pick.builtin.buffers({}, {
       window = { config = window_layout },
     })
   end, { desc = "Buffers" }

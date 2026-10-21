@@ -290,10 +290,58 @@ end)
 
 -- Tabpage interface for cycling through diffs.
 later(function ()
-  vim.pack.add({ "https://github.com/dlyongemallo/diffview-plus.nvim" }, {
-    confirm = false,
-  })
+  vim.pack.add(
+    { "https://github.com/dlyongemallo/diffview-plus.nvim" }, { confirm = false }
+  )
   vim.cmd.Alias({ args = { "df", "DiffviewOpen" } })
+
+  local lib = require("diffview.lib")
+
+  local function base_revision_tab()
+    local view = lib.get_current_view()
+    if not view then return end
+    local entry = view:infer_cur_file()
+    if not (entry and entry.revs and entry.revs.a) then return end
+    local rev = entry.revs.a
+    local object = rev:object_name() .. ":" .. entry.path
+    vim.cmd("Gtabedit " .. vim.fn.fnameescape(object))
+  end
+
+  require("diffview").setup({
+    view = {
+      cycle_layouts = {
+        default = {
+          "diff2_horizontal",
+          "diff1_inline",
+          "diff1_plain",
+        },
+        merge_tool = {
+          "diff3_horizontal",
+          "diff3_mixed",
+          "diff4_mixed",
+          "diff1_plain",
+        },
+      },
+    },
+    keymaps = {
+      view = {
+        {
+          "n",
+          "gB",
+          base_revision_tab,
+          { desc = "Open BASE revision in a new tab (fugitive)" },
+        },
+      },
+      file_panel = {
+        {
+          "n",
+          "gB",
+          base_revision_tab,
+          { desc = "Open BASE revision in a new tab (fugitive)" },
+        },
+      },
+    },
+  })
 end)
 
 -- Show next key clues in a popup window. Useful for discovery of key mappings.

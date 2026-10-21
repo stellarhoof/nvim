@@ -1,11 +1,16 @@
 {
   "plugins": {
+    "codecompanion.nvim": {
+      "rev": "142eadffdaa8dd06060646b6f8ef74e99c42ab06",
+      "src": "https://www.github.com/olimorris/codecompanion.nvim",
+      "version": "20.0.0 - 21.0.0"
+    },
     "conform.nvim": {
       "rev": "016802de402556da54c36bd7359b441266b01cdd",
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "diffview-plus.nvim": {
-      "rev": "43e60bca414e4991ed10118e59f809fb03bbeddd",
+      "rev": "2a2d89a07f5d5d3cef7f542b99c3e28050ca205c",
       "src": "https://github.com/dlyongemallo/diffview-plus.nvim"
     },
     "emmet-vim": {
@@ -13,7 +18,7 @@
       "src": "https://github.com/mattn/emmet-vim"
     },
     "fff": {
-      "rev": "d84c0a10cd5ea23285cb5575fa90179f51710f99",
+      "rev": "7353971198321b5330824c29eb4e49635c072245",
       "src": "https://github.com/dmtrKovalenko/fff"
     },
     "flash.nvim": {
@@ -22,11 +27,11 @@
       "version": "'c92888d432bebeb145dad09c07ab65cc7c577184'"
     },
     "grug-far.nvim": {
-      "rev": "11595bf747edc270bce2069d1020502ad4ae56cf",
+      "rev": "bbde8ef5ae46ceee2c3bd8b21fc048c5f8ffbfc0",
       "src": "https://github.com/MagicDuck/grug-far.nvim"
     },
     "kulala.nvim": {
-      "rev": "232a9939919fe9bc88d573bce92de50f2f160c60",
+      "rev": "e50d91de782404234cde10dc4a83c4f30f9219a0",
       "src": "https://github.com/mistweaverco/kulala.nvim"
     },
     "lush.nvim": {
@@ -34,15 +39,15 @@
       "src": "https://github.com/rktjmp/lush.nvim"
     },
     "mini.nvim": {
-      "rev": "ee23d71c02440668cbca5b0cd8640d79d5bc250b",
+      "rev": "4d84086ab334a88201b803d11d1086406fe7e43d",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "nvim-dap": {
-      "rev": "c9a0738e45f1bd41d792a126941348dce661cf9b",
+      "rev": "cfa2d58f4537aca6ca83e2de1a0d9f1491121264",
       "src": "https://github.com/mfussenegger/nvim-dap"
     },
     "nvim-lspconfig": {
-      "rev": "84252f9832fb5b9024fe9f7258e7c2aff915e6fb",
+      "rev": "77b7432d4770d23b277d37923e5a08a442d8bb07",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-startuptime": {
@@ -50,12 +55,16 @@
       "src": "https://github.com/seblyng/nvim-startuptime"
     },
     "nvim-treesitter": {
-      "rev": "41416e81a6c7f4af4984395bfe0cd8d174e70976",
+      "rev": "29212d826054bb2948fa9d3a99eca9bf6a050eb2",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "oil.nvim": {
-      "rev": "b73018b75affd13fa38e2fc94ef753b465f770d7",
+      "rev": "d3733d933833a0e59b813ecec99341527adf0c28",
       "src": "https://github.com/stevearc/oil.nvim"
+    },
+    "plenary.nvim": {
+      "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
+      "src": "https://www.github.com/nvim-lua/plenary.nvim"
     },
     "ts-comments.nvim": {
       "rev": "a59d6092213447450191122c9346f309161504cb",

@@ -45,12 +45,14 @@ https://github.com/noisesfromspace/touchup.nvim
 https://github.com/nemanjamalesija/ts-expand-hover.nvim
 https://github.com/celeste3z/celeste_comment.nvim
 https://github.com/zgs225/pi2.nvim
+https://github.com/inwonakng/pi-console
 https://www.reddit.com/r/neovim/comments/1wg8ghl/piagentnvim_a_pragmatic_pi_integration/
 https://github.com/mawkler/jsx-element.nvim
 https://github.com/chrisgrieser/nvim-genghis
 https://github.com/y3owk1n/time-machine.nvim
 https://github.com/igorlfs/nvim-dap-view
 https://github.com/kndndrj/nvim-dbee
+https://github.com/simifalaye/minibuffer.nvim
 
 ## Plugins to improve diff mode
 
