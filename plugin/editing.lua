@@ -249,12 +249,14 @@ later(function ()
   vim.pack.add({ "https://github.com/stevearc/conform.nvim" }, { confirm = false })
   require("conform").setup({
     formatters_by_ft = {
-      http = { "kulala-fmt" },
+      json = { "jq" },
       python = { "isort", "black" },
       sh = { "shfmt" },
       fish = { "fish_indent" },
     },
     format_on_save = { timeout_ms = 500, lsp_format = "fallback" },
   })
-  vim.o.formatexpr = require("conform").formatexpr
+  -- Use a string instead of a Lua function: rest.nvim reads 'formatexpr' as a
+  -- string when formatting response bodies and crashes on function values.
+  vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
 end)

@@ -21,6 +21,10 @@
       "rev": "7353971198321b5330824c29eb4e49635c072245",
       "src": "https://github.com/dmtrKovalenko/fff"
     },
+    "fidget.nvim": {
+      "rev": "9e0201673e08e997e7cf52afca5565c70bd117f3",
+      "src": "https://github.com/j-hui/fidget.nvim"
+    },
     "flash.nvim": {
       "rev": "c92888d432bebeb145dad09c07ab65cc7c577184",
       "src": "https://github.com/folke/flash.nvim",
@@ -30,9 +34,9 @@
       "rev": "bbde8ef5ae46ceee2c3bd8b21fc048c5f8ffbfc0",
       "src": "https://github.com/MagicDuck/grug-far.nvim"
     },
-    "kulala.nvim": {
-      "rev": "e50d91de782404234cde10dc4a83c4f30f9219a0",
-      "src": "https://github.com/mistweaverco/kulala.nvim"
+    "lua-mimetypes": {
+      "rev": "7c899be0c402067d11e50d802f0135ba64eccb51",
+      "src": "https://github.com/lunarmodules/lua-mimetypes"
     },
     "lush.nvim": {
       "rev": "9c60ec2279d62487d942ce095e49006af28eed6e",
@@ -50,6 +54,10 @@
       "rev": "77b7432d4770d23b277d37923e5a08a442d8bb07",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
+    "nvim-nio": {
+      "rev": "edcc181a875301dd21840189aa2f2f9ad69fc172",
+      "src": "https://github.com/nvim-neotest/nvim-nio"
+    },
     "nvim-startuptime": {
       "rev": "8191acfecefb1c562b37ea4e20dba5fb54e16779",
       "src": "https://github.com/seblyng/nvim-startuptime"
@@ -65,6 +73,10 @@
     "plenary.nvim": {
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://www.github.com/nvim-lua/plenary.nvim"
+    },
+    "rest.nvim": {
+      "rev": "714d5512aaec5565d55652480c16c26f8d95645d",
+      "src": "https://github.com/rest-nvim/rest.nvim"
     },
     "ts-comments.nvim": {
       "rev": "a59d6092213447450191122c9346f309161504cb",
@@ -93,6 +105,10 @@
     "vim-rhubarb": {
       "rev": "5496d7c94581c4c9ad7430357449bb57fc59f501",
       "src": "https://github.com/tpope/vim-rhubarb"
+    },
+    "xml2lua": {
+      "rev": "b0d2b0b156b4e66078da2dc4b31d978daa69b3ef",
+      "src": "https://github.com/manoelcampos/xml2lua"
     },
     "zenbones.nvim": {
       "rev": "8304d8df9b823ff11e103afa62f38c39f534abe6",
