@@ -10,7 +10,7 @@
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "diffview-plus.nvim": {
-      "rev": "2a2d89a07f5d5d3cef7f542b99c3e28050ca205c",
+      "rev": "fae72d6c981075dce2e0f946f002382ce0cb44e1",
       "src": "https://github.com/dlyongemallo/diffview-plus.nvim"
     },
     "emmet-vim": {
@@ -18,7 +18,7 @@
       "src": "https://github.com/mattn/emmet-vim"
     },
     "fff": {
-      "rev": "7353971198321b5330824c29eb4e49635c072245",
+      "rev": "3004e2d61a69e8c0f9d90b958d21fee3f75fe63e",
       "src": "https://github.com/dmtrKovalenko/fff"
     },
     "fidget.nvim": {
@@ -31,7 +31,7 @@
       "version": "'c92888d432bebeb145dad09c07ab65cc7c577184'"
     },
     "grug-far.nvim": {
-      "rev": "bbde8ef5ae46ceee2c3bd8b21fc048c5f8ffbfc0",
+      "rev": "91b7e58b6ffc6ddad5acb7a7c1df21257724449e",
       "src": "https://github.com/MagicDuck/grug-far.nvim"
     },
     "lua-mimetypes": {
@@ -43,7 +43,7 @@
       "src": "https://github.com/rktjmp/lush.nvim"
     },
     "mini.nvim": {
-      "rev": "4d84086ab334a88201b803d11d1086406fe7e43d",
+      "rev": "a321b535c75ca88ba7fddfd8eb5b583fbda50dd6",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "nvim-dap": {
@@ -51,7 +51,7 @@
       "src": "https://github.com/mfussenegger/nvim-dap"
     },
     "nvim-lspconfig": {
-      "rev": "77b7432d4770d23b277d37923e5a08a442d8bb07",
+      "rev": "cc404d425c7752f56b8eaa269107be44d888ea51",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-nio": {
@@ -63,7 +63,7 @@
       "src": "https://github.com/seblyng/nvim-startuptime"
     },
     "nvim-treesitter": {
-      "rev": "29212d826054bb2948fa9d3a99eca9bf6a050eb2",
+      "rev": "610734c5d3e59761d5f79318d120633374537fa5",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "oil.nvim": {

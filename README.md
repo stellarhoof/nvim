@@ -53,6 +53,7 @@ https://github.com/y3owk1n/time-machine.nvim
 https://github.com/igorlfs/nvim-dap-view
 https://github.com/kndndrj/nvim-dbee
 https://github.com/simifalaye/minibuffer.nvim
+https://github.com/CoreyKaylor/diffbandit.nvim
 
 ## Plugins to improve diff mode
 
